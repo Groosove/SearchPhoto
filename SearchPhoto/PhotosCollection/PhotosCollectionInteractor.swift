@@ -19,7 +19,7 @@ class PhotosCollectionInteractor: PhotosCollectionBusinessLogic {
 
     // MARK: Do something
     func doSomething(request: PhotosCollection.Something.Request) {
-        provider.getItems { (items, error) in
+        provider.getItems(with: request.search) { (items, error) in
             let result: PhotosCollection.PhotosCollectionRequestResult
             if let items = items {
                 result = .success(items)

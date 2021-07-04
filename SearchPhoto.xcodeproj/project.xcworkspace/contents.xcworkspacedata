@@ -1,52 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Workspace
    version = "1.0">
-   <Group
-      location = "group:/Users/arturlutfullin/Desktop/SearchPhoto/SearchPhoto/PhotosCollection"
-      name = "PhotosCollection">
-      <FileRef
-         location = "group:PhotosCollectionInteractor.swift">
-      </FileRef>
-      <FileRef
-         location = "group:PhotosCollectionViewController.swift">
-      </FileRef>
-      <FileRef
-         location = "group:PhotosCollectionBuilder.swift">
-      </FileRef>
-      <FileRef
-         location = "group:PhotosCollectionPresenter.swift">
-      </FileRef>
-      <Group
-         location = "group:Provider"
-         name = "Provider">
-         <FileRef
-            location = "group:PhotosCollectionService.swift">
-         </FileRef>
-         <FileRef
-            location = "group:PhotosCollectionDataStore.swift">
-         </FileRef>
-         <FileRef
-            location = "group:PhotosCollectionProvider.swift">
-         </FileRef>
-      </Group>
-      <FileRef
-         location = "group:PhotosCollectionDataFlow.swift">
-      </FileRef>
-      <Group
-         location = "group:Model"
-         name = "Model">
-         <FileRef
-            location = "group:PhotosCollectionModel.swift">
-         </FileRef>
-      </Group>
-      <Group
-         location = "group:View"
-         name = "View">
-         <FileRef
-            location = "group:PhotosCollectionView.swift">
-         </FileRef>
-      </Group>
-   </Group>
+   <FileRef
+      location = "group:../APIMethods.swift">
+   </FileRef>
+   <FileRef
+      location = "group:../SearchPhoto/PhotosCollection/View/PhotosCollectionView.swift">
+   </FileRef>
    <FileRef
       location = "self:">
    </FileRef>

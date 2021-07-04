@@ -17,8 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 						launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
 		window = UIWindow(frame: UIScreen.main.bounds)
-		let rootVC = PhotosCollectionBuilder().set(initialState: .loading).build()
-		window?.rootViewController = rootVC
+		window?.rootViewController = MainTabBarController()
 		window?.makeKeyAndVisible()
 		return true
 	}

@@ -4,5 +4,5 @@
 
 /// Класс для хранения данных модуля PhotosCollection
 class PhotosCollectionDataStore {
-    var models: [UnsplashPhoto]?
+    var models: [PhotosCollectionModel]?
 }

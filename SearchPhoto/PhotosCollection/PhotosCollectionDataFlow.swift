@@ -8,6 +8,7 @@ enum PhotosCollection {
     enum Something {
 		// swiftlint:disable nesting
         struct Request {
+            var search: String
         }
 
         struct Response {
@@ -22,12 +23,12 @@ enum PhotosCollection {
 
     enum PhotosCollectionRequestResult {
         case failure(PhotosCollectionError)
-        case success([UnsplashPhoto])
+        case success([PhotosCollectionModel])
     }
 
     enum ViewControllerState {
         case loading
-        case result([UnsplashPhoto])
+        case result([PhotosCollectionModel])
         case emptyResult
         case error(message: String)
     }

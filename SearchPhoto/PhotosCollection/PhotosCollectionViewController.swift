@@ -37,7 +37,7 @@ class PhotosCollectionViewController: UIViewController {
 
     // MARK: Do something
     func doSomething() {
-        let request = PhotosCollection.Something.Request()
+        let request = PhotosCollection.Something.Request(search: "programming")
         interactor.doSomething(request: request)
     }
 }
@@ -55,7 +55,7 @@ extension PhotosCollectionViewController: PhotosCollectionDisplayLogic {
         case let .error(message):
             print("error \(message)")
         case let .result(items):
-            print("result: \(items)")
+            items.forEach { print($0.links.download) }
         case .emptyResult:
             print("empty result")
         }

@@ -14,6 +14,7 @@ class PhotosCollectionView: UIView {
         super.init(frame: frame)
         addSubviews()
         makeConstraints()
+        backgroundColor = .red
     }
 
     required init?(coder aDecoder: NSCoder) {
