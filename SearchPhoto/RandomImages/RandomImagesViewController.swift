@@ -12,5 +12,6 @@ class RandomImagesViewController: UIViewController {
         super.viewDidLoad()
         
         view.backgroundColor = .orange
+		navigationController?.navigationBar.isHidden = true
     }
 }

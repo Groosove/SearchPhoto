@@ -12,7 +12,8 @@ protocol PhotosCollectionDisplayLogic: AnyObject {
 class PhotosCollectionViewController: UIViewController {
     let interactor: PhotosCollectionBusinessLogic
     var state: PhotosCollection.ViewControllerState
-
+	
+	
     init(interactor: PhotosCollectionBusinessLogic, initialState: PhotosCollection.ViewControllerState = .loading) {
         self.interactor = interactor
         self.state = initialState
@@ -25,14 +26,17 @@ class PhotosCollectionViewController: UIViewController {
 
     // MARK: View lifecycle
     override func loadView() {
-        let view = PhotosCollectionView(frame: UIScreen.main.bounds)
-        self.view = view
+		let collectionView = PhotosCollectionView(frame: UIScreen.main.bounds)
+        self.view = collectionView
+		view.backgroundColor = .black
         // make additional setup of view or save references to subviews
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         doSomething()
+		setUpNavigationBar()
+		setUpSearchBar()
     }
 
     // MARK: Do something
@@ -40,6 +44,12 @@ class PhotosCollectionViewController: UIViewController {
         let request = PhotosCollection.Something.Request(search: "programming")
         interactor.doSomething(request: request)
     }
+	
+	private func setUpNavigationBar() {
+		navigationController?.navigationBar.isTranslucent = false
+		navigationController?.navigationBar.barTintColor = .black
+		navigationItem.hidesSearchBarWhenScrolling = true
+	}
 }
 
 extension PhotosCollectionViewController: PhotosCollectionDisplayLogic {
@@ -60,4 +70,21 @@ extension PhotosCollectionViewController: PhotosCollectionDisplayLogic {
             print("empty result")
         }
     }
+}
+
+extension PhotosCollectionViewController: UISearchBarDelegate {
+	private func setUpSearchBar() {
+		let searchController = UISearchController(searchResultsController: nil)
+		navigationItem.searchController = searchController
+		searchController.hidesNavigationBarDuringPresentation = true
+		searchController.obscuresBackgroundDuringPresentation = true
+		searchController.searchBar.tintColor = .white
+		searchController.searchBar.searchTextField.textColor = .white
+		searchController.searchBar.delegate = self
+		
+	}
+	
+	func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+		print(searchBar)
+	}
 }

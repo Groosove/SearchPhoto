@@ -109,6 +109,8 @@
 		143E00142691CCE000D912F6 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				4A385B03268F515D00EC0D51 /* LaunchScreen.storyboard */,
+				4A385B01268F515D00EC0D51 /* Assets.xcassets */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -133,8 +135,6 @@
 			isa = PBXGroup;
 			children = (
 				4A385AF4268F515600EC0D51 /* SearchPhoto */,
-				143E00142691CCE000D912F6 /* Resources */,
-				4A9AE02F2690973700B106D5 /* Service */,
 				4A385B0E268F515D00EC0D51 /* SearchPhotoTests */,
 				4A385B19268F515E00EC0D51 /* SearchPhotoUITests */,
 				4A385AF3268F515600EC0D51 /* Products */,
@@ -154,13 +154,13 @@
 		4A385AF4268F515600EC0D51 /* SearchPhoto */ = {
 			isa = PBXGroup;
 			children = (
+				4A85F237269264EC006BEE9C /* Service */,
+				143E00142691CCE000D912F6 /* Resources */,
 				146BABCF2692055200B10A43 /* MainTabBarController.swift */,
 				4A385AF5268F515600EC0D51 /* AppDelegate.swift */,
 				146BABD326921F8800B10A43 /* FavoritePicture */,
 				146BABD226921F6000B10A43 /* RandomImages */,
 				4A940964268FC47E00ED9CB1 /* PhotosCollection */,
-				4A385B01268F515D00EC0D51 /* Assets.xcassets */,
-				4A385B03268F515D00EC0D51 /* LaunchScreen.storyboard */,
 				4A385B06268F515D00EC0D51 /* Info.plist */,
 				4A385AFE268F515600EC0D51 /* SearchPhoto.xcdatamodeld */,
 			);
@@ -183,6 +183,15 @@
 				4A385B1C268F515E00EC0D51 /* Info.plist */,
 			);
 			path = SearchPhotoUITests;
+			sourceTree = "<group>";
+		};
+		4A85F237269264EC006BEE9C /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				143E00152691CCF400D912F6 /* API.swift */,
+				143E00192691DDFA00D912F6 /* APIMethods.swift */,
+			);
+			path = Service;
 			sourceTree = "<group>";
 		};
 		4A94095E268FC47E00ED9CB1 /* Provider */ = {
@@ -227,16 +236,6 @@
 			);
 			name = PhotosCollection;
 			path = /Users/arturlutfullin/Desktop/SearchPhoto/SearchPhoto/PhotosCollection;
-			sourceTree = "<absolute>";
-		};
-		4A9AE02F2690973700B106D5 /* Service */ = {
-			isa = PBXGroup;
-			children = (
-				143E00152691CCF400D912F6 /* API.swift */,
-				143E00192691DDFA00D912F6 /* APIMethods.swift */,
-			);
-			name = Service;
-			path = /Users/flavon/Desktop/SearchPhoto;
 			sourceTree = "<absolute>";
 		};
 /* End PBXGroup section */

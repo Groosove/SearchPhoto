@@ -13,8 +13,8 @@ class PhotosCollectionBuilder: ModuleBuilder {
 
     var initialState: PhotosCollection.ViewControllerState?
 
-    func set(initialState: PhotosCollection.ViewControllerState) -> PhotosCollectionBuilder {
-        self.initialState = initialState
+    func set(state: PhotosCollection.ViewControllerState) -> PhotosCollectionBuilder {
+        self.initialState = state
         return self
     }
 

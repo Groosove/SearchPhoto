@@ -12,5 +12,6 @@ class FavoriteViewController: UIViewController {
         super.viewDidLoad()
         
         view.backgroundColor = .gray
+		navigationController?.navigationBar.isHidden = true
     }
 }
