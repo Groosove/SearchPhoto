@@ -5,11 +5,10 @@
 //  Created by Fenix Lavon on 7/4/21.
 //
 
-import Foundation
-
+import UIKit
 
 struct PhotosCollectionViewModel {
     let uid: String
-    let downloadLink: String
+    let image: UIImage
     let authorName: String
 }

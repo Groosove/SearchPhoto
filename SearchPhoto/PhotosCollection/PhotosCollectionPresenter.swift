@@ -6,7 +6,7 @@
 import UIKit
 
 protocol PhotosCollectionPresentationLogic {
-    func presentSomething(response: PhotosCollection.Something.Response)
+    func showImages(response: PhotosCollection.Something.Response)
 }
 
 /// Отвечает за отображение данных модуля PhotosCollection
@@ -14,7 +14,7 @@ class PhotosCollectionPresenter: PhotosCollectionPresentationLogic {
     weak var viewController: PhotosCollectionDisplayLogic?
 
     // MARK: Do something
-    func presentSomething(response: PhotosCollection.Something.Response) {
+    func showImages(response: PhotosCollection.Something.Response) {
         var viewModel: PhotosCollection.Something.ViewModel
 
         switch response.result {

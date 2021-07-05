@@ -2,12 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:../APIMethods.swift">
-   </FileRef>
-   <FileRef
-      location = "group:../SearchPhoto/PhotosCollection/View/PhotosCollectionView.swift">
-   </FileRef>
-   <FileRef
       location = "self:">
    </FileRef>
 </Workspace>

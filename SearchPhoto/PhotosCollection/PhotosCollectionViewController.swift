@@ -12,11 +12,12 @@ protocol PhotosCollectionDisplayLogic: AnyObject {
 class PhotosCollectionViewController: UIViewController {
     let interactor: PhotosCollectionBusinessLogic
     var state: PhotosCollection.ViewControllerState
-	
+    let tableView: PhotosTablieView
 	
     init(interactor: PhotosCollectionBusinessLogic, initialState: PhotosCollection.ViewControllerState = .loading) {
         self.interactor = interactor
         self.state = initialState
+        tableView = PhotosTablieView(frame: UIScreen.main.bounds)
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -28,7 +29,6 @@ class PhotosCollectionViewController: UIViewController {
     override func loadView() {
 		let collectionView = PhotosCollectionView(frame: UIScreen.main.bounds)
         self.view = collectionView
-		view.backgroundColor = .black
         // make additional setup of view or save references to subviews
     }
 
@@ -41,7 +41,7 @@ class PhotosCollectionViewController: UIViewController {
     // MARK: Do something
 	func findPhoto(with search: String) {
         let request = PhotosCollection.Something.Request(search: search)
-        interactor.doSomething(request: request)
+        interactor.findPhoto(request: request)
     }
 	
 	private func setUpNavigationBar() {
@@ -79,10 +79,16 @@ extension PhotosCollectionViewController: UISearchBarDelegate {
 		searchController.obscuresBackgroundDuringPresentation = false
 		searchController.searchBar.tintColor = .white
 		searchController.searchBar.searchTextField.textColor = .white
+        searchController.searchBar.searchTextField.clearButtonMode = .never
 		searchController.searchBar.delegate = self
 	}
 	
 	func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
 		findPhoto(with: searchBar.text!)
+        self.view.addSubview(tableView)
 	}
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        tableView.removeFromSuperview()
+    }
 }

@@ -4,7 +4,7 @@
 //
 
 protocol PhotosCollectionBusinessLogic {
-    func doSomething(request: PhotosCollection.Something.Request)
+    func findPhoto(request: PhotosCollection.Something.Request)
 }
 
 /// Класс для описания бизнес-логики модуля PhotosCollection
@@ -18,7 +18,7 @@ class PhotosCollectionInteractor: PhotosCollectionBusinessLogic {
     }
 
     // MARK: Do something
-    func doSomething(request: PhotosCollection.Something.Request) {
+    func findPhoto(request: PhotosCollection.Something.Request) {
         provider.getItems(with: request.search) { (items, error) in
             let result: PhotosCollection.PhotosCollectionRequestResult
             if let items = items {
@@ -28,7 +28,7 @@ class PhotosCollectionInteractor: PhotosCollectionBusinessLogic {
             } else {
                 result = .failure(.someError(message: "No Data"))
             }
-            self.presenter.presentSomething(response: PhotosCollection.Something.Response(result: result))
+            self.presenter.showImages(response: PhotosCollection.Something.Response(result: result))
         }
     }
 }

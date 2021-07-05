@@ -1,10 +1,13 @@
 //
-//  Created by Artur Lutfullin on 03/07/2021.
+//  PhotosTablieView.swift
+//  SearchPhoto
+//
+//  Created by Fenix Lavon on 7/5/21.
 //
 
 import UIKit
 
-class PhotosCollectionView: UIView {
+class PhotosTablieView: UIView {
     fileprivate(set) lazy var customView: UIView = {
         let view = UIView()
         return view
@@ -14,7 +17,7 @@ class PhotosCollectionView: UIView {
         super.init(frame: frame)
         addSubviews()
         makeConstraints()
-        backgroundColor = .black
+        backgroundColor = .red
     }
 
     required init?(coder aDecoder: NSCoder) {
