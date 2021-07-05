@@ -13,16 +13,15 @@ struct PhotosCollectionModel: Decodable {
     let width: Int
     let height: Int
     let user: User
-    let links: Links
-    
-    struct User: Decodable {
-        let name: String
-    }
-
-    struct Links: Decodable {
-        let download: String
-    }
+	let urls: Links
 }
 
+struct User: Decodable {
+	let name: String
+}
+
+struct Links: Decodable {
+	let regular: String
+}
 
 

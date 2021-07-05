@@ -30,6 +30,8 @@
 		4A385B05268F515D00EC0D51 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4A385B03268F515D00EC0D51 /* LaunchScreen.storyboard */; };
 		4A385B10268F515D00EC0D51 /* SearchPhotoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A385B0F268F515D00EC0D51 /* SearchPhotoTests.swift */; };
 		4A385B1B268F515E00EC0D51 /* SearchPhotoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A385B1A268F515E00EC0D51 /* SearchPhotoUITests.swift */; };
+		4A85F23926928263006BEE9C /* PhotosCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A85F23826928263006BEE9C /* PhotosCollectionViewCell.swift */; };
+		4A85F23B26928514006BEE9C /* PhotosCollectionViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A85F23A26928514006BEE9C /* PhotosCollectionViewDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,6 +81,8 @@
 		4A385B16268F515E00EC0D51 /* SearchPhotoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SearchPhotoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A385B1A268F515E00EC0D51 /* SearchPhotoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPhotoUITests.swift; sourceTree = "<group>"; };
 		4A385B1C268F515E00EC0D51 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4A85F23826928263006BEE9C /* PhotosCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosCollectionViewCell.swift; sourceTree = "<group>"; };
+		4A85F23A26928514006BEE9C /* PhotosCollectionViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosCollectionViewDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -154,13 +158,13 @@
 		4A385AF4268F515600EC0D51 /* SearchPhoto */ = {
 			isa = PBXGroup;
 			children = (
-				4A85F237269264EC006BEE9C /* Service */,
-				143E00142691CCE000D912F6 /* Resources */,
 				146BABCF2692055200B10A43 /* MainTabBarController.swift */,
 				4A385AF5268F515600EC0D51 /* AppDelegate.swift */,
 				146BABD326921F8800B10A43 /* FavoritePicture */,
 				146BABD226921F6000B10A43 /* RandomImages */,
 				4A940964268FC47E00ED9CB1 /* PhotosCollection */,
+				4A85F237269264EC006BEE9C /* Service */,
+				143E00142691CCE000D912F6 /* Resources */,
 				4A385B06268F515D00EC0D51 /* Info.plist */,
 				4A385AFE268F515600EC0D51 /* SearchPhoto.xcdatamodeld */,
 			);
@@ -218,6 +222,7 @@
 			isa = PBXGroup;
 			children = (
 				143E00122691CCD000D912F6 /* PhotosCollectionView.swift */,
+				4A85F23826928263006BEE9C /* PhotosCollectionViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -230,6 +235,7 @@
 				143E00002691CC6400D912F6 /* PhotosCollectionDataFlow.swift */,
 				143E00012691CC6400D912F6 /* PhotosCollectionPresenter.swift */,
 				143E00042691CC6400D912F6 /* PhotosCollectionViewController.swift */,
+				4A85F23A26928514006BEE9C /* PhotosCollectionViewDelegate.swift */,
 				4A94095E268FC47E00ED9CB1 /* Provider */,
 				4A940961268FC47E00ED9CB1 /* Model */,
 				4A940963268FC47E00ED9CB1 /* View */,
@@ -368,6 +374,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				143E00182691CCF400D912F6 /* PhotosCollectionService.swift in Sources */,
+				4A85F23926928263006BEE9C /* PhotosCollectionViewCell.swift in Sources */,
 				4A385B00268F515600EC0D51 /* SearchPhoto.xcdatamodeld in Sources */,
 				143E000D2691CC9400D912F6 /* PhotosCollectionModel.swift in Sources */,
 				143E00082691CC6400D912F6 /* PhotosCollectionInteractor.swift in Sources */,
@@ -375,6 +382,7 @@
 				143E00052691CC6400D912F6 /* PhotosCollectionDataFlow.swift in Sources */,
 				143E00102691CCA800D912F6 /* PhotosCollectionProvider.swift in Sources */,
 				143E00112691CCA800D912F6 /* PhotosCollectionDataStore.swift in Sources */,
+				4A85F23B26928514006BEE9C /* PhotosCollectionViewDelegate.swift in Sources */,
 				143E00092691CC6400D912F6 /* PhotosCollectionViewController.swift in Sources */,
 				143E00172691CCF400D912F6 /* API.swift in Sources */,
 				143E00072691CC6400D912F6 /* PhotosCollectionBuilder.swift in Sources */,

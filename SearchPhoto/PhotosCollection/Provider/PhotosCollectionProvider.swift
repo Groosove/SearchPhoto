@@ -21,7 +21,7 @@ struct PhotosCollectionProvider: PhotosCollectionProviderProtocol {
     }
 
     func getItems(with searchItem: String, completion: @escaping ([PhotosCollectionModel]?, PhotosCollectionProviderError?) -> Void) {
-        if dataStore.models?.isEmpty == false {
+		if dataStore.models.isEmpty == false {
             return completion(self.dataStore.models, nil)
         }
         service.getImages(with: searchItem) { (array, error) in

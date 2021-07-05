@@ -34,14 +34,13 @@ class PhotosCollectionViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        doSomething()
 		setUpNavigationBar()
 		setUpSearchBar()
     }
 
     // MARK: Do something
-    func doSomething() {
-        let request = PhotosCollection.Something.Request(search: "programming")
+	func findPhoto(with search: String) {
+        let request = PhotosCollection.Something.Request(search: search)
         interactor.doSomething(request: request)
     }
 	
@@ -65,7 +64,7 @@ extension PhotosCollectionViewController: PhotosCollectionDisplayLogic {
         case let .error(message):
             print("error \(message)")
         case let .result(items):
-            items.forEach { print($0.links.download) }
+			items.forEach { print($0.urls.regular) }
         case .emptyResult:
             print("empty result")
         }
@@ -77,14 +76,13 @@ extension PhotosCollectionViewController: UISearchBarDelegate {
 		let searchController = UISearchController(searchResultsController: nil)
 		navigationItem.searchController = searchController
 		searchController.hidesNavigationBarDuringPresentation = true
-		searchController.obscuresBackgroundDuringPresentation = true
+		searchController.obscuresBackgroundDuringPresentation = false
 		searchController.searchBar.tintColor = .white
 		searchController.searchBar.searchTextField.textColor = .white
 		searchController.searchBar.delegate = self
-		
 	}
 	
-	func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-		print(searchBar)
+	func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+		findPhoto(with: searchBar.text!)
 	}
 }
