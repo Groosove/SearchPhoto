@@ -24,6 +24,7 @@ class MainTabBarController: UITabBarController {
 		let randomImages = generateNavigationController(with: RandomImagesViewController(), imageName: "picture")
         viewControllers = [randomImages, searchPhotoViewController, favoritePictures]
 		tabBar.items?.forEach { $0.imageInsets = UIEdgeInsets(top: 6, left: 0, bottom: -6, right: 0); $0.title = "" }
+		
     }
 	
 	private func generateNavigationController(with controller: UIViewController, imageName: String) -> UIViewController {

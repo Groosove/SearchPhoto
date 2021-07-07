@@ -22,6 +22,7 @@ class PhotosTableViewCell: UITableViewCell {
 	private lazy var photographLabel: UILabel = {
 		let label = UILabel()
 		label.translatesAutoresizingMaskIntoConstraints = false
+		label.textColor = .white
 		return label
 	}()
 	
@@ -34,22 +35,20 @@ class PhotosTableViewCell: UITableViewCell {
 	
 	private func addSubviews() {
 		self.addSubview(photoView)
-		addSubview(photographLabel)
+		photoView.addSubview(photographLabel)
 	}
 
 	private func makeConstraints() {
 		let photoViewConstraints = [
 			photoView.topAnchor.constraint(equalTo: self.topAnchor),
 			photoView.bottomAnchor.constraint(equalTo: self.layoutMarginsGuide.bottomAnchor),
-			photoView.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor),
-			photoView.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor),
+			photoView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+			photoView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
 		]
 		
 		let photographLabelConstraints = [
-			photographLabel.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor),
-			photographLabel.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor),
-			photographLabel.topAnchor.constraint(equalTo: self.topAnchor),
-			photographLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+			photographLabel.leadingAnchor.constraint(equalTo: self.layoutMarginsGuide.leadingAnchor),
+			photographLabel.bottomAnchor.constraint(equalTo: self.layoutMarginsGuide.bottomAnchor),
 		]
 		
 		NSLayoutConstraint.activate(photographLabelConstraints)

@@ -70,8 +70,7 @@ extension PhotosCollectionViewController: PhotosCollectionDisplayLogic {
         case let .result(items):
 			tableHandler.models = items
 			tableDataSource.models = items
-			let adjustForTabbarInsets: UIEdgeInsets = UIEdgeInsets(top: self.tabBarController!.tabBar.frame.height, left: 0, bottom: 0, right: 0);
-			tableView.updateTableViewData(delegate: tableHandler, dataSource: tableDataSource)
+			tableView.updateTableViewData(delegate: tableHandler, dataSource: tableDataSource, tabBarHeight: (tabBarController?.tabBar.frame.height)!)
 			view.addSubview(tableView)
         case .emptyResult:
             print("empty result")

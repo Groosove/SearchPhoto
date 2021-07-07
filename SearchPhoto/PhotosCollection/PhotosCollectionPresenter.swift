@@ -35,15 +35,12 @@ class PhotosCollectionPresenter: PhotosCollectionPresentationLogic {
     }
 	
 	private func loadImage(url: String) -> UIImage {
-		DispatchQueue.global().sync {
-			guard let url = URL(string: url) else { return UIImage() }
-				if let data = try? Data(contentsOf: url) {
-					if let image = UIImage(data: data) {
-						return image
-					}
-				}
-			return UIImage()
+		guard let url = URL(string: url) else { return UIImage() }
+			if let data = try? Data(contentsOf: url) {
+				if let image = UIImage(data: data) {
+					return image
+			}
 		}
-		
+		return UIImage()
 	}
 }
