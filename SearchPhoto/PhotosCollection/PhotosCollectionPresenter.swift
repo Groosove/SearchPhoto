@@ -22,25 +22,10 @@ class PhotosCollectionPresenter: PhotosCollectionPresentationLogic {
         case let .success(data):
             if data.isEmpty {
                 viewModel = PhotosCollection.Something.ViewModel(state: .emptyResult)
-            } else {
-				var result = [PhotosCollectionViewModel]()
-					for item in data {
-						let imageView = self.loadImage(url: item.urls.regular)
-						result.append(PhotosCollectionViewModel(uid: item.id, image: imageView, authorName: item.user.name))
-					}
-				viewModel = PhotosCollection.Something.ViewModel(state: .result(result))
+			} else {
+				viewModel = PhotosCollection.Something.ViewModel(state: .result(data))
 			}
 		}
         viewController?.displaySomething(viewModel: viewModel)
     }
-	
-	private func loadImage(url: String) -> UIImage {
-		guard let url = URL(string: url) else { return UIImage() }
-			if let data = try? Data(contentsOf: url) {
-				if let image = UIImage(data: data) {
-					return image
-			}
-		}
-		return UIImage()
-	}
 }

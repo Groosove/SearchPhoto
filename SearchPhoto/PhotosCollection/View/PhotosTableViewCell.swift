@@ -10,7 +10,6 @@ import UIKit
 class PhotosTableViewCell: UITableViewCell {
     static let identifier = "PhotosTableViewCellId"
     
-	private var image = UIImage()
 	lazy var photoView: UIImageView = {
 		let image = UIImageView()
 		image.contentMode = .scaleAspectFill
@@ -41,11 +40,11 @@ class PhotosTableViewCell: UITableViewCell {
 	private func makeConstraints() {
 		let photoViewConstraints = [
 			photoView.topAnchor.constraint(equalTo: self.topAnchor),
-			photoView.bottomAnchor.constraint(equalTo: self.layoutMarginsGuide.bottomAnchor),
+			photoView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
 			photoView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
 			photoView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
 		]
-		
+
 		let photographLabelConstraints = [
 			photographLabel.leadingAnchor.constraint(equalTo: self.layoutMarginsGuide.leadingAnchor),
 			photographLabel.bottomAnchor.constraint(equalTo: self.layoutMarginsGuide.bottomAnchor),
@@ -59,16 +58,13 @@ class PhotosTableViewCell: UITableViewCell {
 		DispatchQueue.main.async {
 			self.photoView.image = image
 		}
+		
 		photographLabel.text = photograph
     }
 	
-
-	
-	override func prepareForReuse() {
-		super.prepareForReuse()
-//		photoView.image = nil
-	}
 	required init?(coder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
 }
+
+
