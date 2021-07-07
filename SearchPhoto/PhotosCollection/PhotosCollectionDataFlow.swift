@@ -28,7 +28,7 @@ enum PhotosCollection {
 
     enum ViewControllerState {
         case loading
-        case result([PhotosCollectionModel])
+        case result([PhotosCollectionViewModel])
         case emptyResult
         case error(message: String)
     }

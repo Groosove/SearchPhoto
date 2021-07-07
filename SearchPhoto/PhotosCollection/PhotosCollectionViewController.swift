@@ -13,17 +13,16 @@ class PhotosCollectionViewController: UIViewController {
     let interactor: PhotosCollectionBusinessLogic
     var state: PhotosCollection.ViewControllerState
     let tableView: PhotosTablieView
+	var tableDataSource = PhotosTableViewDataStore()
+	var tableHandler = PhotosTableViewDelegate()
 	
     init(interactor: PhotosCollectionBusinessLogic, initialState: PhotosCollection.ViewControllerState = .loading) {
         self.interactor = interactor
         self.state = initialState
-        tableView = PhotosTablieView(frame: UIScreen.main.bounds)
+		tableView = PhotosTablieView(frame: UIScreen.main.bounds)
         super.init(nibName: nil, bundle: nil)
     }
 
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
 
     // MARK: View lifecycle
     override func loadView() {
@@ -38,7 +37,7 @@ class PhotosCollectionViewController: UIViewController {
 		setUpSearchBar()
     }
 
-    // MARK: Do something
+    // MARK: Find Photo
 	func findPhoto(with search: String) {
         let request = PhotosCollection.Something.Request(search: search)
         interactor.findPhoto(request: request)
@@ -49,6 +48,11 @@ class PhotosCollectionViewController: UIViewController {
 		navigationController?.navigationBar.barTintColor = .black
 		navigationItem.hidesSearchBarWhenScrolling = true
 	}
+	
+	
+	required init?(coder aDecoder: NSCoder) {
+	 fatalError("init(coder:) has not been implemented")
+		}
 }
 
 extension PhotosCollectionViewController: PhotosCollectionDisplayLogic {
@@ -64,11 +68,17 @@ extension PhotosCollectionViewController: PhotosCollectionDisplayLogic {
         case let .error(message):
             print("error \(message)")
         case let .result(items):
-			items.forEach { print($0.urls.regular) }
+			tableHandler.models = items
+			tableDataSource.models = items
+			let adjustForTabbarInsets: UIEdgeInsets = UIEdgeInsets(top: self.tabBarController!.tabBar.frame.height, left: 0, bottom: 0, right: 0);
+			tableView.updateTableViewData(delegate: tableHandler, dataSource: tableDataSource)
+			view.addSubview(tableView)
         case .emptyResult:
             print("empty result")
         }
     }
+	
+
 }
 
 extension PhotosCollectionViewController: UISearchBarDelegate {
@@ -85,7 +95,6 @@ extension PhotosCollectionViewController: UISearchBarDelegate {
 	
 	func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
 		findPhoto(with: searchBar.text!)
-        self.view.addSubview(tableView)
 	}
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {

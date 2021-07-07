@@ -28,6 +28,8 @@ class PhotosCollectionViewCell: UICollectionViewCell {
 	}
 	
 	private func makeConstraints() {
+		contentView.preservesSuperviewLayoutMargins = true
+		
 		let photoImageViewConstaints = [
 			photoImageView.topAnchor.constraint(equalTo: self.topAnchor),
 			photoImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
@@ -36,6 +38,10 @@ class PhotosCollectionViewCell: UICollectionViewCell {
 		]
 		
 		NSLayoutConstraint.activate(photoImageViewConstaints)
+	}
+	
+	override func prepareForReuse() {
+		super.prepareForReuse()
 	}
 	
 	required init?(coder: NSCoder) {

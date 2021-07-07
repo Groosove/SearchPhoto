@@ -21,16 +21,13 @@ struct PhotosCollectionProvider: PhotosCollectionProviderProtocol {
     }
 
     func getItems(with searchItem: String, completion: @escaping ([PhotosCollectionModel]?, PhotosCollectionProviderError?) -> Void) {
-		if dataStore.models.isEmpty == false {
-            return completion(self.dataStore.models, nil)
-        }
         service.getImages(with: searchItem) { (array, error) in
             if let error = error {
                 completion(nil, .getItemsFailed(underlyingError: error))
             } else if let models = array {
-                self.dataStore.models = models
-                completion(self.dataStore.models, nil)
-            }
-        }
+				self.dataStore.models = models
+				completion(self.dataStore.models, nil)
+			}
+		}
     }
 }

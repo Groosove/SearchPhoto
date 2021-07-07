@@ -10,8 +10,8 @@ import Foundation
 final class HTTPHandler {
     private let session = URLSession.shared
     
-    func get(endPoint: String, parametrs: [String : String] = [:], completion: @escaping (Result<Data, NetworkError>) -> Void) {
-        var components = URLComponents(string: Unsplash.baseURL)
+	func get(baseURL: String = "", endPoint: String = "", parametrs: [String : String] = [:], completion: @escaping (Result<Data, NetworkError>) -> Void) {
+        var components = URLComponents(string: baseURL)
         components?.queryItems = parametrs.compactMap { URLQueryItem(name: $0, value: $1) }
         components?.path = endPoint
         guard let url = components?.url else { completion(.failure(.url)); return }

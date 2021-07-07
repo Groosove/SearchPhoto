@@ -2,7 +2,7 @@
 //  Created by Artur Lutfullin on 03/07/2021.
 //
 
-import Foundation
+import UIKit
 
 protocol PhotosCollectionServiceProtocol {
     func getImages(with name: String, completion: @escaping ([PhotosCollectionModel]?, Error?) -> Void)
@@ -18,7 +18,7 @@ class PhotosCollectionService: PhotosCollectionServiceProtocol {
 
     func getImages(with name: String, completion: @escaping ([PhotosCollectionModel]?, Error?) -> Void) {
         let parametrs = ["query": name, "page": "1", "per_page": "50", "client_id": Unsplash.API.clientId]
-        httpHandler.get(endPoint: Unsplash.Methods.getImages, parametrs: parametrs) { result in
+		httpHandler.get(baseURL: Unsplash.baseURL, endPoint: Unsplash.Methods.getImages, parametrs: parametrs) { result in
             switch result {
             case let .success(data):
                 do {

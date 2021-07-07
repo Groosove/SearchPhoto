@@ -17,7 +17,7 @@ class PhotosCollectionInteractor: PhotosCollectionBusinessLogic {
         self.provider = provider
     }
 
-    // MARK: Do something
+    // MARK: Find Photo
     func findPhoto(request: PhotosCollection.Something.Request) {
         provider.getItems(with: request.search) { (items, error) in
             let result: PhotosCollection.PhotosCollectionRequestResult
