@@ -23,12 +23,7 @@ class PhotosCollectionPresenter: PhotosCollectionPresentationLogic {
             if data.isEmpty {
                 viewModel = PhotosCollection.Something.ViewModel(state: .emptyResult)
             } else {
-				var result = [PhotosCollectionViewModel]()
-					for item in data {
-						let imageView = self.loadImage(url: item.urls.regular)
-						result.append(PhotosCollectionViewModel(uid: item.id, image: imageView, authorName: item.user.name))
-					}
-				viewModel = PhotosCollection.Something.ViewModel(state: .result(result))
+				viewModel = PhotosCollection.Something.ViewModel(state: .result(data))
 			}
 		}
         viewController?.displaySomething(viewModel: viewModel)

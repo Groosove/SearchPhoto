@@ -13,7 +13,7 @@ class PhotosTableViewCell: UITableViewCell {
 	private var image = UIImage()
 	lazy var photoView: UIImageView = {
 		let image = UIImageView()
-		image.contentMode = .scaleAspectFill
+		image.contentMode = .scaleToFill
 		image.translatesAutoresizingMaskIntoConstraints = false
 		image.clipsToBounds = true
 		return image
@@ -55,20 +55,42 @@ class PhotosTableViewCell: UITableViewCell {
 		NSLayoutConstraint.activate(photoViewConstraints)
 	}
 	
-	func configure(image: UIImage, photograph: String) {
+	func configure(image: String, photograph: String) {
 		DispatchQueue.main.async {
-			self.photoView.image = image
+			self.photoView.loadImage(imageURL: image)
 		}
+		
 		photographLabel.text = photograph
     }
 	
-
 	
 	override func prepareForReuse() {
 		super.prepareForReuse()
-//		photoView.image = nil
+		self.photoView.image = nil
 	}
 	required init?(coder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
+	}
+	
+}
+var imageCache = NSCache<AnyObject, AnyObject>()
+private extension UIImageView {
+	func loadImage(imageURL: String) {
+		if let image = imageCache.object(forKey: imageURL as NSString) as? UIImage {
+			self.image = image
+			return
+		}
+		let myQueue = DispatchQueue(label: "LAR.concurrent.queue.loadImage", attributes: .concurrent)
+		myQueue.async() { [self] in
+			guard let url = URL(string: imageURL) else { return }
+				if let data = try? Data(contentsOf: url) {
+					if let image = UIImage(data: data) {
+						imageCache.setObject(image, forKey: imageURL as NSString)
+						DispatchQueue.main.async {
+							self.image = image
+						}
+				}
+			}
+		}
 	}
 }

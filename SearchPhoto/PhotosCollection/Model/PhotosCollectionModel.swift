@@ -3,15 +3,15 @@
 //
 
 import CoreLocation
-
+import UIKit
 struct UnsplashPhoto: Decodable {
     let results: [PhotosCollectionModel]
 }
 
 struct PhotosCollectionModel: Decodable {
     let id: String
-    let width: Int
-    let height: Int
+    let width: CGFloat
+    let height: CGFloat
     let user: User
 	let urls: Links
 }

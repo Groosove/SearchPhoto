@@ -8,16 +8,15 @@
 import UIKit
 
 class PhotosTableViewDelegate: NSObject, UITableViewDelegate {
-	var models: [PhotosCollectionViewModel]
+	var models: [PhotosCollectionModel]
 	
-	init(models: [PhotosCollectionViewModel] = []) {
+	init(models: [PhotosCollectionModel] = []) {
 		self.models = models
 	}
 	
 	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-		let currentImage = models[indexPath.row].image
-		let imageRatio = currentImage.getImageRatio()
-		return tableView.frame.width / imageRatio
+		let imageRatio = models[indexPath.row].width / models[indexPath.row].height
+		return UIScreen.main.bounds.width / imageRatio
 	}
 }
 
