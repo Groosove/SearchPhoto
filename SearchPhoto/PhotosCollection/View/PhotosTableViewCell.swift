@@ -61,15 +61,7 @@ class PhotosTableViewCell: UITableViewCell {
 		
 		photographLabel.text = photograph
     }
-	
-<<<<<<< HEAD
-	
-	override func prepareForReuse() {
-		super.prepareForReuse()
-		self.photoView.image = nil
-	}
-=======
->>>>>>> 566399d114441bebbf4ebdcd15aeac1f525b4810
+    
 	required init?(coder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
@@ -83,13 +75,13 @@ private extension UIImageView {
 			return
 		}
 		let myQueue = DispatchQueue(label: "LAR.concurrent.queue.loadImage", attributes: .concurrent)
-		myQueue.async() { [self] in
+		myQueue.async() { [weak self] in
 			guard let url = URL(string: imageURL) else { return }
 				if let data = try? Data(contentsOf: url) {
 					if let image = UIImage(data: data) {
 						imageCache.setObject(image, forKey: imageURL as NSString)
 						DispatchQueue.main.async {
-							self.image = image
+							self?.image = image
 						}
 				}
 			}

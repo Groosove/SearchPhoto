@@ -47,6 +47,9 @@ class PhotosTablieView: UIView {
 		tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: tabBarHeight, right: 0)
 		tableView.delegate = delegate
 		tableView.dataSource = dataSource
-		tableView.reloadData()
+        tableView.reloadData()
+        sleep(1)
+        let indexPath = IndexPath(item: 0, section: 0)
+        self.tableView.scrollToRow(at: indexPath, at: .top, animated: true)
 	}
 }

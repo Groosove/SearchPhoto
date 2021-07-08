@@ -22,11 +22,7 @@ class PhotosCollectionPresenter: PhotosCollectionPresentationLogic {
         case let .success(data):
             if data.isEmpty {
                 viewModel = PhotosCollection.Something.ViewModel(state: .emptyResult)
-<<<<<<< HEAD
             } else {
-=======
-			} else {
->>>>>>> 566399d114441bebbf4ebdcd15aeac1f525b4810
 				viewModel = PhotosCollection.Something.ViewModel(state: .result(data))
 			}
 		}
