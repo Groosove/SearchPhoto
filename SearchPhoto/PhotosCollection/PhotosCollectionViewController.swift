@@ -9,6 +9,10 @@ protocol PhotosCollectionDisplayLogic: AnyObject {
     func displaySomething(viewModel: PhotosCollection.Something.ViewModel)
 }
 
+protocol PhotosoCollectionViewControllerDelagate {
+    
+}
+
 class PhotosCollectionViewController: UIViewController {
     let interactor: PhotosCollectionBusinessLogic
     var state: PhotosCollection.ViewControllerState
@@ -70,8 +74,9 @@ extension PhotosCollectionViewController: PhotosCollectionDisplayLogic {
         case let .result(items):
 			tableHandler.models = items
 			tableDataSource.models = items
-			tableView.updateTableViewData(delegate: tableHandler, dataSource: tableDataSource, tabBarHeight: (tabBarController?.tabBar.frame.height)!)
-			view.addSubview(tableView)
+			tableView.updateTableViewData(delegate: tableHandler,
+                                          dataSource: tableDataSource,
+                                          tabBarHeight: (tabBarController?.tabBar.frame.height)!)
         case .emptyResult:
             print("empty result")
         }
@@ -93,6 +98,9 @@ extension PhotosCollectionViewController: UISearchBarDelegate {
 	}
 	
 	func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        if !tableView.isDescendant(of: self.view) {
+            view.addSubview(tableView)
+        }
 		findPhoto(with: searchBar.text!)
 	}
     

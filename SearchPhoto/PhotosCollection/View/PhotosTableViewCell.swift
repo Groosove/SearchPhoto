@@ -57,9 +57,8 @@ class PhotosTableViewCell: UITableViewCell {
 	func configure(image: String, photograph: String) {
 		DispatchQueue.main.async {
 			self.photoView.loadImage(imageURL: image)
-		}
-		
-		photographLabel.text = photograph
+            self.photographLabel.text = photograph
+        }
     }
     
 	required init?(coder: NSCoder) {
@@ -74,18 +73,13 @@ private extension UIImageView {
 			self.image = image
 			return
 		}
-		let myQueue = DispatchQueue(label: "LAR.concurrent.queue.loadImage", attributes: .concurrent)
-		myQueue.async() { [weak self] in
-			guard let url = URL(string: imageURL) else { return }
-				if let data = try? Data(contentsOf: url) {
-					if let image = UIImage(data: data) {
-						imageCache.setObject(image, forKey: imageURL as NSString)
-						DispatchQueue.main.async {
-							self?.image = image
-						}
-				}
-			}
-		}
+        DispatchQueue.global().async { [weak self] in
+			guard let url = URL(string: imageURL), let data = try? Data(contentsOf: url), let image = UIImage(data: data) else { return }
+            imageCache.setObject(image, forKey: imageURL as NSString)
+            DispatchQueue.main.async {
+                self?.image = image
+            }
+        }
 	}
 }
 

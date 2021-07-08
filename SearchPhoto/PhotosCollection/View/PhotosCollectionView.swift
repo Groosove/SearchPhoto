@@ -26,5 +26,6 @@ class PhotosCollectionView: UIView {
     }
 
     private func makeConstraints() {
+        
     }
 }

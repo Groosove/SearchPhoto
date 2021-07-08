@@ -39,7 +39,6 @@ class PhotosTablieView: UIView {
 			tableView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
 			tableView.leadingAnchor.constraint(equalTo: self.leadingAnchor)
 		]
-		
 		NSLayoutConstraint.activate(tableViewViewConstaints)
     }
 	
@@ -48,7 +47,6 @@ class PhotosTablieView: UIView {
 		tableView.delegate = delegate
 		tableView.dataSource = dataSource
         tableView.reloadData()
-        sleep(1)
         let indexPath = IndexPath(item: 0, section: 0)
         self.tableView.scrollToRow(at: indexPath, at: .top, animated: true)
 	}
