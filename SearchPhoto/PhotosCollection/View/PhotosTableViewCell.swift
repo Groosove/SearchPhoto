@@ -37,6 +37,11 @@ class PhotosTableViewCell: UITableViewCell {
 		photoView.addSubview(photographLabel)
 	}
 
+	override func prepareForReuse() {
+		super.prepareForReuse()
+		photoView.image = nil
+	}
+	
 	private func makeConstraints() {
 		let photoViewConstraints = [
 			photoView.topAnchor.constraint(equalTo: self.topAnchor),
@@ -82,5 +87,3 @@ private extension UIImageView {
         }
 	}
 }
-
-

@@ -8,6 +8,12 @@
 import UIKit
 
 class PhotosTablieView: UIView {
+	private lazy var spinnerView: UIActivityIndicatorView = {
+		let spinner = UIActivityIndicatorView(style: .medium)
+		spinner.center = self.center
+		return spinner
+	}()
+	
 	private lazy var tableView: UITableView = {
 		let tableView = UITableView.init(frame: .zero, style: .plain)
 		tableView.register(PhotosTableViewCell.self, forCellReuseIdentifier: PhotosTableViewCell.identifier)

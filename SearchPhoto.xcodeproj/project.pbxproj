@@ -210,8 +210,8 @@
 		4A94095E268FC47E00ED9CB1 /* Provider */ = {
 			isa = PBXGroup;
 			children = (
-				4AE8B3B926978C64005AF0B9 /* PhotosCollectionService.swift */,
 				4AE8B3B826978C64005AF0B9 /* PhotosTableViewDataStore.swift */,
+				4AE8B3B926978C64005AF0B9 /* PhotosCollectionService.swift */,
 				143E000E2691CCA700D912F6 /* PhotosCollectionProvider.swift */,
 				143E000F2691CCA800D912F6 /* PhotosCollectionDataStore.swift */,
 			);
@@ -241,13 +241,13 @@
 		4A940964268FC47E00ED9CB1 /* PhotosCollection */ = {
 			isa = PBXGroup;
 			children = (
-				4AE8B3BC26978C6C005AF0B9 /* PhotosTableViewDelegate.swift */,
 				143E00032691CC6400D912F6 /* PhotosCollectionInteractor.swift */,
 				143E00022691CC6400D912F6 /* PhotosCollectionBuilder.swift */,
 				143E00002691CC6400D912F6 /* PhotosCollectionDataFlow.swift */,
 				143E00012691CC6400D912F6 /* PhotosCollectionPresenter.swift */,
 				143E00042691CC6400D912F6 /* PhotosCollectionViewController.swift */,
 				1493EF1E26932F67000A9B08 /* PhotosCollectionViewDelegate.swift */,
+				4AE8B3BC26978C6C005AF0B9 /* PhotosTableViewDelegate.swift */,
 				4A94095E268FC47E00ED9CB1 /* Provider */,
 				4A940961268FC47E00ED9CB1 /* Model */,
 				4A940963268FC47E00ED9CB1 /* View */,

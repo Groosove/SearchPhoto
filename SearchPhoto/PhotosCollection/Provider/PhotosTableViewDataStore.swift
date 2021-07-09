@@ -9,8 +9,7 @@ import UIKit
 
 class PhotosTableViewDataStore: NSObject, UITableViewDataSource {
     var models: [PhotosCollectionModel]
-    
-    init (models: [PhotosCollectionModel] = []) {
+	init (models: [PhotosCollectionModel] = []) {
         self.models = models
     }
     
@@ -21,7 +20,7 @@ class PhotosTableViewDataStore: NSObject, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: PhotosTableViewCell.identifier, for: indexPath) as? PhotosTableViewCell
         guard let recent = cell else { return UITableViewCell() }
-        DispatchQueue.global(qos: .userInitiated).async {
+		DispatchQueue.global(qos: .userInteractive).sync {
             recent.configure(image: self.models[indexPath.row].urls.regular, photograph: self.models[indexPath.row].user.name)
         }
         return recent

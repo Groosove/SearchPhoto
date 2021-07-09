@@ -5,7 +5,7 @@
 import UIKit
 
 protocol PhotosCollectionServiceProtocol {
-    func getImages(with name: String, completion: @escaping ([PhotosCollectionModel]?, Error?) -> Void)
+    func getImages(with name: String, pageNumber: Int, completion: @escaping ([PhotosCollectionModel]?, Error?) -> Void)
 }
 
 enum PhotosCollectionServiceError: Error {
@@ -16,8 +16,8 @@ class PhotosCollectionService: PhotosCollectionServiceProtocol {
 	let httpHandler = HTTPHandler()
 	private let decoder: JSONDecoder = JSONDecoder()
 
-    func getImages(with name: String, completion: @escaping ([PhotosCollectionModel]?, Error?) -> Void) {
-        let parametrs = ["query": name, "page": "1", "per_page": "50", "client_id": Unsplash.API.clientId]
+	func getImages(with name: String, pageNumber: Int, completion: @escaping ([PhotosCollectionModel]?, Error?) -> Void) {
+        let parametrs = ["query": name, "page": String(pageNumber), "per_page": "50", "client_id": Unsplash.API.clientId]
 		httpHandler.get(baseURL: Unsplash.baseURL, endPoint: Unsplash.Methods.getImages, parametrs: parametrs) { result in
             switch result {
             case let .success(data):

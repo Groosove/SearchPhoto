@@ -9,17 +9,18 @@ protocol PhotosCollectionDisplayLogic: AnyObject {
     func displaySomething(viewModel: PhotosCollection.Something.ViewModel)
 }
 
-protocol PhotosoCollectionViewControllerDelagate {
-    
+protocol PhotosCollectionViewControllerDelegate: AnyObject {
+	func openViewer(uid: String)
 }
 
 class PhotosCollectionViewController: UIViewController {
+	
     let interactor: PhotosCollectionBusinessLogic
     var state: PhotosCollection.ViewControllerState
     let tableView: PhotosTablieView
 	var tableDataSource = PhotosTableViewDataStore()
 	var tableHandler = PhotosTableViewDelegate()
-	
+	var photoCounter = 1
     init(interactor: PhotosCollectionBusinessLogic, initialState: PhotosCollection.ViewControllerState = .loading) {
         self.interactor = interactor
         self.state = initialState
@@ -43,8 +44,9 @@ class PhotosCollectionViewController: UIViewController {
 
     // MARK: Find Photo
 	func findPhoto(with search: String) {
-        let request = PhotosCollection.Something.Request(search: search)
+        let request = PhotosCollection.Something.Request(search: search, count: photoCounter)
         interactor.findPhoto(request: request)
+		photoCounter += 1
     }
 	
 	private func setUpNavigationBar() {
@@ -81,8 +83,6 @@ extension PhotosCollectionViewController: PhotosCollectionDisplayLogic {
             print("empty result")
         }
     }
-	
-
 }
 
 extension PhotosCollectionViewController: UISearchBarDelegate {
@@ -106,5 +106,13 @@ extension PhotosCollectionViewController: UISearchBarDelegate {
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         tableView.removeFromSuperview()
+		photoCounter = 1
     }
 }
+
+extension PhotosCollectionViewController: PhotosCollectionViewControllerDelegate {
+	func openViewer(uid: String) {
+		
+	}
+}
+

@@ -3,7 +3,7 @@
 //
 
 protocol PhotosCollectionProviderProtocol {
-    func getItems(with searchItem: String, completion: @escaping ([PhotosCollectionModel]?, PhotosCollectionProviderError?) -> Void)
+    func getItems(with searchItem: String, pageNumber: Int, completion: @escaping ([PhotosCollectionModel]?, PhotosCollectionProviderError?) -> Void)
 }
 
 enum PhotosCollectionProviderError: Error {
@@ -20,8 +20,8 @@ struct PhotosCollectionProvider: PhotosCollectionProviderProtocol {
         self.service = service
     }
 
-    func getItems(with searchItem: String, completion: @escaping ([PhotosCollectionModel]?, PhotosCollectionProviderError?) -> Void) {
-        service.getImages(with: searchItem) { (array, error) in
+    func getItems(with searchItem: String, pageNumber: Int, completion: @escaping ([PhotosCollectionModel]?, PhotosCollectionProviderError?) -> Void) {
+        service.getImages(with: searchItem, pageNumber: pageNumber) { (array, error) in
             if let error = error {
                 completion(nil, .getItemsFailed(underlyingError: error))
             } else if let models = array {
