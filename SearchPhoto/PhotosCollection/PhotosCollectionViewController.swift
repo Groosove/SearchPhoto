@@ -14,7 +14,8 @@ protocol PhotosCollectionViewControllerDelegate: AnyObject {
 }
 
 class PhotosCollectionViewController: UIViewController {
-	
+    let recentData = Container.shared.setModel(with: "Recent").coreDataStack
+    
     let interactor: PhotosCollectionBusinessLogic
     var state: PhotosCollection.ViewControllerState
     let tableView: PhotosTablieView
@@ -29,18 +30,24 @@ class PhotosCollectionViewController: UIViewController {
         tableView = PhotosTablieView(frame: UIScreen.main.bounds)
         super.init(nibName: nil, bundle: nil)
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.addSubview(recentTableView)
 		setUpNavigationBar()
 		setUpSearchBar()
-        view.addSubview(recentTableView)
+        
     }
 
     // MARK: Find Photo
 	func findPhoto(with search: String) {
         let request = PhotosCollection.Something.Request(search: search)
         interactor.findPhoto(request: request)
+        recentData.backgroundContext.performAndWait {
+            let recent = Recent(context: recentData.backgroundContext)
+            recent.search = search
+            try? recentData.backgroundContext.save()
+        }
     }
 	
 	private func setUpNavigationBar() {
@@ -91,14 +98,15 @@ extension PhotosCollectionViewController: UISearchBarDelegate {
 	func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
 		if !tableView.isDescendant(of: self.view) {
 			view.addSubview(tableView)
-            recentTableView.removeFromSuperview()
+            
         }
+        recentTableView.removeFromSuperview()
 		findPhoto(with: searchBar.text!)
 	}
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        view.addSubview(recentTableView)
         tableView.removeFromSuperview()
+        view.addSubview(recentTableView)
     }
 }
 

@@ -17,16 +17,6 @@ class RecentTableView: UIView {
 		tableView.translatesAutoresizingMaskIntoConstraints = false
 		return tableView
 	}()
-    
-    private lazy var trendingTableView: UITableView = {
-        let tableView = UITableView.init(frame: .zero, style: .plain)
-        tableView.register(RecentTableViewCell.self, forCellReuseIdentifier: RecentTableViewCell.identifier)
-        tableView.tableHeaderView = UIView()
-        tableView.tableFooterView = UIView()
-        tableView.backgroundColor = .white
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        return tableView
-    }()
 
 	override init(frame: CGRect) {
 		super.init(frame: frame)
@@ -34,6 +24,7 @@ class RecentTableView: UIView {
 		makeConstraints()
 		backgroundColor = .black
 	}
+
 	required init?(coder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
