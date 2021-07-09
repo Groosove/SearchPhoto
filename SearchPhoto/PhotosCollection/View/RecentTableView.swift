@@ -1,13 +1,13 @@
 //
-//  PhotosTablieView.swift
+//  RecentTableView.swift
 //  SearchPhoto
 //
-//  Created by Fenix Lavon on 7/5/21.
+//  Created by Артур Лутфуллин on 09.07.2021.
 //
 
 import UIKit
 
-class PhotosTablieView: UIView {
+class RecentTableView: UIView {
 	private lazy var spinnerView: UIActivityIndicatorView = {
 		let spinner = UIActivityIndicatorView(style: .medium)
 		spinner.center = self.center
@@ -16,10 +16,10 @@ class PhotosTablieView: UIView {
 	
 	private lazy var tableView: UITableView = {
 		let tableView = UITableView.init(frame: .zero, style: .plain)
-		tableView.register(PhotosTableViewCell.self, forCellReuseIdentifier: PhotosTableViewCell.identifier)
+		tableView.register(RecentTableViewCell.self, forCellReuseIdentifier: RecentTableViewCell.identifier)
 		tableView.tableHeaderView = UIView()
 		tableView.tableFooterView = UIView()
-		tableView.backgroundColor = .black
+		tableView.backgroundColor = .white
 		tableView.translatesAutoresizingMaskIntoConstraints = false
 		return tableView
 	}()
@@ -34,11 +34,11 @@ class PhotosTablieView: UIView {
 		fatalError("init(coder:) has not been implemented")
 	}
 	
-    private func addSubviews() {
-        addSubview(tableView)
-    }
+	private func addSubviews() {
+		addSubview(tableView)
+	}
 
-    private func makeConstraints() {
+	private func makeConstraints() {
 		let tableViewViewConstaints = [
 			tableView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor),
 			tableView.bottomAnchor.constraint(equalTo: self.layoutMarginsGuide.bottomAnchor),
@@ -46,13 +46,11 @@ class PhotosTablieView: UIView {
 			tableView.leadingAnchor.constraint(equalTo: self.leadingAnchor)
 		]
 		NSLayoutConstraint.activate(tableViewViewConstaints)
-    }
+	}
 	
 	func updateTableViewData(delegate: UITableViewDelegate, dataSource: UITableViewDataSource) {
 		tableView.delegate = delegate
 		tableView.dataSource = dataSource
-        tableView.reloadData()
-        let indexPath = IndexPath(item: 0, section: 0)
-        self.tableView.scrollToRow(at: indexPath, at: .top, animated: true)
+		tableView.reloadData()
 	}
 }

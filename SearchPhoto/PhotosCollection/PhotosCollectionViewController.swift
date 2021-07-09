@@ -17,23 +17,21 @@ class PhotosCollectionViewController: UIViewController {
 	
     let interactor: PhotosCollectionBusinessLogic
     var state: PhotosCollection.ViewControllerState
-    let tableView: PhotosTablieView
+	lazy var tableView = self.view as? PhotosTablieView
 	var tableDataSource = PhotosTableViewDataStore()
 	var tableHandler = PhotosTableViewDelegate()
-	var photoCounter = 1
+	
     init(interactor: PhotosCollectionBusinessLogic, initialState: PhotosCollection.ViewControllerState = .loading) {
         self.interactor = interactor
         self.state = initialState
-		tableView = PhotosTablieView(frame: UIScreen.main.bounds)
         super.init(nibName: nil, bundle: nil)
     }
 
 
     // MARK: View lifecycle
     override func loadView() {
-		let collectionView = PhotosCollectionView(frame: UIScreen.main.bounds)
-        self.view = collectionView
-        // make additional setup of view or save references to subviews
+        self.view = PhotosTablieView(frame: UIScreen.main.bounds)
+
     }
 
     override func viewDidLoad() {
@@ -44,9 +42,8 @@ class PhotosCollectionViewController: UIViewController {
 
     // MARK: Find Photo
 	func findPhoto(with search: String) {
-        let request = PhotosCollection.Something.Request(search: search, count: photoCounter)
+        let request = PhotosCollection.Something.Request(search: search)
         interactor.findPhoto(request: request)
-		photoCounter += 1
     }
 	
 	private func setUpNavigationBar() {
@@ -76,9 +73,7 @@ extension PhotosCollectionViewController: PhotosCollectionDisplayLogic {
         case let .result(items):
 			tableHandler.models = items
 			tableDataSource.models = items
-			tableView.updateTableViewData(delegate: tableHandler,
-                                          dataSource: tableDataSource,
-                                          tabBarHeight: (tabBarController?.tabBar.frame.height)!)
+			tableView?.updateTableViewData(delegate: tableHandler, dataSource: tableDataSource)
         case .emptyResult:
             print("empty result")
         }
@@ -98,15 +93,14 @@ extension PhotosCollectionViewController: UISearchBarDelegate {
 	}
 	
 	func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        if !tableView.isDescendant(of: self.view) {
-            view.addSubview(tableView)
+		if !tableView!.isDescendant(of: self.view) {
+			view.addSubview(tableView!)
         }
 		findPhoto(with: searchBar.text!)
 	}
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        tableView.removeFromSuperview()
-		photoCounter = 1
+        tableView!.removeFromSuperview()
     }
 }
 

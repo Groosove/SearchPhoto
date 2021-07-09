@@ -9,7 +9,6 @@ enum PhotosCollection {
 		// swiftlint:disable nesting
         struct Request {
             var search: String
-			var count: Int
         }
 
         struct Response {

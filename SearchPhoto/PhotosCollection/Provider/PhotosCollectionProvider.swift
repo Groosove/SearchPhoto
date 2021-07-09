@@ -3,7 +3,7 @@
 //
 
 protocol PhotosCollectionProviderProtocol {
-    func getItems(with searchItem: String, pageNumber: Int, completion: @escaping ([PhotosCollectionModel]?, PhotosCollectionProviderError?) -> Void)
+    func getItems(with searchItem: String, completion: @escaping ([PhotosCollectionModel]?, PhotosCollectionProviderError?) -> Void)
 }
 
 enum PhotosCollectionProviderError: Error {
@@ -12,16 +12,16 @@ enum PhotosCollectionProviderError: Error {
 
 /// Отвечает за получение данных модуля PhotosCollection
 struct PhotosCollectionProvider: PhotosCollectionProviderProtocol {
-    let dataStore: PhotosCollectionDataStore
+    let dataStore: PhotosTableViewDataStore
     let service: PhotosCollectionServiceProtocol
 
-    init(dataStore: PhotosCollectionDataStore = PhotosCollectionDataStore(), service: PhotosCollectionServiceProtocol = PhotosCollectionService()) {
+    init(dataStore: PhotosTableViewDataStore = PhotosTableViewDataStore(), service: PhotosCollectionServiceProtocol = PhotosCollectionService()) {
         self.dataStore = dataStore
         self.service = service
     }
 
-    func getItems(with searchItem: String, pageNumber: Int, completion: @escaping ([PhotosCollectionModel]?, PhotosCollectionProviderError?) -> Void) {
-        service.getImages(with: searchItem, pageNumber: pageNumber) { (array, error) in
+    func getItems(with searchItem: String, completion: @escaping ([PhotosCollectionModel]?, PhotosCollectionProviderError?) -> Void) {
+        service.getImages(with: searchItem) { (array, error) in
             if let error = error {
                 completion(nil, .getItemsFailed(underlyingError: error))
             } else if let models = array {
