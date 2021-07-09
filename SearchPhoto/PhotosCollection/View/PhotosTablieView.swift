@@ -15,7 +15,7 @@ class PhotosTablieView: UIView {
 	}()
 	
 	private lazy var tableView: UITableView = {
-		let tableView = UITableView.init(frame: .zero, style: .plain)
+        let tableView = UITableView.init(frame: .zero, style: .plain)
 		tableView.register(PhotosTableViewCell.self, forCellReuseIdentifier: PhotosTableViewCell.identifier)
 		tableView.tableHeaderView = UIView()
 		tableView.tableFooterView = UIView()

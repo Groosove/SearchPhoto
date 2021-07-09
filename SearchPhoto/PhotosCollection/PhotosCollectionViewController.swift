@@ -17,27 +17,24 @@ class PhotosCollectionViewController: UIViewController {
 	
     let interactor: PhotosCollectionBusinessLogic
     var state: PhotosCollection.ViewControllerState
-	lazy var tableView = self.view as? PhotosTablieView
+    let tableView: PhotosTablieView
+    let recentTableView: RecentTableView
 	var tableDataSource = PhotosTableViewDataStore()
 	var tableHandler = PhotosTableViewDelegate()
 	
     init(interactor: PhotosCollectionBusinessLogic, initialState: PhotosCollection.ViewControllerState = .loading) {
         self.interactor = interactor
         self.state = initialState
+        recentTableView = RecentTableView(frame: UIScreen.main.bounds)
+        tableView = PhotosTablieView(frame: UIScreen.main.bounds)
         super.init(nibName: nil, bundle: nil)
-    }
-
-
-    // MARK: View lifecycle
-    override func loadView() {
-        self.view = PhotosTablieView(frame: UIScreen.main.bounds)
-
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
 		setUpNavigationBar()
 		setUpSearchBar()
+        view.addSubview(recentTableView)
     }
 
     // MARK: Find Photo
@@ -52,10 +49,9 @@ class PhotosCollectionViewController: UIViewController {
 		navigationItem.hidesSearchBarWhenScrolling = true
 	}
 	
-	
 	required init?(coder aDecoder: NSCoder) {
-	 fatalError("init(coder:) has not been implemented")
-		}
+        fatalError("init(coder:) has not been implemented")
+    }
 }
 
 extension PhotosCollectionViewController: PhotosCollectionDisplayLogic {
@@ -73,7 +69,7 @@ extension PhotosCollectionViewController: PhotosCollectionDisplayLogic {
         case let .result(items):
 			tableHandler.models = items
 			tableDataSource.models = items
-			tableView?.updateTableViewData(delegate: tableHandler, dataSource: tableDataSource)
+			tableView.updateTableViewData(delegate: tableHandler, dataSource: tableDataSource)
         case .emptyResult:
             print("empty result")
         }
@@ -93,14 +89,16 @@ extension PhotosCollectionViewController: UISearchBarDelegate {
 	}
 	
 	func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-		if !tableView!.isDescendant(of: self.view) {
-			view.addSubview(tableView!)
+		if !tableView.isDescendant(of: self.view) {
+			view.addSubview(tableView)
+            recentTableView.removeFromSuperview()
         }
 		findPhoto(with: searchBar.text!)
 	}
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        tableView!.removeFromSuperview()
+        view.addSubview(recentTableView)
+        tableView.removeFromSuperview()
     }
 }
 
