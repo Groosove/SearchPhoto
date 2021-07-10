@@ -4,6 +4,7 @@
 //
 
 import UIKit
+import CoreData
 
 protocol PhotosCollectionDisplayLogic: AnyObject {
     func displaySomething(viewModel: PhotosCollection.Something.ViewModel)
@@ -11,10 +12,20 @@ protocol PhotosCollectionDisplayLogic: AnyObject {
 
 protocol PhotosCollectionViewControllerDelegate: AnyObject {
 	func openViewer(uid: String)
+    func updateSearchResults(with text: String)
+    func deleteAllRecents()
 }
 
 class PhotosCollectionViewController: UIViewController {
-    let recentData = Container.shared.setModel(with: "Recent").coreDataStack
+    private let recentData = Container.shared.setModel(with: "Recent").coreDataStack
+    private let frc: NSFetchedResultsController<Recent> = {
+        let request = NSFetchRequest<Recent>(entityName: "Recent")
+        request.sortDescriptors = [.init(key: "search", ascending: true)]
+        return NSFetchedResultsController(fetchRequest: request,
+                                      managedObjectContext: Container.shared.coreDataStack.viewContext,
+                                      sectionNameKeyPath: nil,
+                                      cacheName: nil)
+    }()
     
     let interactor: PhotosCollectionBusinessLogic
     var state: PhotosCollection.ViewControllerState
@@ -22,7 +33,8 @@ class PhotosCollectionViewController: UIViewController {
     let recentTableView: RecentTableView
 	var tableDataSource = PhotosTableViewDataStore()
 	var tableHandler = PhotosTableViewDelegate()
-	
+	var recentTableDataSource = RecentTableViewDataStore()
+    var recentTableHandler = RecentTableViewDelegate()
     init(interactor: PhotosCollectionBusinessLogic, initialState: PhotosCollection.ViewControllerState = .loading) {
         self.interactor = interactor
         self.state = initialState
@@ -36,20 +48,28 @@ class PhotosCollectionViewController: UIViewController {
         self.view.addSubview(recentTableView)
 		setUpNavigationBar()
 		setUpSearchBar()
-        
+        updateRecents()
+        recentTableView.delegate = self
     }
 
-    // MARK: Find Photo
-	func findPhoto(with search: String) {
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+    
+    //MARK: -- Find Photo
+    func findPhoto(with search: String) {
         let request = PhotosCollection.Something.Request(search: search)
         interactor.findPhoto(request: request)
-        recentData.backgroundContext.performAndWait {
-            let recent = Recent(context: recentData.backgroundContext)
+        recentData.viewContext.performAndWait {
+            let recents = recentData.getArrayData()
+            guard (recents.filter { $0.search == search }).count == 0 else { return }
+            let recent = Recent(context: recentData.viewContext)
             recent.search = search
-            try? recentData.backgroundContext.save()
+            try? recentData.viewContext.save()
         }
+        try? frc.performFetch()
     }
-	
+    
 	private func setUpNavigationBar() {
 		navigationController?.navigationBar.isTranslucent = false
 		navigationController?.navigationBar.barTintColor = .black
@@ -76,7 +96,9 @@ extension PhotosCollectionViewController: PhotosCollectionDisplayLogic {
         case let .result(items):
 			tableHandler.models = items
 			tableDataSource.models = items
-			tableView.updateTableViewData(delegate: tableHandler, dataSource: tableDataSource)
+			tableView.updateTableViewData(delegate: tableHandler,
+                                          dataSource: tableDataSource,
+                                          tabBarHeight: tabBarController?.tabBar.frame.height ?? 44)
         case .emptyResult:
             print("empty result")
         }
@@ -96,17 +118,29 @@ extension PhotosCollectionViewController: UISearchBarDelegate {
 	}
 	
 	func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-		if !tableView.isDescendant(of: self.view) {
-			view.addSubview(tableView)
-            
+        if !tableView.isDescendant(of: self.view) {
+            view.addSubview(tableView)
         }
         recentTableView.removeFromSuperview()
-		findPhoto(with: searchBar.text!)
+        findPhoto(with: searchBar.text!.capitalized)
 	}
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         tableView.removeFromSuperview()
         view.addSubview(recentTableView)
+        updateRecents()
+    }
+    
+    private func updateRecents() {
+        recentData.backgroundContext.performAndWait {
+            let recents = recentData.getArrayData()
+            recentTableView.isHidden = recents.count == 0
+            recentTableDataSource.models = recents
+            recentTableHandler.models = recents
+            recentTableHandler.delegate = self
+            recentTableView.updateTableViewData(delegate: recentTableHandler,
+                                                dataSource: recentTableDataSource)
+        }
     }
 }
 
@@ -114,5 +148,17 @@ extension PhotosCollectionViewController: PhotosCollectionViewControllerDelegate
 	func openViewer(uid: String) {
 		
 	}
+    
+    func deleteAllRecents() {
+        recentData.deleteAll()
+        try? frc.performFetch()
+        updateRecents()
+    }
+    
+    func updateSearchResults(with text: String) {
+        navigationItem.searchController?.searchBar.text = text
+        searchBarSearchButtonClicked(navigationItem.searchController!.searchBar)
+        navigationItem.searchController?.searchBar.becomeFirstResponder()
+    }
 }
 

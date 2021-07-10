@@ -16,6 +16,6 @@ extension Recent {
         return NSFetchRequest<Recent>(entityName: "Recent")
     }
 
-    @NSManaged public var search: String?
+    @NSManaged public var search: String
 
 }

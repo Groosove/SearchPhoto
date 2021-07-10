@@ -25,16 +25,23 @@ class RecentTableViewCell: UITableViewCell {
 	}
 	
 	private func addSubviews() {
+        addSubview(searchLabel)
 	}
 
-	override func prepareForReuse() {
-		super.prepareForReuse()
-	}
 	
 	private func makeConstraints() {
+        let searchLabelContsraints = [
+            searchLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 5),
+            searchLabel.leadingAnchor.constraint(equalTo: self.layoutMarginsGuide.leadingAnchor),
+            searchLabel.trailingAnchor.constraint(equalTo: self.layoutMarginsGuide.trailingAnchor),
+            searchLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -5),
+        ]
+        
+        NSLayoutConstraint.activate(searchLabelContsraints)
 	}
 	
-	func configure(image: String, photograph: String) {
+    func configure(recent: String) {
+        searchLabel.text = recent
 	}
 	
 	required init?(coder: NSCoder) {

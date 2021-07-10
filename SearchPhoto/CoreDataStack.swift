@@ -17,7 +17,7 @@ final class CoreDataStack {
 
 	init(modelName: String) {
         self.modelName = modelName
-		let container = NSPersistentContainer(name: modelName)
+		let container = NSPersistentContainer(name: "SearchPhoto")
 		self.container = container
 	}
 
@@ -28,9 +28,26 @@ final class CoreDataStack {
 			}
 		}
 	}
+    
+    func saveContext (context: NSManagedObjectContext) {
+        if context.hasChanges {
+            do {
+                try context.save()
+            } catch {
+                let nserror = error as NSError
+                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+            }
+        }
+    }
 
+    func getArrayData() -> [Recent] {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Recent")
+        let results = try? viewContext.fetch(fetchRequest) as? [Recent]
+        return results!
+    }
+    
 	func deleteAll() {
-		let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: modelName)
+		let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Recent")
 		let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
 		_ = try? coordinator.execute(deleteRequest, with: viewContext)
 	}

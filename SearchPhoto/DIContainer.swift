@@ -15,5 +15,5 @@ final class Container {
         self.modelName = name
         return self
     }
-    lazy var coreDataStack = CoreDataStack(modelName: modelName)
+    lazy var coreDataStack = CoreDataStack(modelName: "SearchPhoto")
 }

@@ -6,7 +6,7 @@
         <attribute name="width" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
     </entity>
     <entity name="Recent" representedClassName="Recent" syncable="YES">
-        <attribute name="search" optional="YES" attributeType="String"/>
+        <attribute name="search" attributeType="String" defaultValueString="&quot;&quot;"/>
     </entity>
     <elements>
         <element name="Images" positionX="-63" positionY="-18" width="128" height="88"/>

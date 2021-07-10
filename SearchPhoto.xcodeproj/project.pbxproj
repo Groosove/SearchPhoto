@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1414AF1F2699BED200B9066C /* RecentTableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1414AF1E2699BED200B9066C /* RecentTableViewDelegate.swift */; };
+		1414AF212699FEC000B9066C /* WaterfallLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1414AF202699FEC000B9066C /* WaterfallLayout.swift */; };
 		142C23A12698DE1700C99E54 /* PhotosTableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142C23A02698DE1700C99E54 /* PhotosTableViewDelegate.swift */; };
 		142C23A42698DE2000C99E54 /* PhotosTableViewDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142C23A22698DE2000C99E54 /* PhotosTableViewDataStore.swift */; };
 		142C23A52698DE2000C99E54 /* PhotosCollectionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142C23A32698DE2000C99E54 /* PhotosCollectionService.swift */; };
@@ -59,6 +61,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1414AF1E2699BED200B9066C /* RecentTableViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentTableViewDelegate.swift; sourceTree = SOURCE_ROOT; };
+		1414AF202699FEC000B9066C /* WaterfallLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterfallLayout.swift; sourceTree = "<group>"; };
 		142C23A02698DE1700C99E54 /* PhotosTableViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PhotosTableViewDelegate.swift; path = SearchPhoto/PhotosCollection/PhotosTableViewDelegate.swift; sourceTree = SOURCE_ROOT; };
 		142C23A22698DE2000C99E54 /* PhotosTableViewDataStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotosTableViewDataStore.swift; sourceTree = SOURCE_ROOT; };
 		142C23A32698DE2000C99E54 /* PhotosCollectionService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PhotosCollectionService.swift; path = SearchPhoto/PhotosCollection/Provider/PhotosCollectionService.swift; sourceTree = SOURCE_ROOT; };
@@ -146,6 +150,7 @@
 			isa = PBXGroup;
 			children = (
 				142C23A02698DE1700C99E54 /* PhotosTableViewDelegate.swift */,
+				1414AF1E2699BED200B9066C /* RecentTableViewDelegate.swift */,
 			);
 			name = Delegate;
 			sourceTree = "<group>";
@@ -154,6 +159,7 @@
 			isa = PBXGroup;
 			children = (
 				146BABD626921FE900B10A43 /* RandomImagesViewController.swift */,
+				1414AF202699FEC000B9066C /* WaterfallLayout.swift */,
 			);
 			path = RandomImages;
 			sourceTree = "<group>";
@@ -199,6 +205,7 @@
 				146BABCF2692055200B10A43 /* MainTabBarController.swift */,
 				4A385AF5268F515600EC0D51 /* AppDelegate.swift */,
 				143E000A2691CC9400D912F6 /* CoreDataStack.swift */,
+				1466BA3E2699077B0035F783 /* DIContainer.swift */,
 				14D38CF92698E56000E949BF /* PhotoViewer */,
 				146BABD326921F8800B10A43 /* FavoritePicture */,
 				146BABD226921F6000B10A43 /* RandomImages */,
@@ -207,7 +214,6 @@
 				143E00142691CCE000D912F6 /* Resources */,
 				4A385B06268F515D00EC0D51 /* Info.plist */,
 				4A385AFE268F515600EC0D51 /* SearchPhoto.xcdatamodeld */,
-				1466BA3E2699077B0035F783 /* DIContainer.swift */,
 			);
 			path = SearchPhoto;
 			sourceTree = "<group>";
@@ -423,6 +429,7 @@
 				4A385B00268F515600EC0D51 /* SearchPhoto.xcdatamodeld in Sources */,
 				1466BA3C269903D90035F783 /* Recent+CoreDataProperties.swift in Sources */,
 				143E000D2691CC9400D912F6 /* PhotosCollectionModel.swift in Sources */,
+				1414AF1F2699BED200B9066C /* RecentTableViewDelegate.swift in Sources */,
 				142C23A92698DE3D00C99E54 /* RecentTableView.swift in Sources */,
 				1493EF2926935055000A9B08 /* PhotosTableViewCell.swift in Sources */,
 				145DFC472698F53200CDDF36 /* Images+CoreDataProperties.swift in Sources */,
@@ -445,6 +452,7 @@
 				142C23A12698DE1700C99E54 /* PhotosTableViewDelegate.swift in Sources */,
 				146BABD02692055200B10A43 /* MainTabBarController.swift in Sources */,
 				4A9BF5EB26986A0D00302AC3 /* API.swift in Sources */,
+				1414AF212699FEC000B9066C /* WaterfallLayout.swift in Sources */,
 				142C23A42698DE2000C99E54 /* PhotosTableViewDataStore.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

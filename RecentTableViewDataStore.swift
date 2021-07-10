@@ -20,6 +20,7 @@ class RecentTableViewDataStore: NSObject, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: RecentTableViewCell.identifier, for: indexPath) as? RecentTableViewCell
         guard let recent = cell else { return UITableViewCell() }
+        recent.configure(recent: models[indexPath.row].search)
         return recent
     }
 }

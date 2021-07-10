@@ -9,7 +9,8 @@ import UIKit
 
 class PhotosTablieView: UIView {
 	private lazy var spinnerView: UIActivityIndicatorView = {
-		let spinner = UIActivityIndicatorView(style: .medium)
+		let spinner = UIActivityIndicatorView(style: .large)
+        spinner.color = .white
 		spinner.center = self.center
 		return spinner
 	}()
@@ -48,11 +49,10 @@ class PhotosTablieView: UIView {
 		NSLayoutConstraint.activate(tableViewViewConstaints)
     }
 	
-	func updateTableViewData(delegate: UITableViewDelegate, dataSource: UITableViewDataSource) {
+    func updateTableViewData(delegate: UITableViewDelegate, dataSource: UITableViewDataSource, tabBarHeight: CGFloat) {
+        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: tabBarHeight, right: 0)
 		tableView.delegate = delegate
 		tableView.dataSource = dataSource
         tableView.reloadData()
-        let indexPath = IndexPath(item: 0, section: 0)
-        self.tableView.scrollToRow(at: indexPath, at: .top, animated: true)
 	}
 }
