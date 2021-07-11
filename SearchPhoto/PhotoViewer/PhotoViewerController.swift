@@ -19,8 +19,8 @@ class PhotoViewerController: UIViewController {
         self.view = PhotoViewerView(model: model)
     }
     
-    init(image: UIImageView, uid: String, name: String) {
-        model = PhotoViewerModel(uid: uid, name: name, image: image)
+    init(with model: PhotoViewerModel) {
+        self.model = model
         super.init(nibName: nil, bundle: nil)
     }
     

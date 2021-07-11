@@ -9,7 +9,7 @@ import UIKit
 
 class PhotosTableViewDelegate: NSObject, UITableViewDelegate {
 	var models: [PhotosCollectionModel]
-    var result = [PhotoViewerModel]()
+    var result: PhotoViewerModel?
 	weak var delegate: PhotosCollectionViewControllerDelegate?
 	
 	init(models: [PhotosCollectionModel] = []) {
@@ -22,10 +22,16 @@ class PhotosTableViewDelegate: NSObject, UITableViewDelegate {
 	}
     
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let cell = tableView.cellForRow(at: indexPath) as? PhotosTableViewCell
-        guard let imageCell = cell else { return }
+        let imageCell = tableView.cellForRow(at: indexPath) as! PhotosTableViewCell
 		tableView.deselectRow(at: indexPath, animated: true)
-        delegate?.openViewer(image: imageCell.photoView, uid: models[indexPath.row].id, user: models[indexPath.row].user.name)
+        let image = UIImageView()
+        image.loadImage(imageURL: models[indexPath.row].urls.regular)
+        result = PhotoViewerModel(uid: models[indexPath.row].id,
+                                  name: models[indexPath.row].user.name,
+                                  image: image,
+                                  width: imageCell.frame.width,
+                                  height: imageCell.frame.width)
+        delegate?.openViewer(with: result!)
 	}
 	
 }

@@ -11,7 +11,7 @@ protocol PhotosCollectionDisplayLogic: AnyObject {
 }
 
 protocol PhotosCollectionViewControllerDelegate: AnyObject {
-    func openViewer(image: UIImageView, uid: String, user: String)
+    func openViewer(with model: PhotoViewerModel)
     func updateSearchResults(with text: String)
     func deleteAllRecents()
 }
@@ -146,9 +146,10 @@ extension PhotosCollectionViewController: UISearchBarDelegate {
 }
 
 extension PhotosCollectionViewController: PhotosCollectionViewControllerDelegate {
-    func openViewer(image: UIImageView, uid: String, user: String) {
-        let rootVC = PhotoViewerController(image: image, uid: uid, name: user)
-        self.navigationController?.present(rootVC, animated: true, completion: nil)
+    func openViewer(with model: PhotoViewerModel) {
+        let rootVC = PhotoViewerController(with: model)
+        navigationController?.modalPresentationStyle = .fullScreen
+        self.navigationController?.present(rootVC, animated: true)
 	}
     
     func deleteAllRecents() {
