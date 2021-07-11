@@ -11,7 +11,7 @@ protocol PhotosCollectionDisplayLogic: AnyObject {
 }
 
 protocol PhotosCollectionViewControllerDelegate: AnyObject {
-	func openViewer(uid: String)
+    func openViewer(image: UIImageView, uid: String, user: String)
     func updateSearchResults(with text: String)
     func deleteAllRecents()
 }
@@ -26,7 +26,7 @@ class PhotosCollectionViewController: UIViewController {
                                       sectionNameKeyPath: nil,
                                       cacheName: nil)
     }()
-    
+
     let interactor: PhotosCollectionBusinessLogic
     var state: PhotosCollection.ViewControllerState
     let tableView: PhotosTablieView
@@ -96,6 +96,7 @@ extension PhotosCollectionViewController: PhotosCollectionDisplayLogic {
         case let .result(items):
 			tableHandler.models = items
 			tableDataSource.models = items
+            tableHandler.delegate = self
 			tableView.updateTableViewData(delegate: tableHandler,
                                           dataSource: tableDataSource,
                                           tabBarHeight: tabBarController?.tabBar.frame.height ?? 44)
@@ -145,8 +146,9 @@ extension PhotosCollectionViewController: UISearchBarDelegate {
 }
 
 extension PhotosCollectionViewController: PhotosCollectionViewControllerDelegate {
-	func openViewer(uid: String) {
-		
+    func openViewer(image: UIImageView, uid: String, user: String) {
+        let rootVC = PhotoViewerController(image: image, uid: uid, name: user)
+        self.navigationController?.present(rootVC, animated: true, completion: nil)
 	}
     
     func deleteAllRecents() {
