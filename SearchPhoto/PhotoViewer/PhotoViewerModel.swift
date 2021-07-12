@@ -13,4 +13,5 @@ struct PhotoViewerModel {
     let image: UIImageView
     let width: CGFloat
     let height: CGFloat
+    let imageURL: String
 }

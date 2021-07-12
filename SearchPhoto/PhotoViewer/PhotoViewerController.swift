@@ -8,7 +8,9 @@
 import UIKit
 
 protocol PhotoViewerControllerDelegate: AnyObject {
-    
+    func savePhoto(url: String)
+    func parsePhoto(with imageURL: String)
+    func downloadPhoto(with image: UIImage)
 }
 
 class PhotoViewerController: UIViewController {
@@ -21,6 +23,7 @@ class PhotoViewerController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewer?.delegate = self
         setUpNavigationBar()
     }
     
@@ -63,4 +66,20 @@ extension PhotoViewerController: UIGestureRecognizerDelegate {
 
 extension PhotoViewerController: PhotoViewerControllerDelegate {
 
+    
+    func savePhoto(url: String) {
+        
+    }
+
+    func parsePhoto(with imageURL: String) {
+        guard let url = URL(string: imageURL) else { return }
+        let data = NSData(contentsOf: url)
+        let source = CGImageSourceCreateWithData(data!, nil)!
+        let metadata = CGImageSourceCopyPropertiesAtIndex(source, 0, nil)!
+        print(metadata)
+    }
+
+    func downloadPhoto(with image: UIImage) {
+        
+    }
 }

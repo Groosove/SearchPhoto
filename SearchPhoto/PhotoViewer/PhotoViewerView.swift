@@ -11,6 +11,7 @@ import UIKit
 class PhotoViewerView: UIView {
     weak var delegate: PhotoViewerControllerDelegate?
     let model: PhotoViewerModel
+    private var like = false
     
     lazy var imagePresent: UIImageView = {
         let image = UIImageView()
@@ -24,17 +25,22 @@ class PhotoViewerView: UIView {
         let button = UIButton(type: .infoLight)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.tintColor = .white
+        button.addTarget(delegate, action: #selector(infoButtonTapped), for: .touchUpInside)
         return button
     }()
 
     lazy var likeButton: UIButton = {
         let button = UIButton()
+        button.setImage(UIImage(named: "unlike"), for: .normal)
+        button.addTarget(delegate, action: #selector(likeTapButton), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
 
     lazy var downloadButton: UIButton = {
        let button = UIButton()
+        button.setImage( UIImage(named: "arrow"), for: .normal)
+        button.addTarget(delegate, action: #selector(downloadTapButton), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -61,17 +67,17 @@ class PhotoViewerView: UIView {
     private func makeConstraints() {
         let infoViewButtonConstraints = [
             infoViewButton.leadingAnchor.constraint(equalTo: self.layoutMarginsGuide.leadingAnchor),
-            infoViewButton.bottomAnchor.constraint(equalTo: self.layoutMarginsGuide.bottomAnchor),
+            infoViewButton.topAnchor.constraint(equalTo: imagePresent.bottomAnchor),
         ]
         
         let downloadButtonConstraints = [
+            downloadButton.centerYAnchor.constraint(equalTo: infoViewButton.centerYAnchor),
             downloadButton.trailingAnchor.constraint(equalTo: self.layoutMarginsGuide.trailingAnchor),
-            downloadButton.bottomAnchor.constraint(equalTo: self.layoutMarginsGuide.bottomAnchor),
         ]
         
         let likeButtonConstraints = [
             likeButton.trailingAnchor.constraint(equalTo: self.layoutMarginsGuide.trailingAnchor),
-            likeButton.bottomAnchor.constraint(equalTo: downloadButton.topAnchor),
+            likeButton.bottomAnchor.constraint(equalTo: downloadButton.topAnchor, constant: -5),
         ]
         
         let imagePresentConstraints = [
@@ -104,5 +110,21 @@ class PhotoViewerView: UIView {
         UIGraphicsEndImageContext()
         
         return newImage
+    }
+    
+    @objc private func downloadTapButton(_ sender: AnyObject) {
+        delegate?.downloadPhoto(with: imagePresent.image!)
+    }
+    
+    @objc private func likeTapButton(_ sender: AnyObject) {
+        like = !like
+        let image = (like) ? UIImage(named: "like") : UIImage(named: "unlike")
+        likeButton.setImage(image, for: .normal)
+        delegate?.savePhoto(url: model.imageURL)
+        updateConstraints()
+    }
+    
+    @objc private func infoButtonTapped(_ sender: AnyObject) {
+        delegate?.parsePhoto(with: model.imageURL)
     }
 }

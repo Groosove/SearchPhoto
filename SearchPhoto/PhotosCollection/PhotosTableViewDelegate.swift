@@ -30,7 +30,8 @@ class PhotosTableViewDelegate: NSObject, UITableViewDelegate {
                                   name: models[indexPath.row].user.name,
                                   image: image,
                                   width: imageCell.frame.width,
-                                  height: imageCell.frame.height)
+                                  height: imageCell.frame.height,
+                                  imageURL: models[indexPath.row].urls.regular)
         delegate?.openViewer(with: result!)
 	}
 	
