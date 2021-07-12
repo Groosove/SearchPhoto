@@ -148,8 +148,9 @@ extension PhotosCollectionViewController: UISearchBarDelegate {
 extension PhotosCollectionViewController: PhotosCollectionViewControllerDelegate {
     func openViewer(with model: PhotoViewerModel) {
         let rootVC = PhotoViewerController(with: model)
-        navigationController?.modalPresentationStyle = .fullScreen
-        self.navigationController?.present(rootVC, animated: true)
+        let navVC = CustomNavigationController(rootViewController: rootVC)
+        navVC.modalPresentationStyle = .fullScreen
+        self.navigationController?.present(navVC, animated: true)
 	}
     
     func deleteAllRecents() {

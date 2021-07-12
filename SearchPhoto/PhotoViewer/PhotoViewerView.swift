@@ -11,10 +11,12 @@ import UIKit
 class PhotoViewerView: UIView {
     weak var delegate: PhotoViewerControllerDelegate?
     let model: PhotoViewerModel
+    
     lazy var imagePresent: UIImageView = {
-        let image = model.image
+        let image = UIImageView()
+        image.image = resizeImage(image: self.model.image.image!, targetSize: CGSize(width: self.model.width, height: self.model.height))
+        image.contentMode = .scaleToFill
         image.translatesAutoresizingMaskIntoConstraints = false
-        image.center = self.center
         return image
     }()
 
@@ -72,8 +74,35 @@ class PhotoViewerView: UIView {
             likeButton.bottomAnchor.constraint(equalTo: downloadButton.topAnchor),
         ]
         
+        let imagePresentConstraints = [
+            imagePresent.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            imagePresent.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            imagePresent.topAnchor.constraint(equalTo: self.topAnchor, constant: (UIScreen.main.bounds.height - model.height) / 2)
+        ]
+        
         NSLayoutConstraint.activate(infoViewButtonConstraints)
         NSLayoutConstraint.activate(downloadButtonConstraints)
         NSLayoutConstraint.activate(likeButtonConstraints)
+        NSLayoutConstraint.activate(imagePresentConstraints)
+    }
+    
+    private func resizeImage(image: UIImage, targetSize: CGSize) -> UIImage? {
+        let size = image.size
+        let widthRatio  = targetSize.width  / size.width
+        let heightRatio = targetSize.height / size.height
+        var newSize: CGSize
+        
+        if(widthRatio > heightRatio) {
+            newSize = CGSize(width: size.width * heightRatio, height: size.height * heightRatio)
+        } else {
+            newSize = CGSize(width: size.width * widthRatio, height: size.height * widthRatio)
+        }
+        let rect = CGRect(origin: .zero, size: newSize)
+        UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
+        image.draw(in: rect)
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return newImage
     }
 }

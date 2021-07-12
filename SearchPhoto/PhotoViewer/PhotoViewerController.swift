@@ -19,6 +19,11 @@ class PhotoViewerController: UIViewController {
         self.view = PhotoViewerView(model: model)
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setUpNavigationBar()
+    }
+    
     init(with model: PhotoViewerModel) {
         self.model = model
         super.init(nibName: nil, bundle: nil)
@@ -26,6 +31,29 @@ class PhotoViewerController: UIViewController {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    
+    private func setUpNavigationBar() {
+        navigationController?.navigationBar.barTintColor = .black
+        navigationController?.navigationBar.tintColor = .white
+        navigationItem.hidesSearchBarWhenScrolling = true
+        navigationItem.title = model.name
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.white]
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "cross"), style: .done, target: self, action: #selector(dismissController))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(shareImage))
+    }
+    
+    @objc private func dismissController() {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    @objc private func shareImage() {
+        let imageToShare = [model.image.image!]
+        let activityVC = UIActivityViewController(activityItems: imageToShare, applicationActivities: nil)
+        activityVC.popoverPresentationController?.sourceView = self.view
+        activityVC.excludedActivityTypes = [ UIActivity.ActivityType.airDrop, UIActivity.ActivityType.postToFacebook ]
+        self.present(activityVC, animated: true, completion: nil)
     }
 }
 
