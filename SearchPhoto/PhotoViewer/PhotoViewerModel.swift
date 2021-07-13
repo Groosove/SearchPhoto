@@ -2,10 +2,11 @@
 //  PhotoViewerModel.swift
 //  SearchPhoto
 //
-//  Created by Fenix Lavon on 7/11/21.
+//  Created by Artur Lutfullin on 14.07.21.
 //
 
 import UIKit
+import CoreLocation
 
 struct PhotoViewerModel {
     let uid: String
@@ -23,7 +24,7 @@ struct PhotoStatModel: Decodable {
     let likes: Int
     let description: String?
     let exif: Exif
-    let location: Location
+    let location: Location?
     
 }
 
@@ -41,7 +42,11 @@ struct Location: Decodable {
     let name: String?
     let city: String?
     let country: String?
-    let position: Coordinate?
+	var coordinate: CLLocationCoordinate2D? {
+		guard let coord = position else { return nil }
+		return CLLocationCoordinate2D(latitude: coord.latitude!, longitude: coord.longitude!)
+	}
+    private let position: Coordinate?
 }
 
 struct Coordinate: Decodable {

@@ -150,6 +150,7 @@ extension PhotosCollectionViewController: PhotosCollectionViewControllerDelegate
         let rootVC = PhotoViewerController(with: model)
         let navVC = CustomNavigationController(rootViewController: rootVC)
         navVC.modalPresentationStyle = .fullScreen
+		navigationController?.modalPresentationStyle = .fullScreen
         self.navigationController?.present(navVC, animated: true)
 	}
     

@@ -2,7 +2,7 @@
 //  ImageView_Extension.swift
 //  SearchPhoto
 //
-//  Created by Fenix Lavon on 7/11/21.
+//  Created by Artur Lutfullin on 11.07.21.
 //
 
 import UIKit

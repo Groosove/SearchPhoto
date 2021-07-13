@@ -2,12 +2,12 @@
 //  WaterfallLayout.swift
 //  SearchPhoto
 //
-//  Created by Fenix Lavon on 7/10/21.
+//  Created by Artur Lutfullin on 4.07.21.
 //
 
 import UIKit
 
-protocol WaterfallLayoutDelegate: class {
+protocol WaterfallLayoutDelegate: AnyObject {
     func waterfallLayout(_ layout: WaterfallLayout, sizeForItemAt indexPath: IndexPath) -> CGSize
 }
 

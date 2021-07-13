@@ -2,7 +2,7 @@
 //  DIContainer.swift
 //  SearchPhoto
 //
-//  Created by Fenix Lavon on 7/10/21.
+//  Created by Artur Lutfullin on 04.07.21.
 //
 
 import Foundation

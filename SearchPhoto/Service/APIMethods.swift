@@ -1,8 +1,8 @@
 //
 //  APIMethods.swift
-//  
+//  SearchPhoto
 //
-//  Created by Fenix Lavon on 7/4/21.
+//  Created by Artur Lutfullin on 04.07.21.
 //
 
 import Foundation

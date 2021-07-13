@@ -2,7 +2,7 @@
 //  PhotoViewerController.swift
 //  SearchPhoto
 //
-//  Created by Fenix Lavon on 7/11/21.
+//  Created by Artur Lutfullin on 14.07.21.
 //
 
 import UIKit
@@ -13,10 +13,11 @@ protocol PhotoViewerControllerDelegate: AnyObject {
     func downloadPhoto(with image: UIImage)
 }
 
-class PhotoViewerController: UIViewController {
+class PhotoViewerController: UIViewController, UINavigationControllerDelegate {
     lazy var viewer = self.view as? PhotoViewerView
     let model: PhotoViewerModel
-    
+	private let transition = PanelTransition()
+	
     override func loadView() {
         self.view = PhotoViewerView(model: model)
     }
@@ -58,10 +59,7 @@ class PhotoViewerController: UIViewController {
         activityVC.excludedActivityTypes = [ UIActivity.ActivityType.airDrop, UIActivity.ActivityType.postToFacebook ]
         self.present(activityVC, animated: true, completion: nil)
     }
-}
-
-extension PhotoViewerController: UIGestureRecognizerDelegate {
-    
+	
 }
 
 extension PhotoViewerController: PhotoViewerControllerDelegate {
@@ -75,21 +73,26 @@ extension PhotoViewerController: PhotoViewerControllerDelegate {
         let httpHandler = HTTPHandler()
         let decoder: JSONDecoder = JSONDecoder()
         let parametrs = ["client_id": Unsplash.API.clientId]
-        print(imageId)
         httpHandler.get(baseURL: Unsplash.baseURL, endPoint: "/photos/\(imageId)", parametrs: parametrs) { result in
-            switch result {
-            case let .success(data):
-                do {
-                    let models = try decoder.decode(PhotoStatModel.self, from: data)
-                    print(models)
-                }
-                catch { print(PhotosCollectionServiceError.decodeJSON) }
-            default : break
-            }
+			do {
+				let data = try result.get()
+				let model = try decoder.decode(PhotoStatModel.self, from: data)
+				self.descriptionCreate(with: model)
+			}
+			catch { print(PhotosCollectionServiceError.decodeJSON) }
         }
     }
 
     func downloadPhoto(with image: UIImage) {
         
     }
+}
+
+extension PhotoViewerController: UIPopoverPresentationControllerDelegate {
+	private func descriptionCreate(with model: PhotoStatModel) {
+		let rootVC = DescriptionViewController(model: model)
+		rootVC.transitioningDelegate = transition
+		rootVC.modalPresentationStyle = .custom
+		present(rootVC, animated: true)
+	}
 }
