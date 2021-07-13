@@ -125,6 +125,6 @@ class PhotoViewerView: UIView {
     }
     
     @objc private func infoButtonTapped(_ sender: AnyObject) {
-        delegate?.parsePhoto(with: model.imageURL)
+        delegate?.parsePhoto(with: model.uid)
     }
 }

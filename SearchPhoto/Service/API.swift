@@ -26,7 +26,6 @@ enum Unsplash {
 	enum Methods {
 		static let getImages = "/search/photos"
         static let gerRandomImage = "/photos/random"
-        func getImageStat(id: Int) -> String { return "/photos/\(id)/statistics" }
 	}
 
 }

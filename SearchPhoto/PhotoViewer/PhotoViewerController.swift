@@ -9,7 +9,7 @@ import UIKit
 
 protocol PhotoViewerControllerDelegate: AnyObject {
     func savePhoto(url: String)
-    func parsePhoto(with imageURL: String)
+    func parsePhoto(with imageId: String)
     func downloadPhoto(with image: UIImage)
 }
 
@@ -71,12 +71,22 @@ extension PhotoViewerController: PhotoViewerControllerDelegate {
         
     }
 
-    func parsePhoto(with imageURL: String) {
-        guard let url = URL(string: imageURL) else { return }
-        let data = NSData(contentsOf: url)
-        let source = CGImageSourceCreateWithData(data!, nil)!
-        let metadata = CGImageSourceCopyPropertiesAtIndex(source, 0, nil)!
-        print(metadata)
+    func parsePhoto(with imageId: String) {
+        let httpHandler = HTTPHandler()
+        let decoder: JSONDecoder = JSONDecoder()
+        let parametrs = ["client_id": Unsplash.API.clientId]
+        print(imageId)
+        httpHandler.get(baseURL: Unsplash.baseURL, endPoint: "/photos/\(imageId)", parametrs: parametrs) { result in
+            switch result {
+            case let .success(data):
+                do {
+                    let models = try decoder.decode(PhotoStatModel.self, from: data)
+                    print(models)
+                }
+                catch { print(PhotosCollectionServiceError.decodeJSON) }
+            default : break
+            }
+        }
     }
 
     func downloadPhoto(with image: UIImage) {
