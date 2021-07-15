@@ -43,8 +43,8 @@ struct Location: Decodable {
     let city: String?
     let country: String?
 	var coordinate: CLLocationCoordinate2D? {
-		guard let coord = position else { return nil }
-		return CLLocationCoordinate2D(latitude: coord.latitude!, longitude: coord.longitude!)
+		guard let lat = position?.latitude, let long = position?.longitude else { return nil }
+		return CLLocationCoordinate2D(latitude: lat, longitude: long)
 	}
     private let position: Coordinate?
 }

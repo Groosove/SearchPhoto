@@ -19,6 +19,7 @@ class PhotoViewerController: UIViewController, UINavigationControllerDelegate {
 	private let transition = PanelTransition()
 	
     override func loadView() {
+		super.loadView()
         self.view = PhotoViewerView(model: model)
     }
     
@@ -37,7 +38,7 @@ class PhotoViewerController: UIViewController, UINavigationControllerDelegate {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
+    // MARK: -- Setup NavigationBar
     private func setUpNavigationBar() {
         navigationController?.navigationBar.barTintColor = .black
         navigationController?.navigationBar.tintColor = .white
@@ -48,6 +49,7 @@ class PhotoViewerController: UIViewController, UINavigationControllerDelegate {
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(shareImage))
     }
     
+	// MARK: -- Dissmiss Controller
     @objc private func dismissController() {
         dismiss(animated: true, completion: nil)
     }

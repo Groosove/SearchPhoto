@@ -51,10 +51,6 @@ class PhotosCollectionViewController: UIViewController {
         updateRecents()
         recentTableView.delegate = self
     }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-    }
     
     //MARK: -- Find Photo
     func findPhoto(with search: String) {
