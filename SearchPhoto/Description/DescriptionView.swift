@@ -21,11 +21,16 @@ class DescriptionView: UIView {
 		return button
 	}()
 	
-	lazy var mapViewLoxation: MKMapView = {
-		guard let location = model.location, model.location?.coordinate != nil else { return MKMapView() }
+	lazy var mapViewLocation: MKMapView = {
+		guard let location = model.location, model.location?.coordinate != nil else {
+            let map = MKMapView(frame: CGRect(origin: .zero, size: CGSize(width: frame.width, height: 1)))
+            map.isHidden = true
+            return map
+        }
+        
 		let annotation = MKPointAnnotation()
 		let map = MKMapView()
-		map.frame.size = CGSize(width: self.frame.width, height: self.frame.height / 3)
+		map.frame.size = CGSize(width: self.frame.width, height: self.frame.height / 5)
 		annotation.title = location.name
 		annotation.coordinate = location.coordinate!
 		map.setRegion(MKCoordinateRegion(center: annotation.coordinate,
@@ -42,7 +47,7 @@ class DescriptionView: UIView {
 	lazy var exifView = EXIFView(model: model.exif)
 	
 	lazy var descriptionLabel: UILabel = {
-		guard let description = model.description else { return UILabel() }
+        guard let description = model.description else { return UILabel(frame: CGRect(origin: .zero, size: CGSize(width: frame.width, height: 10))) }
 		let label = UILabel()
 		label.textColor = .white
 		label.text = description
@@ -52,7 +57,7 @@ class DescriptionView: UIView {
 		return label
 	}()
 	
-//	let scrollView = UIScrollView()
+	let scrollView = UIScrollView()
 	
 	lazy var separatorView: UIView = {
 		let image = UIView()
@@ -70,54 +75,52 @@ class DescriptionView: UIView {
 	
 	private func addSubviews() {
 		addSubview(dismissButton)
-//		addSubview(scrollView)
-//		scrollView.addSubview(exifView)
-//		scrollView.addSubview(descriptionLabel)
-		addSubview(mapViewLoxation)
-//		scrollView.addSubview(separatorView)
+		addSubview(scrollView)
+		scrollView.addSubview(exifView)
+		scrollView.addSubview(descriptionLabel)
+        scrollView.addSubview(mapViewLocation)
 	}
 	
 	private func makeConstraints() {
 		exifView.translatesAutoresizingMaskIntoConstraints = false
-//		scrollView.translatesAutoresizingMaskIntoConstraints = false
+		scrollView.translatesAutoresizingMaskIntoConstraints = false
 		
 		let dismissButtonConstraints = [
 			dismissButton.centerXAnchor.constraint(equalTo: self.centerXAnchor),
 			dismissButton.topAnchor.constraint(equalTo: self.topAnchor),
-			dismissButton.widthAnchor.constraint(equalToConstant: 200),
-			dismissButton.heightAnchor.constraint(equalToConstant: 80),
+			dismissButton.widthAnchor.constraint(equalToConstant: 100),
+			dismissButton.heightAnchor.constraint(equalToConstant: 40),
 		]
 
-//		let scrollViewConstraints = [
-//			scrollView.topAnchor.constraint(equalTo: dismissButton.bottomAnchor, constant: 10),
-//			scrollView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-//			scrollView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-//			scrollView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
-//		]
-		
-//		let exifViewConstraints = [
-//			exifView.topAnchor.constraint(equalTo: mapView.bottomAnchor, constant: 10),
-//			exifView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
-//			exifView.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
-//		]
-//
-//		let descriptionLabelConstraints = [
-//			descriptionLabel.topAnchor.constraint(equalTo: scrollView.topAnchor),
-//			descriptionLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
-//			descriptionLabel.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
-//			descriptionLabel.bottomAnchor.constraint(equalTo: mapView.topAnchor)
-//		]
-//
-		let mapViewConstraints = [
-			mapViewLoxation.topAnchor.constraint(equalTo: dismissButton.bottomAnchor, constant: 10),
-			mapViewLoxation.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-			mapViewLoxation.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+		let scrollViewConstraints = [
+			scrollView.topAnchor.constraint(equalTo: dismissButton.bottomAnchor, constant: 10),
+            scrollView.leadingAnchor.constraint(equalTo: self.layoutMarginsGuide.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: self.layoutMarginsGuide.trailingAnchor),
+            scrollView.bottomAnchor.constraint(greaterThanOrEqualTo: self.layoutMarginsGuide.bottomAnchor),
 		]
 		
-//		NSLayoutConstraint.activate(scrollViewConstraints)
+		let exifViewConstraints = [
+			exifView.topAnchor.constraint(equalTo: mapViewLocation.bottomAnchor, constant: 10),
+			exifView.bottomAnchor.constraint(lessThanOrEqualTo: scrollView.bottomAnchor),
+			exifView.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
+		]
+
+		let descriptionLabelConstraints = [
+			descriptionLabel.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            descriptionLabel.widthAnchor.constraint(equalToConstant: descriptionLabel.frame.width),
+            descriptionLabel.heightAnchor.constraint(equalToConstant: descriptionLabel.frame.height),
+		]
+
+		let mapViewConstraints = [
+            mapViewLocation.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant:  10),
+            mapViewLocation.heightAnchor.constraint(equalToConstant: mapViewLocation.frame.height),
+            mapViewLocation.widthAnchor.constraint(equalToConstant: mapViewLocation.frame.width),
+		]
+		
+		NSLayoutConstraint.activate(scrollViewConstraints)
 		NSLayoutConstraint.activate(dismissButtonConstraints)
-//		NSLayoutConstraint.activate(exifViewConstraints)
-//		NSLayoutConstraint.activate(descriptionLabelConstraints)
+		NSLayoutConstraint.activate(exifViewConstraints)
+		NSLayoutConstraint.activate(descriptionLabelConstraints)
 		NSLayoutConstraint.activate(mapViewConstraints)
 	}
 	

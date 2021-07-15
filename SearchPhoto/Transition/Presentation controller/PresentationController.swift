@@ -3,7 +3,6 @@
 //  SearchPhoto
 //
 //  Created by Artur Lutfullin on 14.07.2021.
-//  Copyright © 2019 akaDuality. All rights reserved.
 //
 
 import UIKit

@@ -26,6 +26,9 @@ class PhotosTableViewDelegate: NSObject, UITableViewDelegate {
 		tableView.deselectRow(at: indexPath, animated: true)
         let image = UIImageView()
         image.loadImage(imageURL: models[indexPath.row].urls.regular)
+        if image.image == nil {
+            return
+        }
         result = PhotoViewerModel(uid: models[indexPath.row].id,
                                   name: models[indexPath.row].user.name,
                                   image: image,
