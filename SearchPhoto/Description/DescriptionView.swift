@@ -56,14 +56,8 @@ class DescriptionView: UIView {
 		label.translatesAutoresizingMaskIntoConstraints = false
 		return label
 	}()
-	
+
 	let scrollView = UIScrollView()
-	
-	lazy var separatorView: UIView = {
-		let image = UIView()
-		image.backgroundColor = .gray
-		return image
-	}()
 	
 	init(model: PhotoStatModel) {
 		self.model = model

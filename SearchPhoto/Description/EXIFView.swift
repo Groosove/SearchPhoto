@@ -104,17 +104,12 @@ class EXIFView: UIView {
 	
 	private func createMetaDataLabel(title: String, data: String) -> UILabel {
 		let label = UILabel()
-//		let attributesTittle: [NSAttributedString.Key: Any] = [.foregroundColor: UIColor.systemGray]
-//		let attributesData: [NSAttributedString.Key: Any] = [.foregroundColor: UIColor.white]
-//		let title = NSMutableAttributedString(string: title, attributes: attributesTittle)
-//		let data = NSAttributedString(string: data, attributes: attributesData)
 		let text = NSMutableAttributedString(string: title + data)
 		label.lineBreakMode = .byWordWrapping
 		label.numberOfLines = 2
 		text.setColorForText(textForAttribute: title, withColor: .systemGray)
 		text.setColorForText(textForAttribute: data, withColor: .white)
 		label.attributedText = text
-//		print(label.attributedText)
 		label.translatesAutoresizingMaskIntoConstraints = false
 		return label
 	}
