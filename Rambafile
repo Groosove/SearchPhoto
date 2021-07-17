@@ -8,8 +8,13 @@ xcodeproj_path: SearchPhoto.xcodeproj
 ### Code generation settings section
 # The main project target name
 project_target: SearchPhoto
-project_file_path: .
+
+# The file path for new modules
+project_file_path: SearchPhoto
+
+# The Xcode group path to new modules
+project_group_path: SearchPhoto
 
 ### Templates
 templates:
--{name: yarch}
+- {name: yarch}
