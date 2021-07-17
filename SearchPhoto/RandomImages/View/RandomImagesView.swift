@@ -16,12 +16,16 @@ class RandomImagesView: UIView {
     
     fileprivate(set) lazy var collectionView: UICollectionView = {
         let layout = WaterfallLayout()
-        let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
         layout.delegate = delegate as? WaterfallLayoutDelegate
+        let view = UICollectionView(frame: .zero)
+        
         view.register(RandomImagesViewCell.self, forCellWithReuseIdentifier: RandomImagesViewCell.identifier)
         view.layoutMargins = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
         view.contentInsetAdjustmentBehavior = .automatic
         view.translatesAutoresizingMaskIntoConstraints = false
+//        if let waterfallLayout = view as? WaterfallLayout {
+//            waterfallLayout.delegate = delegate
+//        }
         return view
     }()
 

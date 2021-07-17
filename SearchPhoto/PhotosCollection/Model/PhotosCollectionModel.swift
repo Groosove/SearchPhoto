@@ -2,10 +2,10 @@
 //  Created by Artur Lutfullin on 03/07/2021.
 //
 
-import CoreLocation
 import UIKit
+
 struct UnsplashPhoto: Decodable {
-    let results: [PhotosCollectionModel]
+    var results: [PhotosCollectionModel]
 }
 
 struct PhotosCollectionModel: Decodable {
