@@ -23,7 +23,7 @@ extension CGPoint {
     }
 }
 
-extension CGFloat { // Velocity value
+extension CGFloat {
     func projectedOffset(decelerationRate: UIScrollView.DecelerationRate) -> CGFloat {
         let multiplier = 1 / (1 - decelerationRate.rawValue) / 1000
         return self * multiplier

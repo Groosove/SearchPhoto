@@ -78,10 +78,10 @@ extension TransitionDriver {
     private func handleDismiss(recognizer r: UIPanGestureRecognizer) {
         switch r.state {
         case .began:
-            pause() // Pause allows to detect isRunning
+            pause()
             
             if !isRunning {
-                presentedController?.dismiss(animated: true) // Start the new one
+                presentedController?.dismiss(animated: true)
             }
         
         case .changed:
