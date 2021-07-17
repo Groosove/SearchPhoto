@@ -7,9 +7,16 @@
 
 import UIKit
 
+extension RecentTableViewCell {
+    struct Appearance {
+        let exampleOffset: CGFloat = 5
+    }
+}
+
 class RecentTableViewCell: UITableViewCell {
 	static let identifier = "RecentTableViewCellId"
-	
+    let appearance = Appearance()
+    
 	private lazy var searchLabel: UILabel = {
 		let label = UILabel()
 		label.translatesAutoresizingMaskIntoConstraints = false
@@ -31,10 +38,10 @@ class RecentTableViewCell: UITableViewCell {
 	
 	private func makeConstraints() {
         let searchLabelContsraints = [
-            searchLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 5),
+            searchLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: appearance.exampleOffset),
             searchLabel.leadingAnchor.constraint(equalTo: self.layoutMarginsGuide.leadingAnchor),
             searchLabel.trailingAnchor.constraint(equalTo: self.layoutMarginsGuide.trailingAnchor),
-            searchLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -5),
+            searchLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -appearance.exampleOffset),
         ]
         
         NSLayoutConstraint.activate(searchLabelContsraints)

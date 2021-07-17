@@ -8,13 +8,6 @@
 import UIKit
 
 class PhotosTablieView: UIView {
-	private lazy var spinnerView: UIActivityIndicatorView = {
-		let spinner = UIActivityIndicatorView(style: .large)
-        spinner.color = .white
-		spinner.center = self.center
-		return spinner
-	}()
-	
 	private lazy var tableView: UITableView = {
         let tableView = UITableView.init(frame: .zero, style: .plain)
 		tableView.register(PhotosTableViewCell.self, forCellReuseIdentifier: PhotosTableViewCell.identifier)
@@ -30,9 +23,6 @@ class PhotosTablieView: UIView {
 		addSubviews()
 		makeConstraints()
 		backgroundColor = .black
-	}
-	required init?(coder: NSCoder) {
-		fatalError("init(coder:) has not been implemented")
 	}
 	
     private func addSubviews() {
@@ -55,4 +45,8 @@ class PhotosTablieView: UIView {
 		tableView.dataSource = dataSource
         tableView.reloadData()
 	}
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 }

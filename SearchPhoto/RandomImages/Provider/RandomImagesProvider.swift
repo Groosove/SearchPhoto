@@ -3,7 +3,7 @@
 //
 
 protocol RandomImagesProviderProtocol {
-    func getItems(completion: @escaping ([RandomImagesModel]?, RandomImagesProviderError?) -> Void)
+    func getItems(completion: @escaping ([PhotosCollectionModel]?, RandomImagesProviderError?) -> Void)
 }
 
 enum RandomImagesProviderError: Error {
@@ -20,15 +20,12 @@ struct RandomImagesProvider: RandomImagesProviderProtocol {
         self.service = service
     }
 
-    func getItems(completion: @escaping ([RandomImagesModel]?, RandomImagesProviderError?) -> Void) {
-        if dataStore.models?.isEmpty == false {
-            return completion(self.dataStore.models, nil)
-        }
-        service.fetchItems { (array, error) in
+    func getItems(completion: @escaping ([PhotosCollectionModel]?, RandomImagesProviderError?) -> Void) {
+        service.getImages { (array, error) in
             if let error = error {
                 completion(nil, .getItemsFailed(underlyingError: error))
             } else if let models = array {
-                self.dataStore.models = models
+                self.dataStore.models += models
                 completion(self.dataStore.models, nil)
             }
         }

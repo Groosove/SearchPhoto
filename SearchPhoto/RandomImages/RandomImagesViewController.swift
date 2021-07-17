@@ -9,10 +9,17 @@ protocol RandomImagesDisplayLogic: class {
     func displaySomething(viewModel: RandomImages.Something.ViewModel)
 }
 
+protocol RandomImagesViewControllerDelegate: AnyObject {
+    func openViewer(with model: PhotoViewerModel)
+}
+
 class RandomImagesViewController: UIViewController {
     let interactor: RandomImagesBusinessLogic
     var state: RandomImages.ViewControllerState
-
+    var collectionDataSource =  RandomImagesDataStore()
+    var collectionHandler = RandomImagesWaterfallDelegate()
+    lazy var collectionView = self.view as? RandomImagesView
+    
     init(interactor: RandomImagesBusinessLogic, initialState: RandomImages.ViewControllerState = .loading) {
         self.interactor = interactor
         self.state = initialState
@@ -23,22 +30,19 @@ class RandomImagesViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    // MARK: View lifecycle
     override func loadView() {
-        let view = RandomImagesView(frame: UIScreen.main.bounds)
-        self.view = view
-        // make additional setup of view or save references to subviews
+        self.view = RandomImagesView(frame: UIScreen.main.bounds)
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        doSomething()
+        loadImages()
     }
 
-    // MARK: Do something
-    func doSomething() {
+    // MARK: -- load Images
+    func loadImages() {
         let request = RandomImages.Something.Request()
-        interactor.doSomething(request: request)
+        interactor.loadImages(request: request)
     }
 }
 
@@ -56,8 +60,29 @@ extension RandomImagesViewController: RandomImagesDisplayLogic {
             print("error \(message)")
         case let .result(items):
             print("result: \(items)")
+            collectionDataSource.models = items
+            collectionHandler.models = items
+            collectionView?.delegate = self
+            collectionView?.updateCollectioViewData(delegate: collectionHandler, dataSource: collectionDataSource)
         case .emptyResult:
             print("empty result")
         }
+    }
+}
+
+extension RandomImagesViewController: WaterfallLayoutDelegate {
+    func waterfallLayout(_ layout: WaterfallLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let images = collectionDataSource.models[indexPath.item]
+        return CGSize(width: images.width, height: images.height)
+    }
+}
+
+extension RandomImagesViewController: RandomImagesViewControllerDelegate {
+    func openViewer(with model: PhotoViewerModel) {
+        let rootVC = PhotoViewerController(with: model)
+        let navVC = CustomNavigationController(rootViewController: rootVC)
+        navVC.modalPresentationStyle = .fullScreen
+        navigationController?.modalPresentationStyle = .fullScreen
+        self.navigationController?.present(navVC, animated: true)
     }
 }

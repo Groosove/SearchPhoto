@@ -23,7 +23,7 @@ class DescriptionView: UIView {
 	
 	lazy var mapViewLocation: MKMapView = {
 		guard let location = model.location, model.location?.coordinate != nil else {
-            let map = MKMapView(frame: CGRect(origin: .zero, size: CGSize(width: frame.width, height: 1)))
+            let map = MKMapView(frame: CGRect(origin: .zero, size: CGSize(width: frame.width, height: 10)))
             map.isHidden = true
             return map
         }

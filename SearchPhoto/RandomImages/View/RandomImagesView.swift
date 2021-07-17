@@ -12,9 +12,16 @@ extension RandomImagesView {
 
 class RandomImagesView: UIView {
     let appearance = Appearance()
-
-    fileprivate(set) lazy var customView: UIView = {
-        let view = UIView()
+    weak var delegate: RandomImagesViewControllerDelegate?
+    
+    fileprivate(set) lazy var collectionView: UICollectionView = {
+        let layout = WaterfallLayout()
+        let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        layout.delegate = delegate as? WaterfallLayoutDelegate
+        view.register(RandomImagesViewCell.self, forCellWithReuseIdentifier: RandomImagesViewCell.identifier)
+        view.layoutMargins = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+        view.contentInsetAdjustmentBehavior = .automatic
+        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
 
@@ -24,14 +31,29 @@ class RandomImagesView: UIView {
         makeConstraints()
     }
 
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
     func addSubviews(){
-        addSubview(customView)
+        addSubview(collectionView)
     }
 
     func makeConstraints() {
+        let collectionViewConstraints = [
+            collectionView.topAnchor.constraint(equalTo: self.topAnchor),
+            collectionView.leadingAnchor.constraint(equalTo: self.layoutMarginsGuide.leadingAnchor),
+            collectionView.trailingAnchor.constraint(equalTo: self.layoutMarginsGuide.trailingAnchor),
+            collectionView.bottomAnchor.constraint(equalTo: self.layoutMarginsGuide.bottomAnchor),
+        ]
+        
+        NSLayoutConstraint.activate(collectionViewConstraints)
+    }
+    
+    
+    func updateCollectioViewData(delegate: UICollectionViewDelegate, dataSource: UICollectionViewDataSource) {
+        collectionView.delegate = delegate
+        collectionView.dataSource = dataSource
+        collectionView.reloadData()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }

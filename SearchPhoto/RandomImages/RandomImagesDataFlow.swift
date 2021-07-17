@@ -20,12 +20,12 @@ enum RandomImages {
 
     enum RandomImagesRequestResult {
         case failure(RandomImagesError)
-        case success([RandomImagesModel])
+        case success([PhotosCollectionModel])
     }
 
     enum ViewControllerState {
         case loading
-        case result([Any/*viewModel*/])
+        case result([PhotosCollectionModel])
         case emptyResult
         case error(message: String)
     }

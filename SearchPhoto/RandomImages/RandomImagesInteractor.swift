@@ -4,7 +4,7 @@
 //
 
 protocol RandomImagesBusinessLogic {
-    func doSomething(request: RandomImages.Something.Request)
+    func loadImages(request: RandomImages.Something.Request)
 }
 
 /// Класс для описания бизнес-логики модуля RandomImages
@@ -18,7 +18,7 @@ class RandomImagesInteractor: RandomImagesBusinessLogic {
     }
     
     // MARK: Do something
-    func doSomething(request: RandomImages.Something.Request) {
+    func loadImages(request: RandomImages.Something.Request) {
         provider.getItems { (items, error) in
             let result: RandomImages.RandomImagesRequestResult
             if let items = items {

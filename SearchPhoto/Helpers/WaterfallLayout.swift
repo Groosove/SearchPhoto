@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol WaterfallLayoutDelegate: AnyObject {
+protocol WaterfallLayoutDelegate: class {
     func waterfallLayout(_ layout: WaterfallLayout, sizeForItemAt indexPath: IndexPath) -> CGSize
 }
 
@@ -194,3 +194,4 @@ class WaterfallLayout: UICollectionViewLayout {
         return CGSize(width: floor(columnWidth), height: floor(height))
     }
 }
+
