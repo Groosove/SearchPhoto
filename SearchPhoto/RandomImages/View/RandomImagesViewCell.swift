@@ -22,6 +22,8 @@ class RandomImagesViewCell: UICollectionViewCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .white
+        label.adjustsFontSizeToFitWidth = true
+        label.textAlignment = .left
         return label
     }()
     

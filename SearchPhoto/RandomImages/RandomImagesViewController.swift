@@ -11,6 +11,7 @@ protocol RandomImagesDisplayLogic: class {
 
 protocol RandomImagesViewControllerDelegate: AnyObject {
     func openViewer(with model: PhotoViewerModel)
+    func loadImages()
 }
 
 class RandomImagesViewController: UIViewController {
@@ -31,18 +32,23 @@ class RandomImagesViewController: UIViewController {
     }
 
     override func loadView() {
-        self.view = RandomImagesView(frame: UIScreen.main.bounds)
+        self.view = RandomImagesView(frame: UIScreen.main.bounds, delegate: self)
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        setUpNavigationBar()
         loadImages()
     }
 
     // MARK: -- load Images
-    func loadImages() {
-        let request = RandomImages.Something.Request()
-        interactor.loadImages(request: request)
+
+    
+    private func setUpNavigationBar() {
+        navigationController?.navigationBar.isTranslucent = true
+        navigationController?.navigationBar.barTintColor = .black
+        navigationItem.title = "Random Images"
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.white]
     }
 }
 
@@ -63,6 +69,7 @@ extension RandomImagesViewController: RandomImagesDisplayLogic {
             collectionDataSource.models = items
             collectionHandler.models = items
             collectionView?.delegate = self
+            collectionHandler.delegate = self
             collectionView?.updateCollectioViewData(delegate: collectionHandler, dataSource: collectionDataSource)
         case .emptyResult:
             print("empty result")
@@ -84,5 +91,10 @@ extension RandomImagesViewController: RandomImagesViewControllerDelegate {
         navVC.modalPresentationStyle = .fullScreen
         navigationController?.modalPresentationStyle = .fullScreen
         self.navigationController?.present(navVC, animated: true)
+    }
+    
+    func loadImages() {
+        let request = RandomImages.Something.Request()
+        interactor.loadImages(request: request)
     }
 }
