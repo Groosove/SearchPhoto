@@ -23,7 +23,7 @@ struct PhotoStatModel: Decodable {
     let downloads: Int
     let likes: Int
     let description: String?
-    let exif: Exif
+    let exif: Exif?
     let location: Location?
     
 }

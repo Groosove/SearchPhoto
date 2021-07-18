@@ -8,39 +8,40 @@
 import UIKit
 
 class EXIFView: UIView {
-	let model: Exif
+	let model: Exif?
 	
 	private lazy var makeLabel: UILabel = {
-		let label = createMetaDataLabel(title: "Make\n", data: model.make)
+		let label = createMetaDataLabel(title: "Make\n", data: model?.make ?? "--")
 		return label
 	}()
 	
 	private lazy var modelLabel: UILabel = {
-		let label = createMetaDataLabel(title: "Model\n", data: model.model)
+        let label = createMetaDataLabel(title: "Model\n", data: model?.model ?? "--")
 		return label
 	}()
 	
 	private lazy var shutterLabel: UILabel = {
-		let label = createMetaDataLabel(title: "Shutter Speed\n", data: model.exposure_time + "s")
+		let label = createMetaDataLabel(title: "Shutter Speed\n", data: (model?.exposure_time ?? "--" + "s"))
 		return label
 	}()
 	
 	private lazy var focalLabel: UILabel = {
-		let label = createMetaDataLabel(title: "Focal Length\n", data: model.focal_length)
+		let label = createMetaDataLabel(title: "Focal Length\n", data: model?.focal_length ?? "--")
 		return label
 	}()
 	
 	private lazy var isoLabel: UILabel = {
-		let label = createMetaDataLabel(title: "ISO\n", data: String(model.iso))
+        let data = (model?.iso == nil) ? "--" : String(model!.iso)
+        let label = createMetaDataLabel(title: "ISO\n", data: data)
 		return label
 	}()
 	
 	private lazy var apertureLabel: UILabel = {
-		let label = createMetaDataLabel(title: "Apperture\n", data: model.aperture)
+		let label = createMetaDataLabel(title: "Apperture\n", data: model?.aperture ?? "--")
 		return label
 	}()
 	
-	init(model: Exif) {
+	init(model: Exif?) {
 		self.model = model
 		super.init(frame: UIScreen.main.bounds)
 		addSubviews()

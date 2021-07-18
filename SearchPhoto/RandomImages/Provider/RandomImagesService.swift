@@ -13,7 +13,7 @@ class RandomImagesService: RandomImagesServiceProtocol {
     private let decoder: JSONDecoder = JSONDecoder()
 
     func getImages(completion: @escaping ([PhotosCollectionModel]?, Error?) -> Void) {
-        let parametrs = ["count": "10", "client_id": Unsplash.API.clientId]
+        let parametrs = ["count": "30", "client_id": Unsplash.API.clientId]
         httpHandler.get(baseURL: Unsplash.baseURL, endPoint: Unsplash.Methods.gerRandomImage, parametrs: parametrs) { result in
             switch result {
             case let .success(data):

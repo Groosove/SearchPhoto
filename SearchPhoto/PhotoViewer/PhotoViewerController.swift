@@ -78,6 +78,8 @@ extension PhotoViewerController: PhotoViewerControllerDelegate {
         httpHandler.get(baseURL: Unsplash.baseURL, endPoint: "/photos/\(imageId)", parametrs: parametrs) { result in
 			do {
 				let data = try result.get()
+//                let json = try JSONSerialization.data(withJSONObject: data, options: []) as? [String: Any]
+//                print(json)
 				let model = try decoder.decode(PhotoStatModel.self, from: data)
 				self.descriptionCreate(with: model)
 			}
