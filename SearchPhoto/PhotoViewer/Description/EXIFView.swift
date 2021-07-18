@@ -31,7 +31,7 @@ class EXIFView: UIView {
 	}()
 	
 	private lazy var isoLabel: UILabel = {
-        let data = (model?.iso == nil) ? "--" : String(model!.iso)
+        let data = (model?.iso == nil) ? "--" : String(model!.iso!)
         let label = createMetaDataLabel(title: "ISO\n", data: data)
 		return label
 	}()

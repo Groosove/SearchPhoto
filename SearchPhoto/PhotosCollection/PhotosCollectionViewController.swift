@@ -57,7 +57,7 @@ class PhotosCollectionViewController: UIViewController {
         let request = PhotosCollection.Something.Request(search: search)
         interactor.findPhoto(request: request)
         recentData.viewContext.performAndWait {
-            let recents = recentData.getArrayData()
+            let recents = recentData.getAllRecents()
             guard (recents.filter { $0.search == search }).count == 0 else { return }
             let recent = Recent(context: recentData.viewContext)
             recent.search = search
@@ -130,7 +130,7 @@ extension PhotosCollectionViewController: UISearchBarDelegate {
     
     private func updateRecents() {
         recentData.backgroundContext.performAndWait {
-            let recents = recentData.getArrayData()
+            let recents = recentData.getAllRecents()
             recentTableView.isHidden = recents.count == 0
             recentTableDataSource.models = recents
             recentTableHandler.models = recents
@@ -151,7 +151,7 @@ extension PhotosCollectionViewController: PhotosCollectionViewControllerDelegate
 	}
     
     func deleteAllRecents() {
-        recentData.deleteAll()
+        recentData.deleteAllRecents()
         try? frc.performFetch()
         updateRecents()
     }

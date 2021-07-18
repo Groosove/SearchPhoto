@@ -11,7 +11,6 @@ import UIKit
 class PhotoViewerView: UIView {
     weak var delegate: PhotoViewerControllerDelegate?
     let model: PhotoViewerModel
-    private var like = false
     
     lazy var imagePresent: UIImageView = {
         let image = UIImageView()
@@ -31,7 +30,6 @@ class PhotoViewerView: UIView {
 
     lazy var likeButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(named: "unlike"), for: .normal)
         button.addTarget(delegate, action: #selector(likeTapButton), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
@@ -113,18 +111,27 @@ class PhotoViewerView: UIView {
     }
     
     @objc private func downloadTapButton(_ sender: AnyObject) {
-        delegate?.downloadPhoto(with: imagePresent.image!)
+        delegate?.downloadPhoto(with: imagePresent.image!, imageURL: model.imageURL)
     }
     
     @objc private func likeTapButton(_ sender: AnyObject) {
-        like = !like
-        let image = (like) ? UIImage(named: "like") : UIImage(named: "unlike")
-        likeButton.setImage(image, for: .normal)
-        delegate?.savePhoto(url: model.imageURL)
+        let image = getImage()
+        likeButton.setImage(image.0, for: .normal)
+        if image.1 == false {
+            delegate?.savePhoto(url: model.imageURL)
+        } else {
+            delegate?.unsavePhoto(url: model.imageURL)
+        }
         updateConstraints()
     }
     
     @objc private func infoButtonTapped(_ sender: AnyObject) {
         delegate?.parsePhoto(with: model.uid)
+    }
+    
+    func getImage() -> (UIImage?, Bool) {
+        let like = (delegate?.getImage(with: model.imageURL))!
+        let image = (like) ? UIImage(named: "unlike") : UIImage(named: "like")
+        return (image, like)
     }
 }

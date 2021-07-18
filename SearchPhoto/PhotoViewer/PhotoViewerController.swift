@@ -6,14 +6,27 @@
 //
 
 import UIKit
+import CoreData
 
 protocol PhotoViewerControllerDelegate: AnyObject {
     func savePhoto(url: String)
+    func unsavePhoto(url: String)
     func parsePhoto(with imageId: String)
-    func downloadPhoto(with image: UIImage)
+    func downloadPhoto(with image: UIImage, imageURL: String)
+    func getImage(with imageURL: String) -> Bool
 }
 
 class PhotoViewerController: UIViewController, UINavigationControllerDelegate {
+    let imageData = Container.shared.setModel(with: "Images").coreDataStack
+    private let frc: NSFetchedResultsController<Images> = {
+           let request = NSFetchRequest<Images>(entityName: "Images")
+           request.sortDescriptors = [.init(key: "imageURL", ascending: true)]
+           return NSFetchedResultsController(fetchRequest: request,
+                                         managedObjectContext: Container.shared.coreDataStack.viewContext,
+                                         sectionNameKeyPath: nil,
+                                         cacheName: nil)
+    }()
+
     lazy var viewer = self.view as? PhotoViewerView
     let model: PhotoViewerModel
 	private let transition = PanelTransition()
@@ -26,6 +39,8 @@ class PhotoViewerController: UIViewController, UINavigationControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         viewer?.delegate = self
+        let image = (getImage(with: model.imageURL)) ? UIImage(named: "like") : UIImage(named: "unlike")
+        viewer?.likeButton.setImage(image, for: .normal)
         setUpNavigationBar()
     }
     
@@ -65,10 +80,17 @@ class PhotoViewerController: UIViewController, UINavigationControllerDelegate {
 }
 
 extension PhotoViewerController: PhotoViewerControllerDelegate {
+    func unsavePhoto(url: String) {
+        imageData.unlikeImages(imageURL: url + ".png")
+    }
 
-    
     func savePhoto(url: String) {
-        
+        imageData.viewContext.performAndWait {
+            let imagePath = Images(context: imageData.viewContext)
+            imagePath.imageURL = url + ".png"
+            try? imageData.viewContext.save()
+        }
+        try? frc.performFetch()
     }
 
     func parsePhoto(with imageId: String) {
@@ -78,17 +100,26 @@ extension PhotoViewerController: PhotoViewerControllerDelegate {
         httpHandler.get(baseURL: Unsplash.baseURL, endPoint: "/photos/\(imageId)", parametrs: parametrs) { result in
 			do {
 				let data = try result.get()
-//                let json = try JSONSerialization.data(withJSONObject: data, options: []) as? [String: Any]
-//                print(json)
 				let model = try decoder.decode(PhotoStatModel.self, from: data)
 				self.descriptionCreate(with: model)
 			}
 			catch { print(PhotosCollectionServiceError.decodeJSON) }
         }
     }
-
-    func downloadPhoto(with image: UIImage) {
-        
+    
+    func downloadPhoto(with image: UIImage, imageURL: String) {
+        if let pngData = image.pngData(), let path = documentDirectoryPath()?.appendingPathComponent(imageURL + ".png") {
+            try? pngData.write(to: path)
+        }
+    }
+    
+    private func documentDirectoryPath() -> URL? {
+        let path = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        return path.first
+    }
+    
+    func getImage(with imageURL: String) -> Bool {
+        return imageData.getImage(imageURL: imageURL + ".png")
     }
 }
 

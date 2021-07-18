@@ -16,8 +16,5 @@ extension Images {
         return NSFetchRequest<Images>(entityName: "Images")
     }
 
-    @NSManaged public var imageURL: String?
-    @NSManaged public var width: Double
-    @NSManaged public var height: Double
-
+    @NSManaged public var imageURL: String
 }

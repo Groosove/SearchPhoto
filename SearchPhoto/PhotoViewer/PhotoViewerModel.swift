@@ -29,12 +29,12 @@ struct PhotoStatModel: Decodable {
 }
 
 struct Exif: Decodable {
-    let make: String
-    let model: String
-    let exposure_time: String
-    let aperture: String
-    let focal_length: String
-    let iso: Int
+    let make: String?
+    let model: String?
+    let exposure_time: String?
+    let aperture: String?
+    let focal_length: String?
+    let iso: Int?
 }
 
 struct Location: Decodable {

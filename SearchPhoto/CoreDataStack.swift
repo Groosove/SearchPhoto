@@ -40,13 +40,39 @@ final class CoreDataStack {
         }
     }
 
-    func getArrayData() -> [Recent] {
+    func getAllRecents() -> [Recent] {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Recent")
         let results = try? viewContext.fetch(fetchRequest) as? [Recent]
         return results!
     }
     
-	func deleteAll() {
+    func getAllImages() -> [Images] {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Images")
+        let results = try? viewContext.fetch(fetchRequest) as? [Images]
+        return results!
+    }
+    
+    func getImage(imageURL: String) -> Bool {
+        let images = getAllImages()
+        for item in images where item.imageURL == imageURL {
+            return true
+        }
+        return false
+    }
+    
+    func unlikeImages(imageURL: String) {
+        let images = getAllImages()
+        viewContext.performAndWait {
+            for item in images {
+                if item.imageURL == imageURL {
+                    viewContext.delete(item)
+                }
+            }
+        }
+        try? viewContext.save()
+    }
+    
+	func deleteAllRecents() {
 		let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Recent")
 		let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
 		_ = try? coordinator.execute(deleteRequest, with: viewContext)
