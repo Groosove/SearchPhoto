@@ -9,10 +9,10 @@ import UIKit
 import CoreData
 
 protocol PhotoViewerControllerDelegate: AnyObject {
-    func savePhoto(url: String)
+    func savePhoto(with image: UIImage, url: String)
     func unsavePhoto(url: String)
     func parsePhoto(with imageId: String)
-    func downloadPhoto(with image: UIImage, imageURL: String)
+    func downloadPhoto(with image: UIImage)
     func getImage(with imageURL: String) -> Bool
 }
 
@@ -84,7 +84,10 @@ extension PhotoViewerController: PhotoViewerControllerDelegate {
         imageData.unlikeImages(imageURL: url + ".png")
     }
 
-    func savePhoto(url: String) {
+    func savePhoto(with image: UIImage, url: String) {
+        if let pngData = image.pngData(), let path = documentDirectoryPath()?.appendingPathComponent(url + ".png") {
+            try? pngData.write(to: path)
+        }
         imageData.viewContext.performAndWait {
             let imagePath = Images(context: imageData.viewContext)
             imagePath.imageURL = url + ".png"
@@ -107,10 +110,8 @@ extension PhotoViewerController: PhotoViewerControllerDelegate {
         }
     }
     
-    func downloadPhoto(with image: UIImage, imageURL: String) {
-        if let pngData = image.pngData(), let path = documentDirectoryPath()?.appendingPathComponent(imageURL + ".png") {
-            try? pngData.write(to: path)
-        }
+    func downloadPhoto(with image: UIImage) {
+
     }
     
     private func documentDirectoryPath() -> URL? {

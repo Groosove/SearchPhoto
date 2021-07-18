@@ -111,14 +111,14 @@ class PhotoViewerView: UIView {
     }
     
     @objc private func downloadTapButton(_ sender: AnyObject) {
-        delegate?.downloadPhoto(with: imagePresent.image!, imageURL: model.imageURL)
+        delegate?.downloadPhoto(with: imagePresent.image!)
     }
     
     @objc private func likeTapButton(_ sender: AnyObject) {
         let image = getImage()
         likeButton.setImage(image.0, for: .normal)
         if image.1 == false {
-            delegate?.savePhoto(url: model.imageURL)
+            delegate?.savePhoto(with: model.image.image!, url: model.imageURL)
         } else {
             delegate?.unsavePhoto(url: model.imageURL)
         }
