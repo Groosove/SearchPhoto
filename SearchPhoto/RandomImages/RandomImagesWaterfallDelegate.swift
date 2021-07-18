@@ -17,7 +17,6 @@ class RandomImagesWaterfallDelegate: NSObject, UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
-        let imageCell = collectionView.cellForItem(at: indexPath) as! RandomImagesViewCell
         let image = UIImageView()
         image.loadImage(imageURL: models[indexPath.item].urls.regular)
         if image.image == nil {
