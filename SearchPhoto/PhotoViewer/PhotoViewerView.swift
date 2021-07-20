@@ -118,9 +118,9 @@ class PhotoViewerView: UIView {
         let image = getImage()
         likeButton.setImage(image.0, for: .normal)
         if image.1 == false {
-            delegate?.savePhoto(with: model.image.image!, url: model.imageURL)
+            delegate?.savePhoto(with: model.image.image!, model: model)
         } else {
-            delegate?.unsavePhoto(url: model.imageURL)
+            delegate?.unsavePhoto(uid: model.uid)
         }
         updateConstraints()
     }
@@ -130,7 +130,7 @@ class PhotoViewerView: UIView {
     }
     
     func getImage() -> (UIImage?, Bool) {
-        let like = (delegate?.getImage(with: model.imageURL))!
+        let like = (delegate?.getImage(with: model.uid))!
         let image = (like) ? UIImage(named: "unlike") : UIImage(named: "like")
         return (image, like)
     }

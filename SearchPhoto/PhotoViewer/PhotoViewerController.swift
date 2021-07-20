@@ -9,8 +9,8 @@ import UIKit
 import CoreData
 
 protocol PhotoViewerControllerDelegate: AnyObject {
-    func savePhoto(with image: UIImage, url: String)
-    func unsavePhoto(url: String)
+    func savePhoto(with image: UIImage, model: PhotoViewerModel)
+    func unsavePhoto(uid: String)
     func parsePhoto(with imageId: String)
     func downloadPhoto(with image: UIImage)
     func getImage(with imageURL: String) -> Bool
@@ -39,7 +39,7 @@ class PhotoViewerController: UIViewController, UINavigationControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         viewer?.delegate = self
-        let image = (getImage(with: model.imageURL)) ? UIImage(named: "like") : UIImage(named: "unlike")
+        let image = (getImage(with: model.uid)) ? UIImage(named: "like") : UIImage(named: "unlike")
         viewer?.likeButton.setImage(image, for: .normal)
         setUpNavigationBar()
     }
@@ -80,17 +80,22 @@ class PhotoViewerController: UIViewController, UINavigationControllerDelegate {
 }
 
 extension PhotoViewerController: PhotoViewerControllerDelegate {
-    func unsavePhoto(url: String) {
-        imageData.unlikeImages(imageURL: url + ".png")
+    func unsavePhoto(uid: String) {
+        imageData.unlikeImages(uid: uid)
     }
 
-    func savePhoto(with image: UIImage, url: String) {
-        if let pngData = image.pngData(), let path = documentDirectoryPath()?.appendingPathComponent(url + ".png") {
+    func savePhoto(with image: UIImage, model: PhotoViewerModel) {
+        if let pngData = image.pngData(), let path = documentDirectoryPath()?.appendingPathComponent(model.uid) {
             try? pngData.write(to: path)
         }
+        
         imageData.viewContext.performAndWait {
             let imagePath = Images(context: imageData.viewContext)
-            imagePath.imageURL = url + ".png"
+            imagePath.uid = model.uid
+            imagePath.height = Double(model.height)
+            imagePath.width = Double(model.width)
+            imagePath.imageURL = model.imageURL
+            imagePath.name = model.name
             try? imageData.viewContext.save()
         }
         try? frc.performFetch()
@@ -120,7 +125,7 @@ extension PhotoViewerController: PhotoViewerControllerDelegate {
     }
     
     func getImage(with imageURL: String) -> Bool {
-        return imageData.getImage(imageURL: imageURL + ".png")
+        return imageData.getImage(uid: imageURL)
     }
 }
 

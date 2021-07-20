@@ -32,5 +32,11 @@ class MainTabBarController: UITabBarController {
 		navigationVC.tabBarItem.image = UIImage(named: imageName)
 		return navigationVC
 	}
+    
+    override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
+        if selectedIndex == 3 {
+            tabBar.reloadInputViews()
+        }
+    }
 }
 

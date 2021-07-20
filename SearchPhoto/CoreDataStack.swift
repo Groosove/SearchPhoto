@@ -52,24 +52,30 @@ final class CoreDataStack {
         return results!
     }
     
-    func getImage(imageURL: String) -> Bool {
+    func getImage(uid: String) -> Bool {
         let images = getAllImages()
-        for item in images where item.imageURL == imageURL {
+        for item in images where item.uid == uid {
             return true
         }
         return false
     }
     
-    func unlikeImages(imageURL: String) {
+    func unlikeImages(uid: String) {
         let images = getAllImages()
         viewContext.performAndWait {
             for item in images {
-                if item.imageURL == imageURL {
+                if item.uid == uid {
                     viewContext.delete(item)
                 }
             }
         }
         try? viewContext.save()
+    }
+    
+    func deleteAllImages() {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Images")
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+        _ = try? coordinator.execute(deleteRequest, with: viewContext)
     }
     
 	func deleteAllRecents() {

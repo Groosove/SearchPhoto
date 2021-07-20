@@ -65,7 +65,6 @@ extension RandomImagesViewController: RandomImagesDisplayLogic {
         case let .error(message):
             print("error \(message)")
         case let .result(items):
-            print("result: \(items)")
             collectionDataSource.models = items
             collectionHandler.models = items
             collectionView?.delegate = self
