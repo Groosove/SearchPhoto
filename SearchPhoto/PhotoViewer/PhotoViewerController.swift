@@ -111,7 +111,7 @@ extension PhotoViewerController: PhotoViewerControllerDelegate {
     }
     
     func downloadPhoto(with image: UIImage) {
-
+		UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
     }
     
     private func documentDirectoryPath() -> URL? {
