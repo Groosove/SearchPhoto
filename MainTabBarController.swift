@@ -2,7 +2,7 @@
 //  MainTabBarController.swift
 //  SearchPhoto
 //
-//  Created by Artur Lutfullin on 04.07.21.
+//  Created by Артур Лутфуллин on 04.07.21.
 //
 
 import UIKit
