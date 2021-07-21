@@ -106,8 +106,8 @@ extension FavoriteViewController: UICollectionViewDelegateFlowLayout {
 	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
 		let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
 			layout.sectionInset = UIEdgeInsets(top: 3, left: 3, bottom: 3, right: 3)
-			layout.minimumInteritemSpacing = 03
-			layout.minimumLineSpacing = 03
+			layout.minimumInteritemSpacing = 3
+			layout.minimumLineSpacing = 3
 			layout.invalidateLayout()
 
 		return CGSize(width: ((self.view.frame.width/3) - 4), height:((self.view.frame.width / 3) - 4));

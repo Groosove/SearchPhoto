@@ -25,6 +25,7 @@ class DescriptionView: UIView {
 		guard let location = model.location, model.location?.coordinate != nil else {
             let map = MKMapView(frame: CGRect(origin: .zero, size: CGSize(width: frame.width, height: 10)))
             map.isHidden = true
+            map.translatesAutoresizingMaskIntoConstraints = false
             return map
         }
         
@@ -47,11 +48,15 @@ class DescriptionView: UIView {
 	lazy var exifView = EXIFView(model: model.exif)
 	
 	lazy var descriptionLabel: UILabel = {
-        guard let description = model.description else { return UILabel(frame: CGRect(origin: .zero, size: CGSize(width: frame.width, height: 10))) }
+        guard let description = model.description else {
+            let label = UILabel(frame: CGRect(origin: .zero, size: CGSize(width: frame.width, height: 10)))
+            label.translatesAutoresizingMaskIntoConstraints = false
+            return label
+        }
 		let label = UILabel()
 		label.textColor = .white
-		label.text = description
 		label.numberOfLines = 0
+        label.text = description
 		label.sizeToFit()
 		label.translatesAutoresizingMaskIntoConstraints = false
 		return label
@@ -101,8 +106,8 @@ class DescriptionView: UIView {
 
 		let descriptionLabelConstraints = [
 			descriptionLabel.topAnchor.constraint(equalTo: scrollView.topAnchor),
-            descriptionLabel.widthAnchor.constraint(equalToConstant: descriptionLabel.frame.width),
-            descriptionLabel.heightAnchor.constraint(equalToConstant: descriptionLabel.frame.height),
+            descriptionLabel.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
+//            descriptionLabel.heightAnchor.constraint(equalToConstant: descriptionLabel.frame.height),
 		]
 
 		let mapViewConstraints = [
