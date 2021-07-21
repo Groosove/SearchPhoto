@@ -29,6 +29,11 @@ class FavoriteViewController: UIViewController {
         setUpNavigationBar()
         setUpCollectionView()
     }
+	
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(true)
+		viewDidLoad()
+	}
     
 
     private func setUpNavigationBar() {
@@ -39,8 +44,6 @@ class FavoriteViewController: UIViewController {
     
     private func setUpCollectionView() {
         let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: 100, height: 100)
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
         collectionView = UICollectionView(frame: self.view.bounds, collectionViewLayout: layout)
         collectionView?.register(FavoriteViewCell.self, forCellWithReuseIdentifier: FavoriteViewCell.identifier)
         collectionView?.dataSource = self
@@ -50,7 +53,6 @@ class FavoriteViewController: UIViewController {
         
     private func getImages() -> [UIImage?] {
         let imagePaths = imageData.getAllImages()
-        imagePaths.forEach { print($0.imageURL) }
         let documentDirectory = FileManager.SearchPathDirectory.documentDirectory
         let userDomainMask = FileManager.SearchPathDomainMask.userDomainMask
         let paths = NSSearchPathForDirectoriesInDomains(documentDirectory, userDomainMask, true)
@@ -98,4 +100,16 @@ extension FavoriteViewController: UICollectionViewDelegate {
         let result = PhotoViewerModel(uid: item.uid, name: item.name, image: image, width: CGFloat(item.width), height: CGFloat(item.height), imageURL: item.imageURL)
         openViewer(with: result)
      }
+}
+
+extension FavoriteViewController: UICollectionViewDelegateFlowLayout {
+	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+		let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
+			layout.sectionInset = UIEdgeInsets(top: 3, left: 3, bottom: 3, right: 3)
+			layout.minimumInteritemSpacing = 03
+			layout.minimumLineSpacing = 03
+			layout.invalidateLayout()
+
+		return CGSize(width: ((self.view.frame.width/3) - 4), height:((self.view.frame.width / 3) - 4));
+	}
 }
