@@ -12,6 +12,7 @@ struct PhotosCollectionModel: Decodable {
     let id: String
     let width: CGFloat
     let height: CGFloat
+    let blur_hash: String
     let user: User
 	let urls: Links
 }

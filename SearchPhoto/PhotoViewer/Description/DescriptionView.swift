@@ -107,7 +107,6 @@ class DescriptionView: UIView {
 		let descriptionLabelConstraints = [
 			descriptionLabel.topAnchor.constraint(equalTo: scrollView.topAnchor),
             descriptionLabel.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
-//            descriptionLabel.heightAnchor.constraint(equalToConstant: descriptionLabel.frame.height),
 		]
 
 		let mapViewConstraints = [

@@ -59,11 +59,10 @@ class PhotosTableViewCell: UITableViewCell {
 		NSLayoutConstraint.activate(photoViewConstraints)
 	}
 	
-	func configure(image: String, photograph: String) {
-		DispatchQueue.main.async {
-			self.photoView.loadImage(imageURL: image)
-            self.photographLabel.text = photograph
-        }
+    func configure(image: String, photograph: String, blur_hash: String) {
+        self.photoView.image = UIImage(blurHash: blur_hash, size: CGSize(width: 32, height: 32))
+        self.photoView.loadImage(imageURL: image)
+        self.photographLabel.text = photograph
     }
     
 	required init?(coder: NSCoder) {

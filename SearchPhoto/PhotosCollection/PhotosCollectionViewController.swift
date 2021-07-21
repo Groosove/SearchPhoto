@@ -35,6 +35,7 @@ class PhotosCollectionViewController: UIViewController {
 	var tableHandler = PhotosTableViewDelegate()
 	var recentTableDataSource = RecentTableViewDataStore()
     var recentTableHandler = RecentTableViewDelegate()
+    
     init(interactor: PhotosCollectionBusinessLogic, initialState: PhotosCollection.ViewControllerState = .loading) {
         self.interactor = interactor
         self.state = initialState

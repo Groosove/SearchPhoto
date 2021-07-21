@@ -21,7 +21,9 @@ class PhotosTableViewDataStore: NSObject, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: PhotosTableViewCell.identifier, for: indexPath) as? PhotosTableViewCell
         guard let recent = cell else { return UITableViewCell() }
 		DispatchQueue.global(qos: .userInteractive).sync {
-            recent.configure(image: self.models[indexPath.row].urls.regular, photograph: self.models[indexPath.row].user.name)
+            recent.configure(image: self.models[indexPath.row].urls.regular,
+                             photograph: self.models[indexPath.row].user.name,
+                             blur_hash: self.models[indexPath.row].blur_hash)
         }
         return recent
     }
