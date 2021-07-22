@@ -12,18 +12,18 @@ class PhotosTableViewDataStore: NSObject, UITableViewDataSource {
 	init (models: [PhotosCollectionModel] = []) {
         self.models = models
     }
-    
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         models.count
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: PhotosTableViewCell.identifier, for: indexPath) as? PhotosTableViewCell
         guard let recent = cell else { return UITableViewCell() }
 		DispatchQueue.global(qos: .userInteractive).sync {
             recent.configure(image: self.models[indexPath.row].urls.regular,
                              photograph: self.models[indexPath.row].user.name,
-                             blur_hash: self.models[indexPath.row].blur_hash)
+							 blurHash: self.models[indexPath.row].blurHash)
         }
         return recent
     }

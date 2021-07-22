@@ -9,12 +9,21 @@ struct UnsplashPhoto: Decodable {
 }
 
 struct PhotosCollectionModel: Decodable {
-    let id: String
+    let uid: String
     let width: CGFloat
     let height: CGFloat
-    let blur_hash: String
+    let blurHash: String
     let user: User
 	let urls: Links
+
+	enum CodingKeys: String, CodingKey {
+		case uid = "id"
+		case width
+		case height
+		case blurHash = "blur_hash"
+		case user
+		case urls
+	}
 }
 
 struct User: Decodable {
@@ -24,5 +33,3 @@ struct User: Decodable {
 struct Links: Decodable {
 	let regular: String
 }
-
-

@@ -4,8 +4,8 @@
 //
 
 enum RandomImages {
-    // MARK: Use cases
-    enum Something {
+    enum LoadImage {
+		// swiftlint:disable nesting
         struct Request {
         }
 
@@ -16,6 +16,7 @@ enum RandomImages {
         struct ViewModel {
             var state: ViewControllerState
         }
+		// swiftlint:enable nesting
     }
 
     enum RandomImagesRequestResult {

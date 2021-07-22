@@ -11,7 +11,7 @@ protocol PhotosCollectionServiceProtocol {
 enum PhotosCollectionServiceError: Error {
     case decodeJSON
 }
-/// Получает данные для модуля PhotosCollection
+
 class PhotosCollectionService: PhotosCollectionServiceProtocol {
 	let httpHandler = HTTPHandler()
 	private let decoder: JSONDecoder = JSONDecoder()
@@ -24,14 +24,10 @@ class PhotosCollectionService: PhotosCollectionServiceProtocol {
                 do {
                     let models = try self.decoder.decode(UnsplashPhoto.self, from: data)
                     completion(models.results, nil)
-                }
-                catch { completion(nil, PhotosCollectionServiceError.decodeJSON) }
+                } catch { completion(nil, PhotosCollectionServiceError.decodeJSON) }
             case let .failure(error):
                 completion(nil, error)
             }
         }
     }
 }
-    
-
-

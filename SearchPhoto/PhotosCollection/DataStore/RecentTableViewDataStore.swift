@@ -12,11 +12,11 @@ class RecentTableViewDataStore: NSObject, UITableViewDataSource {
     init (models: [Recent] = []) {
         self.models = models
     }
-    
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         models.count
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: RecentTableViewCell.identifier, for: indexPath) as? RecentTableViewCell
         guard let recent = cell else { return UITableViewCell() }

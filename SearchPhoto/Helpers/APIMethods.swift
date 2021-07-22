@@ -9,8 +9,8 @@ import Foundation
 
 final class HTTPHandler {
     private let session = URLSession.shared
-    
-	func get(baseURL: String = "", endPoint: String = "", parametrs: [String : String] = [:], completion: @escaping (Result<Data, NetworkError>) -> Void) {
+
+	func get(baseURL: String = "", endPoint: String = "", parametrs: [String: String] = [:], completion: @escaping (Result<Data, NetworkError>) -> Void) {
         var components = URLComponents(string: baseURL)
         components?.queryItems = parametrs.compactMap { URLQueryItem(name: $0, value: $1) }
         components?.path = endPoint
@@ -19,16 +19,16 @@ final class HTTPHandler {
         request.httpMethod = HttpMethod.get.rawValue
         task(with: request, completion: completion)
     }
-    
+
     func task(with request: URLRequest, completion: @escaping (Result<Data, NetworkError>) -> Void) {
-        let task = session.dataTask(with: request) { (data, response, error) in
+        let task = session.dataTask(with: request) { (data, _, error) in
             let result: Result<Data, NetworkError>
             defer {
                 DispatchQueue.main.async {
                     completion(result)
                 }
             }
-            
+
             switch (data, error) {
             case let (.some(data), .none):
                 result = .success(data)

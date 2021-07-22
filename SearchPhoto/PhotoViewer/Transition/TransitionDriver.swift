@@ -8,19 +8,17 @@
 import UIKit
 
 class TransitionDriver: UIPercentDrivenInteractiveTransition {
-    
+
     // MARK: - Linking
     func link(to controller: UIViewController) {
         presentedController = controller
-        
         panRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handle(recognizer:)))
         presentedController?.view.addGestureRecognizer(panRecognizer!)
     }
-    
+
     private weak var presentedController: UIViewController?
     private var panRecognizer: UIPanGestureRecognizer?
-    
-    
+
     // MARK: - Override
     override var wantsInteractiveStart: Bool {
         get {
@@ -32,63 +30,64 @@ class TransitionDriver: UIPercentDrivenInteractiveTransition {
                 return gestureIsActive
             }
         }
-        
+		// swiftlint:disable unused_setter_value
         set { }
+		// swiftlint:enable unused_setter_value
     }
-    
+
     // MARK: - Direction
     var direction: TransitionDirection = .present
-    
-    @objc private func handle(recognizer r: UIPanGestureRecognizer) {
+
+    @objc private func handle(recognizer: UIPanGestureRecognizer) {
         switch direction {
         case .present:
-            handlePresentation(recognizer: r)
+            handlePresentation(recognizer: recognizer)
         case .dismiss:
-            handleDismiss(recognizer: r)
+            handleDismiss(recognizer: recognizer)
         }
     }
 }
 
 // MARK: - Gesture Handling
 extension TransitionDriver {
-    
-    private func handlePresentation(recognizer r: UIPanGestureRecognizer) {
-        switch r.state {
+
+    private func handlePresentation(recognizer: UIPanGestureRecognizer) {
+        switch recognizer.state {
         case .began:
             pause()
         case .changed:
-            let increment = -r.incrementToBottom(maxTranslation: maxTranslation)
+            let increment = -recognizer.incrementToBottom(maxTranslation: maxTranslation)
             update(percentComplete + increment)
-            
+
         case .ended, .cancelled:
-            if r.isProjectedToDownHalf(maxTranslation: maxTranslation) {
+            if recognizer.isProjectedToDownHalf(maxTranslation: maxTranslation) {
                 cancel()
             } else {
                 finish()
             }
-            
+
         case .failed:
             cancel()
-            
+
         default:
             break
         }
     }
-    
-    private func handleDismiss(recognizer r: UIPanGestureRecognizer) {
-        switch r.state {
+
+    private func handleDismiss(recognizer: UIPanGestureRecognizer) {
+        switch recognizer.state {
         case .began:
             pause()
-            
+
             if !isRunning {
                 presentedController?.dismiss(animated: true)
             }
-        
+
         case .changed:
-            update(percentComplete + r.incrementToBottom(maxTranslation: maxTranslation))
-            
+            update(percentComplete + recognizer.incrementToBottom(maxTranslation: maxTranslation))
+
         case .ended, .cancelled:
-            if r.isProjectedToDownHalf(maxTranslation: maxTranslation) {
+            if recognizer.isProjectedToDownHalf(maxTranslation: maxTranslation) {
                 finish()
             } else {
                 cancel()
@@ -96,12 +95,12 @@ extension TransitionDriver {
 
         case .failed:
             cancel()
-            
+
         default:
             break
         }
     }
-    
+
     var maxTranslation: CGFloat {
         return presentedController?.view.frame.height ?? 0
     }
@@ -115,14 +114,14 @@ private extension UIPanGestureRecognizer {
     func isProjectedToDownHalf(maxTranslation: CGFloat) -> Bool {
         let endLocation = projectedLocation(decelerationRate: .fast)
         let isPresentationCompleted = endLocation.y > maxTranslation / 2
-        
+
         return isPresentationCompleted
     }
-    
+
     func incrementToBottom(maxTranslation: CGFloat) -> CGFloat {
         let translation = self.translation(in: view).y
         setTranslation(.zero, in: nil)
-        
+
         let percentIncrement = translation / maxTranslation
         return percentIncrement
     }

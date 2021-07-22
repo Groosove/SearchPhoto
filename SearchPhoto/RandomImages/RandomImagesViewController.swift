@@ -5,8 +5,8 @@
 
 import UIKit
 
-protocol RandomImagesDisplayLogic: class {
-    func displaySomething(viewModel: RandomImages.Something.ViewModel)
+protocol RandomImagesDisplayLogic: AnyObject {
+    func displaySomething(viewModel: RandomImages.LoadImage.ViewModel)
 }
 
 protocol RandomImagesViewControllerDelegate: AnyObject {
@@ -20,7 +20,7 @@ class RandomImagesViewController: UIViewController {
     var collectionDataSource =  RandomImagesDataStore()
     var collectionHandler = RandomImagesWaterfallDelegate()
     lazy var collectionView = self.view as? RandomImagesView
-    
+
     init(interactor: RandomImagesBusinessLogic, initialState: RandomImages.ViewControllerState = .loading) {
         self.interactor = interactor
         self.state = initialState
@@ -41,19 +41,18 @@ class RandomImagesViewController: UIViewController {
         loadImages()
     }
 
-    // MARK: -- load Images
+    // MARK: - load Images
 
-    
     private func setUpNavigationBar() {
         navigationController?.navigationBar.isTranslucent = true
         navigationController?.navigationBar.barTintColor = .black
         navigationItem.title = "Random Images"
-        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.white]
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
     }
 }
 
 extension RandomImagesViewController: RandomImagesDisplayLogic {
-    func displaySomething(viewModel: RandomImages.Something.ViewModel) {
+    func displaySomething(viewModel: RandomImages.LoadImage.ViewModel) {
         display(newState: viewModel.state)
     }
 
@@ -91,9 +90,9 @@ extension RandomImagesViewController: RandomImagesViewControllerDelegate {
         navigationController?.modalPresentationStyle = .fullScreen
         self.navigationController?.present(navVC, animated: true)
     }
-    
+
     func loadImages() {
-        let request = RandomImages.Something.Request()
+        let request = RandomImages.LoadImage.Request()
         interactor.loadImages(request: request)
     }
 }

@@ -26,16 +26,15 @@ class PhotosCollectionViewController: UIViewController {
                                       sectionNameKeyPath: nil,
                                       cacheName: nil)
     }()
-
     let interactor: PhotosCollectionBusinessLogic
     var state: PhotosCollection.ViewControllerState
     let tableView: PhotosTablieView
     let recentTableView: RecentTableView
-	var tableDataSource = PhotosTableViewDataStore()
-	var tableHandler = PhotosTableViewDelegate()
-	var recentTableDataSource = RecentTableViewDataStore()
-    var recentTableHandler = RecentTableViewDelegate()
-    
+	let tableDataSource = PhotosTableViewDataStore()
+	let tableHandler = PhotosTableViewDelegate()
+	let recentTableDataSource = RecentTableViewDataStore()
+    let recentTableHandler = RecentTableViewDelegate()
+
     init(interactor: PhotosCollectionBusinessLogic, initialState: PhotosCollection.ViewControllerState = .loading) {
         self.interactor = interactor
         self.state = initialState
@@ -43,17 +42,17 @@ class PhotosCollectionViewController: UIViewController {
         tableView = PhotosTablieView(frame: UIScreen.main.bounds)
         super.init(nibName: nil, bundle: nil)
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.addSubview(recentTableView)
 		setUpNavigationBar()
 		setUpSearchBar()
+        self.view.addSubview(recentTableView)
         updateRecents()
         recentTableView.delegate = self
     }
-    
-    //MARK: -- Find Photo
+
+    // MARK: - Find Photo
     func findPhoto(with search: String) {
         let request = PhotosCollection.Something.Request(search: search)
         interactor.findPhoto(request: request)
@@ -66,13 +65,13 @@ class PhotosCollectionViewController: UIViewController {
         }
         try? frc.performFetch()
     }
-    
+
 	private func setUpNavigationBar() {
 		navigationController?.navigationBar.isTranslucent = false
 		navigationController?.navigationBar.barTintColor = .black
 		navigationItem.hidesSearchBarWhenScrolling = true
 	}
-	
+
 	required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -89,7 +88,7 @@ extension PhotosCollectionViewController: PhotosCollectionDisplayLogic {
         case .loading:
             print("loading...")
         case let .error(message):
-            print("error \(message)")
+			createActivity(message: message)
         case let .result(items):
 			tableHandler.models = items
 			tableDataSource.models = items
@@ -98,23 +97,31 @@ extension PhotosCollectionViewController: PhotosCollectionDisplayLogic {
                                           dataSource: tableDataSource,
                                           tabBarHeight: tabBarController?.tabBar.frame.height ?? 44)
         case .emptyResult:
-            print("empty result")
+            createActivity(message: "Check your internet connection")
         }
     }
+
+	private func createActivity(message: String) {
+		let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+		alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"),
+									  style: .default,
+									  handler: { _ in NSLog("The \"OK\" alert occured.")}))
+		self.present(alert, animated: true, completion: nil)
+	}
 }
 
 extension PhotosCollectionViewController: UISearchBarDelegate {
 	private func setUpSearchBar() {
 		let searchController = UISearchController(searchResultsController: nil)
 		navigationItem.searchController = searchController
-		searchController.hidesNavigationBarDuringPresentation = true
 		searchController.obscuresBackgroundDuringPresentation = false
+		searchController.hidesNavigationBarDuringPresentation = false
 		searchController.searchBar.tintColor = .white
 		searchController.searchBar.searchTextField.textColor = .white
         searchController.searchBar.searchTextField.clearButtonMode = .never
 		searchController.searchBar.delegate = self
 	}
-	
+
 	func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         if !tableView.isDescendant(of: self.view) {
             view.addSubview(tableView)
@@ -122,13 +129,13 @@ extension PhotosCollectionViewController: UISearchBarDelegate {
         recentTableView.removeFromSuperview()
         findPhoto(with: searchBar.text!.capitalized)
 	}
-    
+
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         tableView.removeFromSuperview()
         view.addSubview(recentTableView)
         updateRecents()
     }
-    
+
     private func updateRecents() {
         recentData.backgroundContext.performAndWait {
             let recents = recentData.getAllRecents()
@@ -150,17 +157,16 @@ extension PhotosCollectionViewController: PhotosCollectionViewControllerDelegate
 		navigationController?.modalPresentationStyle = .fullScreen
         self.navigationController?.present(navVC, animated: true)
 	}
-    
+
     func deleteAllRecents() {
         recentData.deleteAllRecents()
         try? frc.performFetch()
         updateRecents()
     }
-    
+
     func updateSearchResults(with text: String) {
         navigationItem.searchController?.searchBar.text = text
         searchBarSearchButtonClicked(navigationItem.searchController!.searchBar)
         navigationItem.searchController?.searchBar.becomeFirstResponder()
     }
 }
-

@@ -14,7 +14,7 @@ protocol DescriptionViewControllerDelegate: AnyObject {
 class DescriptionViewController: UIViewController {
 	lazy var descView = self.view as? DescriptionView
 	let model: PhotoStatModel
-	
+
 	override func loadView() {
 		super.loadView()
 		self.view = DescriptionView(model: model)
@@ -24,12 +24,12 @@ class DescriptionViewController: UIViewController {
 		descView?.delegate = self
 		view.backgroundColor = .black
 	}
-	
+
 	init(model: PhotoStatModel) {
 		self.model = model
 		super.init(nibName: nil, bundle: nil)
 	}
-		
+
 	required init?(coder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}

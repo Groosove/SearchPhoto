@@ -28,7 +28,7 @@ final class CoreDataStack {
 			}
 		}
 	}
-    
+
     func saveContext (context: NSManagedObjectContext) {
         if context.hasChanges {
             do {
@@ -45,13 +45,13 @@ final class CoreDataStack {
         let results = try? viewContext.fetch(fetchRequest) as? [Recent]
         return results!
     }
-    
+
     func getAllImages() -> [Images] {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Images")
         let results = try? viewContext.fetch(fetchRequest) as? [Images]
         return results!
     }
-    
+
     func getImage(uid: String) -> Bool {
         let images = getAllImages()
         for item in images where item.uid == uid {
@@ -59,25 +59,23 @@ final class CoreDataStack {
         }
         return false
     }
-    
+
     func unlikeImages(uid: String) {
         let images = getAllImages()
         viewContext.performAndWait {
-            for item in images {
-                if item.uid == uid {
-                    viewContext.delete(item)
-                }
+            for item in images where item.uid == uid {
+				viewContext.delete(item)
             }
         }
         try? viewContext.save()
     }
-    
+
     func deleteAllImages() {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Images")
         let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
         _ = try? coordinator.execute(deleteRequest, with: viewContext)
     }
-    
+
 	func deleteAllRecents() {
 		let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Recent")
 		let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)

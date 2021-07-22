@@ -24,7 +24,7 @@ class PhotosTablieView: UIView {
 		makeConstraints()
 		backgroundColor = .black
 	}
-	
+
     private func addSubviews() {
         addSubview(tableView)
     }
@@ -38,14 +38,14 @@ class PhotosTablieView: UIView {
 		]
 		NSLayoutConstraint.activate(tableViewViewConstaints)
     }
-	
+
     func updateTableViewData(delegate: UITableViewDelegate, dataSource: UITableViewDataSource, tabBarHeight: CGFloat) {
         tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: tabBarHeight, right: 0)
 		tableView.delegate = delegate
 		tableView.dataSource = dataSource
         tableView.reloadData()
 	}
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

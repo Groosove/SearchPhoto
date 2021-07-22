@@ -4,7 +4,7 @@
 //
 
 protocol RandomImagesBusinessLogic {
-    func loadImages(request: RandomImages.Something.Request)
+    func loadImages(request: RandomImages.LoadImage.Request)
 }
 
 /// Класс для описания бизнес-логики модуля RandomImages
@@ -16,9 +16,9 @@ class RandomImagesInteractor: RandomImagesBusinessLogic {
         self.presenter = presenter
         self.provider = provider
     }
-    
-    // MARK: Do something
-    func loadImages(request: RandomImages.Something.Request) {
+
+    // MARK: - Do something
+    func loadImages(request: RandomImages.LoadImage.Request) {
         provider.getItems { (items, error) in
             let result: RandomImages.RandomImagesRequestResult
             if let items = items {
@@ -28,7 +28,7 @@ class RandomImagesInteractor: RandomImagesBusinessLogic {
             } else {
                 result = .failure(.someError(message: "No Data"))
             }
-            self.presenter.presentSomething(response: RandomImages.Something.Response(result: result))
+            self.presenter.presentSomething(response: RandomImages.LoadImage.Response(result: result))
         }
     }
 }

@@ -13,16 +13,19 @@ class RecentTableViewDelegate: NSObject, UITableViewDelegate {
     init(models: [Recent] = []) {
         self.models = models
     }
-    
+
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         return 44
     }
-    
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let searchBar = UISearchBar()
         searchBar.text = models[indexPath.row].search
         delegate?.updateSearchResults(with: models[indexPath.row].search)
     }
-    
+
+	@objc private func deleteRecents() {
+		delegate?.deleteAllRecents()
+	}
 }

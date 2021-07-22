@@ -12,7 +12,7 @@ class RandomImagesBuilder: ModuleBuilder {
     func set(initialState: RandomImages.ViewControllerState) -> RandomImagesBuilder {
         self.initialState = initialState
         return self
-    } 
+	}
 
     func build() -> UIViewController {
         let presenter = RandomImagesPresenter()

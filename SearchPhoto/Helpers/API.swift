@@ -19,7 +19,7 @@ enum HttpMethod: String {
 
 enum Unsplash {
     static let baseURL = "https://api.unsplash.com"
-    
+
 	enum API {
 		static let clientId = "4SdaT4avzkW98M_0IJfpBZkctWHFsDvytusV10nP-k0"
 	}

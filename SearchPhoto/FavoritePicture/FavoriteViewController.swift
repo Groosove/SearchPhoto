@@ -21,7 +21,7 @@ class FavoriteViewController: UIViewController {
                                          sectionNameKeyPath: nil,
                                          cacheName: nil)
     }()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         images = getImages()
@@ -29,19 +29,18 @@ class FavoriteViewController: UIViewController {
         setUpNavigationBar()
         setUpCollectionView()
     }
-	
+
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(true)
 		viewDidLoad()
 	}
-    
 
     private func setUpNavigationBar() {
         navigationController?.navigationBar.barTintColor = .black
         navigationItem.title = "Favorite Photos"
-        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.white]
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
     }
-    
+
     private func setUpCollectionView() {
         let layout = UICollectionViewFlowLayout()
         collectionView = UICollectionView(frame: self.view.bounds, collectionViewLayout: layout)
@@ -50,13 +49,13 @@ class FavoriteViewController: UIViewController {
         collectionView?.delegate = self
         self.view.addSubview(collectionView ?? UICollectionView())
     }
-        
+
     private func getImages() -> [UIImage?] {
         let imagePaths = imageData.getAllImages()
         let documentDirectory = FileManager.SearchPathDirectory.documentDirectory
         let userDomainMask = FileManager.SearchPathDomainMask.userDomainMask
         let paths = NSSearchPathForDirectoriesInDomains(documentDirectory, userDomainMask, true)
-        
+
         if let dirPath = paths.first {
             var result = [UIImage?]()
             for item in imagePaths {
@@ -68,7 +67,7 @@ class FavoriteViewController: UIViewController {
         }
         return []
     }
-    
+
     private func openViewer(with model: PhotoViewerModel) {
         let rootVC = PhotoViewerController(with: model)
         let navVC = CustomNavigationController(rootViewController: rootVC)
@@ -82,7 +81,7 @@ extension FavoriteViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return images.count
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FavoriteViewCell.identifier, for: indexPath)
         guard let imagePhoto = cell as? FavoriteViewCell else { return UICollectionViewCell() }
@@ -104,12 +103,12 @@ extension FavoriteViewController: UICollectionViewDelegate {
 
 extension FavoriteViewController: UICollectionViewDelegateFlowLayout {
 	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-		let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
-			layout.sectionInset = UIEdgeInsets(top: 3, left: 3, bottom: 3, right: 3)
-			layout.minimumInteritemSpacing = 3
-			layout.minimumLineSpacing = 3
-			layout.invalidateLayout()
+		let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout
+		layout?.sectionInset = UIEdgeInsets(top: 3, left: 3, bottom: 3, right: 3)
+		layout?.minimumInteritemSpacing = 3
+		layout?.minimumLineSpacing = 3
+		layout?.invalidateLayout()
 
-		return CGSize(width: ((self.view.frame.width/3) - 4), height:((self.view.frame.width / 3) - 4));
+		return CGSize(width: (self.view.frame.width/3) - 4, height: (self.view.frame.width / 3) - 4)
 	}
 }

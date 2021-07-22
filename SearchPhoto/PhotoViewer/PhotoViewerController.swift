@@ -26,16 +26,15 @@ class PhotoViewerController: UIViewController, UINavigationControllerDelegate {
                                          sectionNameKeyPath: nil,
                                          cacheName: nil)
     }()
-
     lazy var viewer = self.view as? PhotoViewerView
     let model: PhotoViewerModel
 	private let transition = PanelTransition()
-	
+
     override func loadView() {
 		super.loadView()
         self.view = PhotoViewerView(model: model)
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         viewer?.delegate = self
@@ -43,32 +42,32 @@ class PhotoViewerController: UIViewController, UINavigationControllerDelegate {
         viewer?.likeButton.setImage(image, for: .normal)
         setUpNavigationBar()
     }
-    
+
     init(with model: PhotoViewerModel) {
         self.model = model
         super.init(nibName: nil, bundle: nil)
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    // MARK: -- Setup NavigationBar
+
+    // MARK: - Setup NavigationBar
     private func setUpNavigationBar() {
         navigationController?.navigationBar.barTintColor = .black
         navigationController?.navigationBar.tintColor = .white
         navigationItem.hidesSearchBarWhenScrolling = true
         navigationItem.title = model.name
-        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.white]
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "cross"), style: .done, target: self, action: #selector(dismissController))
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(shareImage))
     }
-    
-	// MARK: -- Dissmiss Controller
+
+	// MARK: - Dissmiss Controller
     @objc private func dismissController() {
         dismiss(animated: true, completion: nil)
     }
-    
+
     @objc private func shareImage() {
         let imageToShare = [model.image.image!]
         let activityVC = UIActivityViewController(activityItems: imageToShare, applicationActivities: nil)
@@ -76,7 +75,6 @@ class PhotoViewerController: UIViewController, UINavigationControllerDelegate {
         activityVC.excludedActivityTypes = [ UIActivity.ActivityType.airDrop, UIActivity.ActivityType.postToFacebook ]
         self.present(activityVC, animated: true, completion: nil)
     }
-	
 }
 
 extension PhotoViewerController: PhotoViewerControllerDelegate {
@@ -88,7 +86,7 @@ extension PhotoViewerController: PhotoViewerControllerDelegate {
         if let pngData = image.pngData(), let path = documentDirectoryPath()?.appendingPathComponent(model.uid) {
             try? pngData.write(to: path)
         }
-        
+
         imageData.viewContext.performAndWait {
             let imagePath = Images(context: imageData.viewContext)
             imagePath.uid = model.uid
@@ -110,20 +108,19 @@ extension PhotoViewerController: PhotoViewerControllerDelegate {
 				let data = try result.get()
 				let model = try decoder.decode(PhotoStatModel.self, from: data)
 				self.descriptionCreate(with: model)
-			}
-			catch { print(PhotosCollectionServiceError.decodeJSON) }
+			} catch { print(PhotosCollectionServiceError.decodeJSON) }
         }
     }
-    
+
     func downloadPhoto(with image: UIImage) {
 		UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
     }
-    
+
     private func documentDirectoryPath() -> URL? {
         let path = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         return path.first
     }
-    
+
     func getImage(with imageURL: String) -> Bool {
         return imageData.getImage(uid: imageURL)
     }

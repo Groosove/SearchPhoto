@@ -18,23 +18,41 @@ struct PhotoViewerModel {
 }
 
 struct PhotoStatModel: Decodable {
-    let created_at: String
-    let id: String
+    let createAt: String
+    let uid: String
     let downloads: Int
     let likes: Int
     let description: String?
     let exif: Exif?
     let location: Location?
-    
+
+	enum CodingKeys: String, CodingKey {
+		case uid = "id"
+		case downloads
+		case likes
+		case description
+		case location
+		case exif
+		case createAt = "created_at"
+	}
 }
 
 struct Exif: Decodable {
     let make: String?
     let model: String?
-    let exposure_time: String?
+    let exposureTime: String?
     let aperture: String?
-    let focal_length: String?
+    let focalLength: String?
     let iso: Int?
+
+	enum CodingKeys: String, CodingKey {
+		case make
+		case model
+		case exposureTime = "exposure_time"
+		case aperture
+		case focalLength = "focal_length"
+		case iso
+	}
 }
 
 struct Location: Decodable {
