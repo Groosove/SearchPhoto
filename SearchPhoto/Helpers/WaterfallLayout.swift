@@ -136,7 +136,6 @@ class WaterfallLayout: UICollectionViewLayout {
             layoutAttributes.append(attributes)
             frames.append(attributes.frame)
         }
-
         contentHeight = columnHeights.max() ?? 0
 
         if numberOfItems > 0 {
