@@ -18,12 +18,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         stack.load()
 		window = UIWindow(frame: UIScreen.main.bounds)
 		window?.rootViewController = MainTabBarController()
-//        if isFirstLaunch {
-//            window?.rootViewController = MainTabBarController()
-//        } else {
+        if isFirstLaunch {
+            window?.rootViewController = MainTabBarController()
+        } else {
             window?.rootViewController = PageLauncherController()
-//            UserDefaults.standard.set(true, forKey: "isFirstLaunch")
-//        }
+            UserDefaults.standard.set(true, forKey: "isFirstLaunch")
+        }
 		window?.makeKeyAndVisible()
 		return true
 	}

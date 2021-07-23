@@ -38,7 +38,7 @@ extension HelloPageViewContoller: UIPageViewControllerDataSource {
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         guard let viewControllerIndex = pages.firstIndex(of: viewController) else { return nil }
         let previousIndex = viewControllerIndex - 1
-        guard previousIndex >= 0 else { return pages.last }
+        guard previousIndex >= 0 else { return pages[0] }
         guard pages.count > previousIndex else { return nil }
 
         return pages[previousIndex]
@@ -47,23 +47,8 @@ extension HelloPageViewContoller: UIPageViewControllerDataSource {
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
         guard let viewControllerIndex = pages.firstIndex(of: viewController) else { return nil }
         let nextIndex = viewControllerIndex + 1
-        guard nextIndex < pages.count else { return pages.first }
         guard pages.count > nextIndex else { return nil }
-
         return pages[nextIndex]
-    }
-}
-
-extension HelloPageViewContoller: UIPageViewControllerDelegate {
-    func presentationCount(for pageViewController: UIPageViewController) -> Int {
-        pages.count
-    }
-    
-    func presentationIndex(for pageViewController: UIPageViewController) -> Int {
-        guard let firstVC = pageViewController.viewControllers?.first,
-            let firstVCIndex = pages.firstIndex(of: firstVC) else { return 0 }
-
-        return firstVCIndex
     }
 }
 
@@ -93,7 +78,6 @@ class HomeScreenController: UIViewController {
 	
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .red
         addSubviews()
 		if isLast {
 			dismissButton.isHidden = false
@@ -139,7 +123,7 @@ class PageLauncherController: UIViewController {
     let myContainerView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .gray
+		view.backgroundColor = .white
         return view
     }()
     var thePageVC = HelloPageViewContoller()
@@ -159,18 +143,20 @@ class PageLauncherController: UIViewController {
 
 	private func makeConstraints() {
 		thePageVC.view.translatesAutoresizingMaskIntoConstraints = false
-		NSLayoutConstraint.activate([
+		let myContainerViewConstraints = [
 			myContainerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
 			myContainerView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
 			myContainerView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-			myContainerView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-		])
-		
-		NSLayoutConstraint.activate([
+			myContainerView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+		]
+		let thePageVCConstraints = [
 			thePageVC.view.topAnchor.constraint(equalTo: myContainerView.topAnchor),
 			thePageVC.view.bottomAnchor.constraint(equalTo: myContainerView.bottomAnchor),
 			thePageVC.view.leadingAnchor.constraint(equalTo: myContainerView.leadingAnchor),
-			thePageVC.view.trailingAnchor.constraint(equalTo: myContainerView.trailingAnchor),
-		])
+			thePageVC.view.trailingAnchor.constraint(equalTo: myContainerView.trailingAnchor)
+		]
+		
+		NSLayoutConstraint.activate(thePageVCConstraints)
+		NSLayoutConstraint.activate(myContainerViewConstraints)
 	}
 }
