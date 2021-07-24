@@ -54,7 +54,6 @@ class PhotosCollectionViewController: UIViewController {
 		if !recentTableView.isDescendant(of: self.view) {
 			view.addSubview(recentTableView)
 			updateRecents()
-			recentTableView.delegate = self
 		}
 	}
 
