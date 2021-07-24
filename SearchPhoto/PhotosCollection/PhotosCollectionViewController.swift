@@ -16,7 +16,9 @@ protocol PhotosCollectionViewControllerDelegate: AnyObject {
     func deleteAllRecents()
 }
 
-class PhotosCollectionViewController: UIViewController {
+final class PhotosCollectionViewController: UIViewController {
+    
+    //MARK: - Properties
     private let recentData = Container.shared.setModel(with: "Recent").coreDataStack
     private let frc: NSFetchedResultsController<Recent> = {
         let request = NSFetchRequest<Recent>(entityName: "Recent")
@@ -26,21 +28,23 @@ class PhotosCollectionViewController: UIViewController {
                                       sectionNameKeyPath: nil,
                                       cacheName: nil)
     }()
-    let interactor: PhotosCollectionBusinessLogic
-    var state: PhotosCollection.ViewControllerState
-    var tableView: PhotosTablieView!
-    var recentTableView: RecentTableView!
-	let tableDataSource = PhotosTableViewDataStore()
-	let tableHandler = PhotosTableViewDelegate()
-	let recentTableDataSource = RecentTableViewDataStore()
-    let recentTableHandler = RecentTableViewDelegate()
+    private let interactor: PhotosCollectionBusinessLogic
+    private var state: PhotosCollection.ViewControllerState
+    private var tableView: PhotosTablieView!
+    private var recentTableView: RecentTableView!
+	private let tableDataSource = PhotosTableViewDataStore()
+	private let tableHandler = PhotosTableViewDelegate()
+	private let recentTableDataSource = RecentTableViewDataStore()
+    private let recentTableHandler = RecentTableViewDelegate()
 
+    //MARK: - Init
     init(interactor: PhotosCollectionBusinessLogic, initialState: PhotosCollection.ViewControllerState = .loading) {
         self.interactor = interactor
         self.state = initialState
         super.init(nibName: nil, bundle: nil)
     }
 
+    //MARK: -  View cycle
     override func viewDidLoad() {
         super.viewDidLoad()
 		setUpNavigationBar()
@@ -82,6 +86,7 @@ class PhotosCollectionViewController: UIViewController {
         try? frc.performFetch()
     }
 
+    // MARK: Setup UI
     private func setUpNavigationBar() {
 		navigationController?.navigationBar.barTintColor = .black
         navigationItem.title = "Search Images"
@@ -89,11 +94,31 @@ class PhotosCollectionViewController: UIViewController {
 		navigationItem.hidesSearchBarWhenScrolling = true
 	}
 
+    private func createActivity(message: String) {
+        let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"),
+                                      style: .default,
+                                      handler: { _ in NSLog("The \"OK\" alert occured.")}))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    private func setUpSearchBar() {
+        let searchController = UISearchController(searchResultsController: nil)
+        navigationItem.searchController = searchController
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.hidesNavigationBarDuringPresentation = false
+        searchController.searchBar.tintColor = .white
+        searchController.searchBar.searchTextField.textColor = .white
+        searchController.searchBar.searchTextField.clearButtonMode = .never
+        searchController.searchBar.delegate = self
+    }
+    
 	required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
 
+// MARK: -Extension PhotosCollectionDisplayLogic
 extension PhotosCollectionViewController: PhotosCollectionDisplayLogic {
     func displaySomething(viewModel: PhotosCollection.LoadImages.ViewModel) {
         display(newState: viewModel.state)
@@ -120,27 +145,10 @@ extension PhotosCollectionViewController: PhotosCollectionDisplayLogic {
         }
     }
 
-	private func createActivity(message: String) {
-		let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
-		alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"),
-									  style: .default,
-									  handler: { _ in NSLog("The \"OK\" alert occured.")}))
-		self.present(alert, animated: true, completion: nil)
-	}
 }
 
+// MARK: -Extension UISearchBarDelegate
 extension PhotosCollectionViewController: UISearchBarDelegate {
-	private func setUpSearchBar() {
-		let searchController = UISearchController(searchResultsController: nil)
-		navigationItem.searchController = searchController
-		searchController.obscuresBackgroundDuringPresentation = false
-		searchController.hidesNavigationBarDuringPresentation = false
-		searchController.searchBar.tintColor = .white
-		searchController.searchBar.searchTextField.textColor = .white
-        searchController.searchBar.searchTextField.clearButtonMode = .never
-		searchController.searchBar.delegate = self
-	}
-
 	func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         tableView.isHidden = false
 		recentTableView.isHidden = true
@@ -166,6 +174,7 @@ extension PhotosCollectionViewController: UISearchBarDelegate {
     }
 }
 
+// MARK: -Extension PhotosCollectionViewControllerDelegate
 extension PhotosCollectionViewController: PhotosCollectionViewControllerDelegate {
     func openViewer(with model: PhotoViewerModel) {
         let rootVC = PhotoViewerController(with: model)

@@ -11,7 +11,7 @@ class PhotosCollectionInteractor: PhotosCollectionBusinessLogic {
     let presenter: PhotosCollectionPresentationLogic
     let provider: PhotosCollectionProviderProtocol
 
-	init(presenter: PhotosCollectionPresentationLogic, provider: PhotosCollectionProviderProtocol = PhotosCollectionProvider()) {
+    init(presenter: PhotosCollectionPresentationLogic, provider: PhotosCollectionProviderProtocol = PhotosCollectionProvider()) {
         self.presenter = presenter
         self.provider = provider
     }
