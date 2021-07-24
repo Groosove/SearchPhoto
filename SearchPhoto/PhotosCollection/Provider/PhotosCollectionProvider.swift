@@ -10,7 +10,6 @@ enum PhotosCollectionProviderError: Error {
     case getItemsFailed(underlyingError: Error)
 }
 
-/// Отвечает за получение данных модуля PhotosCollection
 struct PhotosCollectionProvider: PhotosCollectionProviderProtocol {
     let dataStore: PhotosTableViewDataStore
     let service: PhotosCollectionServiceProtocol

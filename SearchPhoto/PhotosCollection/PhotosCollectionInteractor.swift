@@ -7,7 +7,6 @@ protocol PhotosCollectionBusinessLogic {
     func findPhoto(request: PhotosCollection.LoadImages.Request)
 }
 
-/// Класс для описания бизнес-логики модуля PhotosCollection
 class PhotosCollectionInteractor: PhotosCollectionBusinessLogic {
     let presenter: PhotosCollectionPresentationLogic
     let provider: PhotosCollectionProviderProtocol
