@@ -39,8 +39,7 @@ class PhotosTablieView: UIView {
 		NSLayoutConstraint.activate(tableViewViewConstaints)
     }
 
-    func updateTableViewData(delegate: UITableViewDelegate, dataSource: UITableViewDataSource, tabBarHeight: CGFloat) {
-        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: tabBarHeight, right: 0)
+    func updateTableViewData(delegate: UITableViewDelegate, dataSource: UITableViewDataSource) {
 		tableView.delegate = delegate
 		tableView.dataSource = dataSource
         tableView.reloadData()

@@ -28,7 +28,7 @@ class PhotosCollectionViewController: UIViewController {
     }()
     let interactor: PhotosCollectionBusinessLogic
     var state: PhotosCollection.ViewControllerState
-    var tableView: PhotosTablieView
+    var tableView: PhotosTablieView!
     var recentTableView: RecentTableView!
 	let tableDataSource = PhotosTableViewDataStore()
 	let tableHandler = PhotosTableViewDelegate()
@@ -38,8 +38,6 @@ class PhotosCollectionViewController: UIViewController {
     init(interactor: PhotosCollectionBusinessLogic, initialState: PhotosCollection.ViewControllerState = .loading) {
         self.interactor = interactor
         self.state = initialState
-        recentTableView = RecentTableView(frame: UIScreen.main.bounds)
-        tableView = PhotosTablieView(frame: UIScreen.main.bounds)
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -51,10 +49,23 @@ class PhotosCollectionViewController: UIViewController {
 	
 	override func viewWillLayoutSubviews() {
 		super.viewWillLayoutSubviews()
+        if recentTableView == nil {
+            recentTableView = RecentTableView(frame: view.bounds)
+        }
+
+        if tableView == nil {
+            tableView = PhotosTablieView(frame: view.bounds)
+        }
+
 		if !recentTableView.isDescendant(of: self.view) {
 			view.addSubview(recentTableView)
 			updateRecents()
 		}
+        
+        if !tableView.isDescendant(of: self.view) {
+            view.addSubview(tableView)
+            tableView.isHidden = true
+        }
 	}
 
     // MARK: - Find Photo
@@ -98,13 +109,11 @@ extension PhotosCollectionViewController: PhotosCollectionDisplayLogic {
 			tableHandler.models = items
 			tableDataSource.models = items
             tableHandler.delegate = self
-			tableView.updateTableViewData(delegate: tableHandler,
-                                          dataSource: tableDataSource,
-                                          tabBarHeight: tabBarController?.tabBar.frame.height ?? 44)
+			tableView.updateTableViewData(delegate: tableHandler, dataSource: tableDataSource)
         case .emptyResult:
             createActivity(message: "Nothing was found for this result")
-			tableView.removeFromSuperview()
-			view.addSubview(recentTableView)
+            tableView.isHidden = true
+            recentTableView.isHidden = false
 			recentData.deleteLastRecents()
 			updateRecents()
         }
@@ -132,15 +141,13 @@ extension PhotosCollectionViewController: UISearchBarDelegate {
 	}
 
 	func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        if !tableView.isDescendant(of: self.view) {
-            view.addSubview(tableView)
-        }
+        tableView.isHidden = false
 		recentTableView.isHidden = true
         findPhoto(with: searchBar.text!.capitalized)
 	}
 
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        tableView.removeFromSuperview()
+        tableView.isHidden = true
 		recentTableView.isHidden = false
         updateRecents()
     }

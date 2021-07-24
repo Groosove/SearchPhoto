@@ -7,8 +7,14 @@
 
 import UIKit
 
-class PhotosTableViewCell: UITableViewCell {
+extension PhotosTableViewCell {
+    struct Appearance {
+        let blurSize = CGSize(width: 32, height: 32)
+    }
+}
+final class PhotosTableViewCell: UITableViewCell {
     static let identifier = "PhotosTableViewCellId"
+    let appearance = Appearance()
 	lazy var photoView: UIImageView = {
 		let image = UIImageView()
 		image.contentMode = .scaleToFill
@@ -57,7 +63,7 @@ class PhotosTableViewCell: UITableViewCell {
 	}
 
     func configure(image: String, photograph: String, blurHash: String) {
-        self.photoView.image = UIImage(blurHash: blurHash, size: CGSize(width: 32, height: 32))
+        self.photoView.image = UIImage(blurHash: blurHash, size: appearance.blurSize)
         self.photoView.loadImage(imageURL: image)
         self.photographLabel.text = photograph
     }

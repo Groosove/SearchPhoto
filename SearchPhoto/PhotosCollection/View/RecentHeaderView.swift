@@ -7,9 +7,16 @@
 
 import UIKit
 
-class RecentHeaderView: UITableViewHeaderFooterView {
+extension RecentHeaderView {
+    struct Appearance {
+        let layoutOffset: CGFloat = 10
+    }
+}
+
+final class RecentHeaderView: UITableViewHeaderFooterView {
 	static let identifier = "RecentHeaderViewId"
 	weak var delegate: PhotosCollectionViewControllerDelegate?
+    let appearance = Appearance()
 	lazy var headerView: UILabel = {
 		let label = UILabel()
 		label.text = "Recents"
@@ -43,12 +50,12 @@ class RecentHeaderView: UITableViewHeaderFooterView {
 	
 	private func makeConstraints() {
 		let headerViewConstraints = [
-			headerView.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor),
+            headerView.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: appearance.layoutOffset),
 			headerView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor)
 		]
 		
 		let clearRecentsConstraints = [
-			clearRecents.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor),
+			clearRecents.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -appearance.layoutOffset),
 			clearRecents.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor)
 		]
 		NSLayoutConstraint.activate(headerViewConstraints)
