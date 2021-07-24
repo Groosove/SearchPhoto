@@ -12,10 +12,11 @@ extension PhotosTableViewCell {
         let blurSize = CGSize(width: 32, height: 32)
     }
 }
+
 final class PhotosTableViewCell: UITableViewCell {
     static let identifier = "PhotosTableViewCellId"
-    let appearance = Appearance()
-	lazy var photoView: UIImageView = {
+    private let appearance = Appearance()
+	private lazy var photoView: UIImageView = {
 		let image = UIImageView()
 		image.contentMode = .scaleToFill
 		image.translatesAutoresizingMaskIntoConstraints = false
@@ -35,6 +36,16 @@ final class PhotosTableViewCell: UITableViewCell {
 		addSubviews()
 		makeConstraints()
 	}
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    func configure(image: String, photograph: String, blurHash: String) {
+        self.photoView.image = UIImage(blurHash: blurHash, size: appearance.blurSize)
+        self.photoView.loadImage(imageURL: image)
+        self.photographLabel.text = photograph
+    }
 
 	private func addSubviews() {
 		self.addSubview(photoView)
@@ -62,13 +73,6 @@ final class PhotosTableViewCell: UITableViewCell {
 		NSLayoutConstraint.activate(photoViewConstraints)
 	}
 
-    func configure(image: String, photograph: String, blurHash: String) {
-        self.photoView.image = UIImage(blurHash: blurHash, size: appearance.blurSize)
-        self.photoView.loadImage(imageURL: image)
-        self.photographLabel.text = photograph
-    }
+    
 
-	required init?(coder: NSCoder) {
-		fatalError("init(coder:) has not been implemented")
-	}
 }

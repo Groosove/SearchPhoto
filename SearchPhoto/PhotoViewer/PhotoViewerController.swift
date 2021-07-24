@@ -17,6 +17,7 @@ protocol PhotoViewerControllerDelegate: AnyObject {
 }
 
 class PhotoViewerController: UIViewController, UINavigationControllerDelegate {
+    // MARK: - Properties
     let imageData = Container.shared.coreDataStack
     private let frc: NSFetchedResultsController<Images> = {
            let request = NSFetchRequest<Images>(entityName: "Images")
@@ -30,6 +31,7 @@ class PhotoViewerController: UIViewController, UINavigationControllerDelegate {
     let model: PhotoViewerModel
 	private let transition = PanelTransition()
 
+    // MARK: - View cycle
     override func loadView() {
 		super.loadView()
         self.view = PhotoViewerView(model: model)
@@ -43,6 +45,7 @@ class PhotoViewerController: UIViewController, UINavigationControllerDelegate {
         setUpNavigationBar()
     }
 
+    // MARK: - Init
     init(with model: PhotoViewerModel) {
         self.model = model
         super.init(nibName: nil, bundle: nil)
@@ -77,6 +80,7 @@ class PhotoViewerController: UIViewController, UINavigationControllerDelegate {
     }
 }
 
+// MARK: - PhotoViewerControllerDelegate
 extension PhotoViewerController: PhotoViewerControllerDelegate {
     func unsavePhoto(uid: String) {
         imageData.unlikeImages(uid: uid)
@@ -126,6 +130,7 @@ extension PhotoViewerController: PhotoViewerControllerDelegate {
     }
 }
 
+// MARK: - UIPopoverPresentationControllerDelegate
 extension PhotoViewerController: UIPopoverPresentationControllerDelegate {
 	private func descriptionCreate(with model: PhotoStatModel) {
 		let rootVC = DescriptionViewController(model: model)

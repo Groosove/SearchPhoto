@@ -9,8 +9,7 @@ import UIKit
 
 class RandomImagesViewCell: UICollectionViewCell {
     static let identifier = "UICollectionViewCellId"
-
-    lazy var photoView: UIImageView = {
+    private lazy var photoView: UIImageView = {
         let image = UIImageView()
         image.contentMode = .scaleToFill
         image.translatesAutoresizingMaskIntoConstraints = false
@@ -33,6 +32,10 @@ class RandomImagesViewCell: UICollectionViewCell {
         addSubviews()
         makeConstraints()
     }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     private func addSubviews() {
         self.addSubview(photoView)
@@ -42,6 +45,14 @@ class RandomImagesViewCell: UICollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         photoView.image = nil
+    }
+    
+    
+    func configure(image: String, photograph: String) {
+        DispatchQueue.main.async {
+            self.photoView.loadImage(imageURL: image)
+            self.photographLabel.text = photograph
+        }
     }
 
     private func makeConstraints() {
@@ -59,16 +70,5 @@ class RandomImagesViewCell: UICollectionViewCell {
 
         NSLayoutConstraint.activate(photographLabelConstraints)
         NSLayoutConstraint.activate(photoViewConstraints)
-    }
-
-    func configure(image: String, photograph: String) {
-        DispatchQueue.main.async {
-            self.photoView.loadImage(imageURL: image)
-            self.photographLabel.text = photograph
-        }
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
 }

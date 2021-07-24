@@ -13,9 +13,9 @@ extension RecentTableViewCell {
     }
 }
 
-class RecentTableViewCell: UITableViewCell {
+final class RecentTableViewCell: UITableViewCell {
 	static let identifier = "RecentTableViewCellId"
-    let appearance = Appearance()
+    private let appearance = Appearance()
 	private lazy var searchLabel: UILabel = {
 		let label = UILabel()
 		label.translatesAutoresizingMaskIntoConstraints = false
@@ -30,6 +30,14 @@ class RecentTableViewCell: UITableViewCell {
 		makeConstraints()
 	}
 
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    func configure(recent: String) {
+        searchLabel.text = recent
+    }
+
 	private func addSubviews() {
         addSubview(searchLabel)
 	}
@@ -43,13 +51,4 @@ class RecentTableViewCell: UITableViewCell {
         ]
         NSLayoutConstraint.activate(searchLabelContsraints)
 	}
-
-    func configure(recent: String) {
-        searchLabel.text = recent
-	}
-
-	required init?(coder: NSCoder) {
-		fatalError("init(coder:) has not been implemented")
-	}
-
 }

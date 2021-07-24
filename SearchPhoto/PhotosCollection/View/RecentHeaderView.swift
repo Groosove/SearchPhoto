@@ -16,15 +16,15 @@ extension RecentHeaderView {
 final class RecentHeaderView: UITableViewHeaderFooterView {
 	static let identifier = "RecentHeaderViewId"
 	weak var delegate: PhotosCollectionViewControllerDelegate?
-    let appearance = Appearance()
-	lazy var headerView: UILabel = {
+    private let appearance = Appearance()
+	private lazy var headerView: UILabel = {
 		let label = UILabel()
 		label.text = "Recents"
 		label.textColor = .white
 		label.translatesAutoresizingMaskIntoConstraints = false
 		return label
 	}()
-	lazy var clearRecents: UIButton = {
+	private lazy var clearRecents: UIButton = {
 		let button = UIButton()
 		button.setTitle("Clear", for: .normal)
 		button.setTitleColor(.white, for: .normal)

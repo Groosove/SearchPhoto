@@ -5,8 +5,7 @@
 
 import UIKit
 
-class RandomImagesBuilder: ModuleBuilder {
-
+final class RandomImagesBuilder: ModuleBuilder {
     var initialState: RandomImages.ViewControllerState?
 
     func set(initialState: RandomImages.ViewControllerState) -> RandomImagesBuilder {

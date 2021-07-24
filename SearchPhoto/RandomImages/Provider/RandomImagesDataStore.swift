@@ -4,7 +4,7 @@
 
 import UIKit
 
-class RandomImagesDataStore: NSObject, UICollectionViewDataSource {
+final class RandomImagesDataStore: NSObject, UICollectionViewDataSource {
     var models: [PhotosCollectionModel]
 
     init (models: [PhotosCollectionModel] = []) {

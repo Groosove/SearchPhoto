@@ -7,7 +7,7 @@
 
 import UIKit
 
-class RecentTableViewDelegate: NSObject, UITableViewDelegate {
+final class RecentTableViewDelegate: NSObject, UITableViewDelegate {
     var models: [Recent]
     weak var delegate: PhotosCollectionViewControllerDelegate?
     init(models: [Recent] = []) {

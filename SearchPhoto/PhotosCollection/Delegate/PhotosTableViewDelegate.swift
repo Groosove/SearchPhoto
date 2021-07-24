@@ -9,7 +9,7 @@ import UIKit
 
 final class PhotosTableViewDelegate: NSObject, UITableViewDelegate {
 	var models: [PhotosCollectionViewModel]
-    var result: PhotoViewerModel?
+    var result: PhotoViewerModel!
 	weak var delegate: PhotosCollectionViewControllerDelegate?
 
 	init(models: [PhotosCollectionViewModel] = []) {
@@ -33,6 +33,6 @@ final class PhotosTableViewDelegate: NSObject, UITableViewDelegate {
                                   width: imageCell.frame.width,
                                   height: imageCell.frame.height,
                                   imageURL: models[indexPath.row].imageURL)
-        delegate?.openViewer(with: result!)
+        delegate?.openViewer(with: result)
 	}
 }

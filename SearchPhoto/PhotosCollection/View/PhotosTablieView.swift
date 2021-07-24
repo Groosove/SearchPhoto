@@ -7,7 +7,7 @@
 
 import UIKit
 
-class PhotosTablieView: UIView {
+final class PhotosTablieView: UIView {
 	private lazy var tableView: UITableView = {
         let tableView = UITableView.init(frame: .zero, style: .plain)
 		tableView.register(PhotosTableViewCell.self, forCellReuseIdentifier: PhotosTableViewCell.identifier)

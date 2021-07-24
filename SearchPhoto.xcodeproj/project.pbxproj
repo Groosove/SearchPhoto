@@ -36,6 +36,8 @@
 		1493EF2326934ECF000A9B08 /* PhotosTablieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1493EF2226934ECF000A9B08 /* PhotosTablieView.swift */; };
 		1493EF2926935055000A9B08 /* PhotosTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1493EF2826935055000A9B08 /* PhotosTableViewCell.swift */; };
 		1498040726AC715200678000 /* PhotosCollectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1498040626AC715200678000 /* PhotosCollectionViewModel.swift */; };
+		1498040926AC773200678000 /* PageLauncherController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1498040826AC773200678000 /* PageLauncherController.swift */; };
+		1498040B26AC776A00678000 /* HomeScreenController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1498040A26AC776A00678000 /* HomeScreenController.swift */; };
 		14C3894B26A05464000C00C5 /* RecentTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C3894926A05464000C00C5 /* RecentTableView.swift */; };
 		14C3894C26A05464000C00C5 /* RecentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C3894A26A05464000C00C5 /* RecentTableViewCell.swift */; };
 		14CAA36826A8807100F9895E /* HelloPageViewContoller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CAA36726A8807100F9895E /* HelloPageViewContoller.swift */; };
@@ -122,6 +124,8 @@
 		1493EF2226934ECF000A9B08 /* PhotosTablieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PhotosTablieView.swift; path = SearchPhoto/PhotosCollection/View/PhotosTablieView.swift; sourceTree = SOURCE_ROOT; };
 		1493EF2826935055000A9B08 /* PhotosTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PhotosTableViewCell.swift; path = SearchPhoto/PhotosCollection/View/PhotosTableViewCell.swift; sourceTree = SOURCE_ROOT; };
 		1498040626AC715200678000 /* PhotosCollectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PhotosCollectionViewModel.swift; path = SearchPhoto/PhotosCollection/View/PhotosCollectionViewModel.swift; sourceTree = SOURCE_ROOT; };
+		1498040826AC773200678000 /* PageLauncherController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageLauncherController.swift; sourceTree = "<group>"; };
+		1498040A26AC776A00678000 /* HomeScreenController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreenController.swift; sourceTree = "<group>"; };
 		14C3894926A05464000C00C5 /* RecentTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RecentTableView.swift; path = SearchPhoto/PhotosCollection/View/RecentTableView.swift; sourceTree = SOURCE_ROOT; };
 		14C3894A26A05464000C00C5 /* RecentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RecentTableViewCell.swift; path = SearchPhoto/PhotosCollection/View/RecentTableViewCell.swift; sourceTree = SOURCE_ROOT; };
 		14CAA36726A8807100F9895E /* HelloPageViewContoller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelloPageViewContoller.swift; sourceTree = "<group>"; };
@@ -230,6 +234,8 @@
 			isa = PBXGroup;
 			children = (
 				14CAA36726A8807100F9895E /* HelloPageViewContoller.swift */,
+				1498040826AC773200678000 /* PageLauncherController.swift */,
+				1498040A26AC776A00678000 /* HomeScreenController.swift */,
 			);
 			path = HelloScreen;
 			sourceTree = "<group>";
@@ -281,8 +287,8 @@
 			isa = PBXGroup;
 			children = (
 				14CAA36626A8805600F9895E /* HelloScreen */,
-				146BABCF2692055200B10A43 /* MainTabBarController.swift */,
 				4A385AF5268F515600EC0D51 /* AppDelegate.swift */,
+				146BABCF2692055200B10A43 /* MainTabBarController.swift */,
 				143E000A2691CC9400D912F6 /* CoreDataStack.swift */,
 				1466BA3E2699077B0035F783 /* DIContainer.swift */,
 				14D38CF92698E56000E949BF /* PhotoViewer */,
@@ -626,11 +632,13 @@
 				1491D8B6269B202B007045AC /* PhotoViewerModel.swift in Sources */,
 				4AB96579269E4DA8003E1F1C /* PresentationController.swift in Sources */,
 				143E00062691CC6400D912F6 /* PhotosCollectionPresenter.swift in Sources */,
+				1498040B26AC776A00678000 /* HomeScreenController.swift in Sources */,
 				14F0014426AC21BB00A2DB98 /* RecentHeaderView.swift in Sources */,
 				143E00052691CC6400D912F6 /* PhotosCollectionDataFlow.swift in Sources */,
 				1491D8B0269B043D007045AC /* PhotoViewerController.swift in Sources */,
 				14DBA2F826A70D6A004A3F43 /* FavoriteViewCell.swift in Sources */,
 				142C23A52698DE2000C99E54 /* PhotosCollectionService.swift in Sources */,
+				1498040926AC773200678000 /* PageLauncherController.swift in Sources */,
 				143E00102691CCA800D912F6 /* PhotosCollectionProvider.swift in Sources */,
 				147EC4C826A46A05004B3CC2 /* Recent+CoreDataClass.swift in Sources */,
 				14DBA2FD26A712EB004A3F43 /* Images+CoreDataProperties.swift in Sources */,

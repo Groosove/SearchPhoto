@@ -11,10 +11,9 @@ extension RandomImagesView {
 }
 
 class RandomImagesView: UIView {
-    let appearance = Appearance()
+    private let appearance = Appearance()
     weak var delegate: RandomImagesViewControllerDelegate?
-
-    fileprivate(set) lazy var collectionView: UICollectionView = {
+    private lazy var collectionView: UICollectionView = {
         let layout = WaterfallLayout()
         layout.delegate = delegate as? WaterfallLayoutDelegate
         let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -33,11 +32,21 @@ class RandomImagesView: UIView {
         makeConstraints()
     }
 
-    func addSubviews() {
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    func updateCollectioViewData(delegate: UICollectionViewDelegate, dataSource: UICollectionViewDataSource) {
+        collectionView.delegate = delegate
+        collectionView.dataSource = dataSource
+        collectionView.reloadData()
+    }
+    
+    private func addSubviews() {
         addSubview(collectionView)
     }
 
-    func makeConstraints() {
+    private func makeConstraints() {
         let collectionViewConstraints = [
             collectionView.topAnchor.constraint(equalTo: self.topAnchor),
             collectionView.leadingAnchor.constraint(equalTo: self.layoutMarginsGuide.leadingAnchor),
@@ -47,13 +56,4 @@ class RandomImagesView: UIView {
         NSLayoutConstraint.activate(collectionViewConstraints)
     }
 
-    func updateCollectioViewData(delegate: UICollectionViewDelegate, dataSource: UICollectionViewDataSource) {
-        collectionView.delegate = delegate
-        collectionView.dataSource = dataSource
-        collectionView.reloadData()
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
 }

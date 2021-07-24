@@ -7,8 +7,7 @@ protocol RandomImagesBusinessLogic {
     func loadImages(request: RandomImages.LoadImage.Request)
 }
 
-/// Класс для описания бизнес-логики модуля RandomImages
-class RandomImagesInteractor: RandomImagesBusinessLogic {
+final class RandomImagesInteractor: RandomImagesBusinessLogic {
     let presenter: RandomImagesPresentationLogic
     let provider: RandomImagesProviderProtocol
 
@@ -17,7 +16,6 @@ class RandomImagesInteractor: RandomImagesBusinessLogic {
         self.provider = provider
     }
 
-    // MARK: - Do something
     func loadImages(request: RandomImages.LoadImage.Request) {
         provider.getItems { (items, error) in
             let result: RandomImages.RandomImagesRequestResult

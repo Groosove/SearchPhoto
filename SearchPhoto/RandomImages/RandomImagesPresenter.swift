@@ -9,11 +9,9 @@ protocol RandomImagesPresentationLogic {
     func presentSomething(response: RandomImages.LoadImage.Response)
 }
 
-/// Отвечает за отображение данных модуля RandomImages
-class RandomImagesPresenter: RandomImagesPresentationLogic {
+final class RandomImagesPresenter: RandomImagesPresentationLogic {
     weak var viewController: RandomImagesDisplayLogic?
 
-    // MARK: Do something
     func presentSomething(response: RandomImages.LoadImage.Response) {
         var viewModel: RandomImages.LoadImage.ViewModel
 

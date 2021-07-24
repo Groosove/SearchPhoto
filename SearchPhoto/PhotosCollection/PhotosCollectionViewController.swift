@@ -44,6 +44,10 @@ final class PhotosCollectionViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
     }
 
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     //MARK: -  View cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -112,13 +116,10 @@ final class PhotosCollectionViewController: UIViewController {
         searchController.searchBar.searchTextField.clearButtonMode = .never
         searchController.searchBar.delegate = self
     }
-    
-	required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+
 }
 
-// MARK: -Extension PhotosCollectionDisplayLogic
+// MARK: - PhotosCollectionDisplayLogic
 extension PhotosCollectionViewController: PhotosCollectionDisplayLogic {
     func displaySomething(viewModel: PhotosCollection.LoadImages.ViewModel) {
         display(newState: viewModel.state)
@@ -144,10 +145,9 @@ extension PhotosCollectionViewController: PhotosCollectionDisplayLogic {
 			updateRecents()
         }
     }
-
 }
 
-// MARK: -Extension UISearchBarDelegate
+// MARK: - UISearchBarDelegate
 extension PhotosCollectionViewController: UISearchBarDelegate {
 	func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         tableView.isHidden = false
@@ -174,7 +174,7 @@ extension PhotosCollectionViewController: UISearchBarDelegate {
     }
 }
 
-// MARK: -Extension PhotosCollectionViewControllerDelegate
+// MARK: - PhotosCollectionViewControllerDelegate
 extension PhotosCollectionViewController: PhotosCollectionViewControllerDelegate {
     func openViewer(with model: PhotoViewerModel) {
         let rootVC = PhotoViewerController(with: model)

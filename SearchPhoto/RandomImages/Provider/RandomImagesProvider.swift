@@ -10,7 +10,6 @@ enum RandomImagesProviderError: Error {
     case getItemsFailed(underlyingError: Error)
 }
 
-/// Отвечает за получение данных модуля RandomImages
 struct RandomImagesProvider: RandomImagesProviderProtocol {
     let dataStore: RandomImagesDataStore
     let service: RandomImagesServiceProtocol

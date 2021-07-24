@@ -8,8 +8,8 @@ protocol RandomImagesServiceProtocol {
     func getImages(completion: @escaping ([PhotosCollectionModel]?, Error?) -> Void)
 }
 
-class RandomImagesService: RandomImagesServiceProtocol {
-    let httpHandler = HTTPHandler()
+final class RandomImagesService: RandomImagesServiceProtocol {
+    private let httpHandler = HTTPHandler()
     private let decoder: JSONDecoder = JSONDecoder()
 
     func getImages(completion: @escaping ([PhotosCollectionModel]?, Error?) -> Void) {

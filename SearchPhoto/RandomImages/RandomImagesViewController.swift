@@ -14,13 +14,15 @@ protocol RandomImagesViewControllerDelegate: AnyObject {
     func loadImages()
 }
 
-class RandomImagesViewController: UIViewController {
-    let interactor: RandomImagesBusinessLogic
-    var state: RandomImages.ViewControllerState
-    var collectionDataSource =  RandomImagesDataStore()
-    var collectionHandler = RandomImagesWaterfallDelegate()
-    lazy var collectionView = self.view as? RandomImagesView
+final class RandomImagesViewController: UIViewController {
+    // MARK: - Properties
+    private let interactor: RandomImagesBusinessLogic
+    private var state: RandomImages.ViewControllerState
+    private let collectionDataSource =  RandomImagesDataStore()
+    private let collectionHandler = RandomImagesWaterfallDelegate()
+    private lazy var collectionView = self.view as? RandomImagesView
 
+    // MARK: - Init
     init(interactor: RandomImagesBusinessLogic, initialState: RandomImages.ViewControllerState = .loading) {
         self.interactor = interactor
         self.state = initialState
@@ -31,6 +33,7 @@ class RandomImagesViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // MARK: - View cycle
     override func loadView() {
         self.view = RandomImagesView(frame: UIScreen.main.bounds, delegate: self)
     }
@@ -41,7 +44,7 @@ class RandomImagesViewController: UIViewController {
         loadImages()
     }
 
-    // MARK: - load Images
+    // MARK: - Setup UI
 
     private func setUpNavigationBar() {
         navigationController?.navigationBar.isTranslucent = true
@@ -51,6 +54,7 @@ class RandomImagesViewController: UIViewController {
     }
 }
 
+// MARK: - RandomImagesDisplayLogic
 extension RandomImagesViewController: RandomImagesDisplayLogic {
     func displaySomething(viewModel: RandomImages.LoadImage.ViewModel) {
         display(newState: viewModel.state)
@@ -83,6 +87,7 @@ extension RandomImagesViewController: RandomImagesDisplayLogic {
 	}
 }
 
+// MARK: - WaterfallLayoutDelegate
 extension RandomImagesViewController: WaterfallLayoutDelegate {
     func waterfallLayout(_ layout: WaterfallLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let images = collectionDataSource.models[indexPath.item]
@@ -90,6 +95,7 @@ extension RandomImagesViewController: WaterfallLayoutDelegate {
     }
 }
 
+// MARK: - RandomImagesViewControllerDelegate
 extension RandomImagesViewController: RandomImagesViewControllerDelegate {
     func openViewer(with model: PhotoViewerModel) {
         let rootVC = PhotoViewerController(with: model)

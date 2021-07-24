@@ -7,7 +7,7 @@
 
 import UIKit
 
-class RandomImagesWaterfallDelegate: NSObject, UICollectionViewDelegate {
+final class RandomImagesWaterfallDelegate: NSObject, UICollectionViewDelegate {
     var models: [PhotosCollectionModel]
     weak var delegate: RandomImagesViewControllerDelegate?
 

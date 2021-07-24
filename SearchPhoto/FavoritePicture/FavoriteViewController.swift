@@ -9,6 +9,7 @@ import UIKit
 import CoreData
 
 class FavoriteViewController: UIViewController {
+    // MARK: - Properties
     var collectionView: UICollectionView?
     var images = [UIImage?]()
     var models = [Images]()
@@ -22,6 +23,7 @@ class FavoriteViewController: UIViewController {
                                          cacheName: nil)
     }()
 
+    // MARK: - View cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         images = getImages()
@@ -35,6 +37,7 @@ class FavoriteViewController: UIViewController {
 		viewDidLoad()
 	}
 
+    // MARK: - Setup UI
     private func setUpNavigationBar() {
         navigationController?.navigationBar.barTintColor = .black
         navigationItem.title = "Favorite Photos"
@@ -50,6 +53,7 @@ class FavoriteViewController: UIViewController {
         self.view.addSubview(collectionView ?? UICollectionView())
     }
 
+    // MARK: - Private Function
     private func getImages() -> [UIImage?] {
         let imagePaths = imageData.getAllImages()
         let documentDirectory = FileManager.SearchPathDirectory.documentDirectory
@@ -77,6 +81,7 @@ class FavoriteViewController: UIViewController {
     }
 }
 
+// MARK: - UICollectionViewDataSource
 extension FavoriteViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return images.count
@@ -90,6 +95,7 @@ extension FavoriteViewController: UICollectionViewDataSource {
     }
 }
 
+// MARK: - UICollectionViewDelegate
 extension FavoriteViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
@@ -101,6 +107,7 @@ extension FavoriteViewController: UICollectionViewDelegate {
      }
 }
 
+// MARK: - UICollectionViewDelegateFlowLayout
 extension FavoriteViewController: UICollectionViewDelegateFlowLayout {
 	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
 		let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout

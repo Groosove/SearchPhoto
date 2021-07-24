@@ -12,19 +12,23 @@ protocol DescriptionViewControllerDelegate: AnyObject {
 }
 
 class DescriptionViewController: UIViewController {
+    // MARK: - Properties
 	lazy var descView = self.view as? DescriptionView
 	let model: PhotoStatModel
 
+    // MARK: - View cycle
 	override func loadView() {
 		super.loadView()
 		self.view = DescriptionView(model: model)
 	}
+    
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		descView?.delegate = self
 		view.backgroundColor = .black
 	}
 
+    // MARK: - Init
 	init(model: PhotoStatModel) {
 		self.model = model
 		super.init(nibName: nil, bundle: nil)
@@ -35,6 +39,7 @@ class DescriptionViewController: UIViewController {
 	}
 }
 
+// MARK: - DescriptionViewControllerDelegate
 extension DescriptionViewController: DescriptionViewControllerDelegate {
 	func dismissSelf() {
 		dismiss(animated: true)

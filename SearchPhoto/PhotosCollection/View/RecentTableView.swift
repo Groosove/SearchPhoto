@@ -7,8 +7,8 @@
 
 import UIKit
 
-class RecentTableView: UIView {
-    lazy var recentTableView: UITableView = {
+final class RecentTableView: UIView {
+    private lazy var recentTableView: UITableView = {
         let tableView = UITableView.init(frame: .zero, style: .plain)
 		tableView.register(RecentTableViewCell.self, forCellReuseIdentifier: RecentTableViewCell.identifier)
 		tableView.register(RecentHeaderView.self, forHeaderFooterViewReuseIdentifier: RecentHeaderView.identifier)
@@ -26,9 +26,16 @@ class RecentTableView: UIView {
 		makeConstraints()
 		backgroundColor = .black
 	}
+
 	required init?(coder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
+
+    func updateTableViewData(delegate: UITableViewDelegate, dataSource: UITableViewDataSource) {
+        recentTableView.delegate = delegate
+        recentTableView.dataSource = dataSource
+        recentTableView.reloadData()
+    }
 
 	private func addSubviews() {
 		addSubview(recentTableView)
@@ -44,9 +51,5 @@ class RecentTableView: UIView {
         NSLayoutConstraint.activate(tableViewViewConstaints)
 	}
 
-    func updateTableViewData(delegate: UITableViewDelegate, dataSource: UITableViewDataSource) {
-		recentTableView.delegate = delegate
-		recentTableView.dataSource = dataSource
-		recentTableView.reloadData()
-	}
+    
 }

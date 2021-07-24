@@ -13,7 +13,7 @@ enum PhotosCollectionServiceError: Error {
 }
 
 final class PhotosCollectionService: PhotosCollectionServiceProtocol {
-	let httpHandler = HTTPHandler()
+	private let httpHandler = HTTPHandler()
 	private let decoder: JSONDecoder = JSONDecoder()
 
 	func getImages(with name: String, completion: @escaping ([PhotosCollectionModel]?, Error?) -> Void) {
