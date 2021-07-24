@@ -7,7 +7,7 @@ import UIKit
 import CoreData
 
 protocol PhotosCollectionDisplayLogic: AnyObject {
-    func displaySomething(viewModel: PhotosCollection.Something.ViewModel)
+    func displaySomething(viewModel: PhotosCollection.LoadImages.ViewModel)
 }
 
 protocol PhotosCollectionViewControllerDelegate: AnyObject {
@@ -28,8 +28,8 @@ class PhotosCollectionViewController: UIViewController {
     }()
     let interactor: PhotosCollectionBusinessLogic
     var state: PhotosCollection.ViewControllerState
-    let tableView: PhotosTablieView
-    let recentTableView: RecentTableView
+    var tableView: PhotosTablieView
+    var recentTableView: RecentTableView!
 	let tableDataSource = PhotosTableViewDataStore()
 	let tableHandler = PhotosTableViewDelegate()
 	let recentTableDataSource = RecentTableViewDataStore()
@@ -47,14 +47,20 @@ class PhotosCollectionViewController: UIViewController {
         super.viewDidLoad()
 		setUpNavigationBar()
 		setUpSearchBar()
-        self.view.addSubview(recentTableView)
-        updateRecents()
-        recentTableView.delegate = self
     }
+	
+	override func viewWillLayoutSubviews() {
+		super.viewWillLayoutSubviews()
+		if !recentTableView.isDescendant(of: self.view) {
+			view.addSubview(recentTableView)
+			updateRecents()
+			recentTableView.delegate = self
+		}
+	}
 
     // MARK: - Find Photo
     func findPhoto(with search: String) {
-        let request = PhotosCollection.Something.Request(search: search)
+        let request = PhotosCollection.LoadImages.Request(search: search)
         interactor.findPhoto(request: request)
         recentData.viewContext.performAndWait {
             let recents = recentData.getAllRecents()
@@ -78,7 +84,7 @@ class PhotosCollectionViewController: UIViewController {
 }
 
 extension PhotosCollectionViewController: PhotosCollectionDisplayLogic {
-    func displaySomething(viewModel: PhotosCollection.Something.ViewModel) {
+    func displaySomething(viewModel: PhotosCollection.LoadImages.ViewModel) {
         display(newState: viewModel.state)
     }
 
@@ -97,7 +103,11 @@ extension PhotosCollectionViewController: PhotosCollectionDisplayLogic {
                                           dataSource: tableDataSource,
                                           tabBarHeight: tabBarController?.tabBar.frame.height ?? 44)
         case .emptyResult:
-            createActivity(message: "Check your internet connection")
+            createActivity(message: "Nothing was found for this result")
+			tableView.removeFromSuperview()
+			view.addSubview(recentTableView)
+			recentData.deleteLastRecents()
+			updateRecents()
         }
     }
 
@@ -126,13 +136,13 @@ extension PhotosCollectionViewController: UISearchBarDelegate {
         if !tableView.isDescendant(of: self.view) {
             view.addSubview(tableView)
         }
-        recentTableView.removeFromSuperview()
+		recentTableView.isHidden = true
         findPhoto(with: searchBar.text!.capitalized)
 	}
 
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         tableView.removeFromSuperview()
-        view.addSubview(recentTableView)
+		recentTableView.isHidden = false
         updateRecents()
     }
 

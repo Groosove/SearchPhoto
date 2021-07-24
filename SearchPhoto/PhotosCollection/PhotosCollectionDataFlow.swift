@@ -4,8 +4,7 @@
 //
 
 enum PhotosCollection {
-    // MARK: Use cases
-    enum Something {
+    enum LoadImages {
 		// swiftlint:disable nesting
         struct Request {
             var search: String

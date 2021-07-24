@@ -62,7 +62,7 @@ extension RandomImagesViewController: RandomImagesDisplayLogic {
         case .loading:
             print("loading...")
         case let .error(message):
-            print("error \(message)")
+			createActivity(message: message)
         case let .result(items):
             collectionDataSource.models = items
             collectionHandler.models = items
@@ -70,9 +70,17 @@ extension RandomImagesViewController: RandomImagesDisplayLogic {
             collectionHandler.delegate = self
             collectionView?.updateCollectioViewData(delegate: collectionHandler, dataSource: collectionDataSource)
         case .emptyResult:
-            print("empty result")
+			print("Empty result")
         }
-    }
+	}
+
+	private func createActivity(message: String) {
+		let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+		alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"),
+									  style: .default,
+									  handler: { _ in NSLog("The \"OK\" alert occured.")}))
+		self.present(alert, animated: true, completion: nil)
+	}
 }
 
 extension RandomImagesViewController: WaterfallLayoutDelegate {

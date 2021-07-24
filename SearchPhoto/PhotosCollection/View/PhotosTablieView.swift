@@ -31,8 +31,8 @@ class PhotosTablieView: UIView {
 
     private func makeConstraints() {
 		let tableViewViewConstaints = [
-			tableView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor),
-			tableView.bottomAnchor.constraint(equalTo: self.layoutMarginsGuide.bottomAnchor),
+			tableView.topAnchor.constraint(equalTo: self.topAnchor),
+			tableView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
 			tableView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
 			tableView.leadingAnchor.constraint(equalTo: self.leadingAnchor)
 		]

@@ -27,9 +27,9 @@ class RecentTableView: UIView {
     lazy var recentTableView: UITableView = {
         let tableView = UITableView.init(frame: .zero, style: .plain)
 		tableView.register(RecentTableViewCell.self, forCellReuseIdentifier: RecentTableViewCell.identifier)
-		tableView.tableHeaderView = UIView()
-		tableView.sectionHeaderHeight = 70
+		tableView.register(RecentHeaderView.self, forHeaderFooterViewReuseIdentifier: RecentHeaderView.identifier)
 		tableView.tableFooterView = UIView()
+		tableView.estimatedSectionHeaderHeight = 70
 		tableView.backgroundColor = .black
         tableView.separatorColor = .white
 		tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -48,8 +48,8 @@ class RecentTableView: UIView {
 
 	private func addSubviews() {
 		addSubview(recentTableView)
-        addSubview(headerView)
-        addSubview(clearRecents)
+//        addSubview(headerView)
+//        addSubview(clearRecents)
 	}
 
 	private func makeConstraints() {
@@ -68,11 +68,12 @@ class RecentTableView: UIView {
 		let tableViewViewConstaints = [
 			recentTableView.bottomAnchor.constraint(equalTo: self.layoutMarginsGuide.bottomAnchor),
 			recentTableView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-			recentTableView.leadingAnchor.constraint(equalTo: self.leadingAnchor)
+			recentTableView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+			recentTableView.topAnchor.constraint(equalTo: self.topAnchor)
 		]
 
-        NSLayoutConstraint.activate(headerViewConstarits)
-        NSLayoutConstraint.activate(clearRecentsConstraints)
+//        NSLayoutConstraint.activate(headerViewConstarits)
+//        NSLayoutConstraint.activate(clearRecentsConstraints)
         NSLayoutConstraint.activate(tableViewViewConstaints)
 	}
 
