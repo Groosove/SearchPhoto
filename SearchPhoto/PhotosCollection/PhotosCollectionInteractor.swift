@@ -7,7 +7,7 @@ protocol PhotosCollectionBusinessLogic {
     func findPhoto(request: PhotosCollection.LoadImages.Request)
 }
 
-class PhotosCollectionInteractor: PhotosCollectionBusinessLogic {
+final class PhotosCollectionInteractor: PhotosCollectionBusinessLogic {
     let presenter: PhotosCollectionPresentationLogic
     let provider: PhotosCollectionProviderProtocol
 
@@ -16,16 +16,16 @@ class PhotosCollectionInteractor: PhotosCollectionBusinessLogic {
         self.provider = provider
     }
 
-    // MARK: Find Photo
     func findPhoto(request: PhotosCollection.LoadImages.Request) {
 		provider.getItems(with: request.search) { (items, error) in
             let result: PhotosCollection.PhotosCollectionRequestResult
+
             if let items = items {
                 result = .success(items)
             } else if let error = error {
-                result = .failure(.someError(message: error.localizedDescription))
+                result = .failure(.loadImageError(message: error.localizedDescription))
             } else {
-                result = .failure(.someError(message: "No Data"))
+                result = .failure(.loadImageError(message: "No Data"))
             }
             self.presenter.showImages(response: PhotosCollection.LoadImages.Response(result: result))
         }

@@ -40,42 +40,13 @@ final class CoreDataStack {
         }
     }
 
+    // MARK: - Recents Functions
     func getAllRecents() -> [Recent] {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Recent")
         let results = try? viewContext.fetch(fetchRequest) as? [Recent]
         return results!
     }
-
-    func getAllImages() -> [Images] {
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Images")
-        let results = try? viewContext.fetch(fetchRequest) as? [Images]
-        return results!
-    }
-
-    func getImage(uid: String) -> Bool {
-        let images = getAllImages()
-        for item in images where item.uid == uid {
-            return true
-        }
-        return false
-    }
-
-    func unlikeImages(uid: String) {
-        let images = getAllImages()
-        viewContext.performAndWait {
-            for item in images where item.uid == uid {
-				viewContext.delete(item)
-            }
-        }
-        try? viewContext.save()
-    }
-
-    func deleteAllImages() {
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Images")
-        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
-        _ = try? coordinator.execute(deleteRequest, with: viewContext)
-    }
-
+   
 	func deleteLastRecents() {
 		let recents = getAllRecents()
 		viewContext.performAndWait {
@@ -90,5 +61,36 @@ final class CoreDataStack {
 		let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
 		_ = try? coordinator.execute(deleteRequest, with: viewContext)
 	}
+
+    // MARK: - Images Functions
+    func getAllImages() -> [Images] {
+           let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Images")
+           let results = try? viewContext.fetch(fetchRequest) as? [Images]
+           return results!
+       }
+
+       func getImage(uid: String) -> Bool {
+           let images = getAllImages()
+           for item in images where item.uid == uid {
+               return true
+           }
+           return false
+       }
+
+       func unlikeImages(uid: String) {
+           let images = getAllImages()
+           viewContext.performAndWait {
+               for item in images where item.uid == uid {
+                   viewContext.delete(item)
+               }
+           }
+           try? viewContext.save()
+       }
+
+       func deleteAllImages() {
+           let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Images")
+           let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+           _ = try? coordinator.execute(deleteRequest, with: viewContext)
+       }
 
 }

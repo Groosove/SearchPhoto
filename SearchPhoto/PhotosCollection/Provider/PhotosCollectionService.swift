@@ -12,7 +12,7 @@ enum PhotosCollectionServiceError: Error {
     case decodeJSON
 }
 
-class PhotosCollectionService: PhotosCollectionServiceProtocol {
+final class PhotosCollectionService: PhotosCollectionServiceProtocol {
 	let httpHandler = HTTPHandler()
 	private let decoder: JSONDecoder = JSONDecoder()
 

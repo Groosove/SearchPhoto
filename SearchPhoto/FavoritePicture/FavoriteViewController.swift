@@ -12,7 +12,7 @@ class FavoriteViewController: UIViewController {
     var collectionView: UICollectionView?
     var images = [UIImage?]()
     var models = [Images]()
-    let imageData = Container.shared.setModel(with: "Images").coreDataStack
+    let imageData = Container.shared.coreDataStack
     private let frc: NSFetchedResultsController<Images> = {
            let request = NSFetchRequest<Images>(entityName: "Images")
            request.sortDescriptors = [.init(key: "imageURL", ascending: true)]

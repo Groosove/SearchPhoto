@@ -9,7 +9,7 @@ protocol ModuleBuilder {
 	func build() -> UIViewController
 }
 
-class PhotosCollectionBuilder: ModuleBuilder {
+final class PhotosCollectionBuilder: ModuleBuilder {
 
     var initialState: PhotosCollection.ViewControllerState?
 

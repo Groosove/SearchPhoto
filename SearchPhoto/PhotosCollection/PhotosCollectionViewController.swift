@@ -19,7 +19,7 @@ protocol PhotosCollectionViewControllerDelegate: AnyObject {
 final class PhotosCollectionViewController: UIViewController {
     
     //MARK: - Properties
-    private let recentData = Container.shared.setModel(with: "Recent").coreDataStack
+    private let recentData = Container.shared.coreDataStack
     private let frc: NSFetchedResultsController<Recent> = {
         let request = NSFetchRequest<Recent>(entityName: "Recent")
         request.sortDescriptors = [.init(key: "search", ascending: true)]

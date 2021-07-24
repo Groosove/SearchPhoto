@@ -11,9 +11,5 @@ final class Container {
     static let shared = Container()
     private var modelName: String = ""
     private init() {}
-    func setModel(with name: String) -> Container {
-        self.modelName = name
-        return self
-    }
     lazy var coreDataStack = CoreDataStack(modelName: "SearchPhoto")
 }

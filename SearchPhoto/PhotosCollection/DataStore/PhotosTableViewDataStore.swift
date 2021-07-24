@@ -8,8 +8,8 @@
 import UIKit
 
 class PhotosTableViewDataStore: NSObject, UITableViewDataSource {
-    var models: [PhotosCollectionModel]
-	init (models: [PhotosCollectionModel] = []) {
+    var models: [PhotosCollectionViewModel]
+	init (models: [PhotosCollectionViewModel] = []) {
         self.models = models
     }
 
@@ -21,8 +21,8 @@ class PhotosTableViewDataStore: NSObject, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: PhotosTableViewCell.identifier, for: indexPath) as? PhotosTableViewCell
         guard let recent = cell else { return UITableViewCell() }
 		DispatchQueue.global(qos: .userInteractive).sync {
-            recent.configure(image: self.models[indexPath.row].urls.regular,
-                             photograph: self.models[indexPath.row].user.name,
+            recent.configure(image: self.models[indexPath.row].imageURL,
+                             photograph: self.models[indexPath.row].name,
 							 blurHash: self.models[indexPath.row].blurHash)
         }
         return recent

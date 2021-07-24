@@ -24,9 +24,10 @@ struct PhotosCollectionProvider: PhotosCollectionProviderProtocol {
             if let error = error {
                 completion(nil, .getItemsFailed(underlyingError: error))
             } else if let models = array {
-				self.dataStore.models = models
-				completion(self.dataStore.models, nil)
-			}
+				completion(models, nil)
+            } else {
+                completion(nil, nil)
+            }
 		}
     }
 }
