@@ -45,7 +45,6 @@ class RecentTableView: UIView {
 	}
 
     func updateTableViewData(delegate: UITableViewDelegate, dataSource: UITableViewDataSource) {
-        recentTableView.contentInset = UIEdgeInsets(top: 1, left: 0, bottom: 0, right: 0)
 		recentTableView.delegate = delegate
 		recentTableView.dataSource = dataSource
 		recentTableView.reloadData()
