@@ -82,9 +82,10 @@ class PhotosCollectionViewController: UIViewController {
         try? frc.performFetch()
     }
 
-	private func setUpNavigationBar() {
-		navigationController?.navigationBar.isTranslucent = false
+    private func setUpNavigationBar() {
 		navigationController?.navigationBar.barTintColor = .black
+        navigationItem.title = "Search Images"
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
 		navigationItem.hidesSearchBarWhenScrolling = true
 	}
 

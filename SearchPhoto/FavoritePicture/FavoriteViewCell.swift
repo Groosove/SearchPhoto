@@ -16,8 +16,6 @@ class FavoriteViewCell: UICollectionViewCell {
         imageView.layer.borderColor = UIColor.white.cgColor
         imageView.layer.shadowOpacity = 0.5
         imageView.layer.borderWidth = 1
-//        imageView.layer.shadowOffset = .zero
-//        imageView.layer.shadowRadius = 3
         return imageView
     }()
 
