@@ -13,8 +13,8 @@ protocol DescriptionViewControllerDelegate: AnyObject {
 
 class DescriptionViewController: UIViewController {
     // MARK: - Properties
-	lazy var descView = self.view as? DescriptionView
-	let model: PhotoStatModel
+	private lazy var descView = self.view as? DescriptionView
+	private let model: PhotoStatModel
 
     // MARK: - View cycle
 	override func loadView() {

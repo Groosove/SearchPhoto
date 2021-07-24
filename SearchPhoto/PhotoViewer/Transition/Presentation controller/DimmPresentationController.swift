@@ -7,7 +7,7 @@
 
 import UIKit
 
-class DimmPresentationController: PresentationController {
+final class DimmPresentationController: PresentationController {
     override func presentationTransitionWillBegin() {
         super.presentationTransitionWillBegin()
         containerView?.insertSubview(dimmView, at: 0)

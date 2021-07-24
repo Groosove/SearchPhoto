@@ -10,7 +10,7 @@ import UIKit
 class FavoriteViewCell: UICollectionViewCell {
     static let identifier = "FavoriteViewCellId"
 
-    lazy var imageView: UIImageView = {
+    private lazy var imageView: UIImageView = {
        let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.layer.borderColor = UIColor.white.cgColor
@@ -28,6 +28,10 @@ class FavoriteViewCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    func configure(image: UIImage?) {
+        self.imageView.image = cropImage(image: image!, targetSize: CGSize(width: self.frame.width, height: self.frame.height))
+    }
 
     private func makeConstraints() {
         let imageViewConstraints = [
@@ -38,10 +42,6 @@ class FavoriteViewCell: UICollectionViewCell {
         ]
 
         NSLayoutConstraint.activate(imageViewConstraints)
-    }
-
-    func configure(image: UIImage?) {
-        self.imageView.image = cropImage(image: image!, targetSize: CGSize(width: self.frame.width, height: self.frame.height))
     }
     
     private func cropImage(image: UIImage, targetSize: CGSize) -> UIImage? {

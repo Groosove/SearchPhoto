@@ -10,10 +10,10 @@ import CoreData
 
 class FavoriteViewController: UIViewController {
     // MARK: - Properties
-    var collectionView: UICollectionView?
-    var images = [UIImage?]()
-    var models = [Images]()
-    let imageData = Container.shared.coreDataStack
+    private var collectionView: UICollectionView?
+    private var images = [UIImage?]()
+    private var models = [Images]()
+    private let imageData = Container.shared.coreDataStack
     private let frc: NSFetchedResultsController<Images> = {
            let request = NSFetchRequest<Images>(entityName: "Images")
            request.sortDescriptors = [.init(key: "imageURL", ascending: true)]

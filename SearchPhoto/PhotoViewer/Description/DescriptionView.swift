@@ -11,7 +11,7 @@ import MapKit
 class DescriptionView: UIView {
 	let model: PhotoStatModel
 	weak var delegate: DescriptionViewControllerDelegate?
-	lazy var dismissButton: UIButton = {
+	private lazy var dismissButton: UIButton = {
 		let button = UIButton(type: .system)
 		button.setImage(UIImage(named: "down"), for: .normal)
 		button.tintColor = .white
@@ -19,7 +19,7 @@ class DescriptionView: UIView {
 		button.translatesAutoresizingMaskIntoConstraints = false
 		return button
 	}()
-	lazy var mapViewLocation: MKMapView = {
+	private lazy var mapViewLocation: MKMapView = {
 		guard let location = model.location, model.location?.coordinate != nil else {
             let map = MKMapView(frame: CGRect(origin: .zero, size: CGSize(width: frame.width, height: 10)))
             map.isHidden = true
@@ -41,8 +41,8 @@ class DescriptionView: UIView {
 		map.translatesAutoresizingMaskIntoConstraints = false
 		return map
 	}()
-	lazy var exifView = EXIFView(model: model.exif)
-	lazy var descriptionLabel: UILabel = {
+	private lazy var exifView = EXIFView(model: model.exif)
+	private lazy var descriptionLabel: UILabel = {
         guard let description = model.description else {
             let label = UILabel(frame: CGRect(origin: .zero, size: CGSize(width: frame.width, height: 10)))
             label.translatesAutoresizingMaskIntoConstraints = false
@@ -56,7 +56,7 @@ class DescriptionView: UIView {
 		label.translatesAutoresizingMaskIntoConstraints = false
 		return label
 	}()
-	let scrollView = UIScrollView()
+	private let scrollView = UIScrollView()
 
 	init(model: PhotoStatModel) {
 		self.model = model
@@ -65,6 +65,10 @@ class DescriptionView: UIView {
 		addSubviews()
 		makeConstraints()
 	}
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
 	private func addSubviews() {
 		addSubview(dismissButton)
@@ -118,9 +122,5 @@ class DescriptionView: UIView {
 
 	@objc private func dismissController() {
 		delegate?.dismissSelf()
-	}
-
-	required init?(coder: NSCoder) {
-		fatalError("init(coder:) has not been implemented")
 	}
 }

@@ -7,7 +7,11 @@
 
 import UIKit
 
-class TransitionDriver: UIPercentDrivenInteractiveTransition {
+enum TransitionDirection {
+    case present, dismiss
+}
+
+final class TransitionDriver: UIPercentDrivenInteractiveTransition {
 
     // MARK: - Linking
     func link(to controller: UIViewController) {

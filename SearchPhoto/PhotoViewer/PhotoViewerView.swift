@@ -9,15 +9,15 @@ import UIKit
 
 class PhotoViewerView: UIView {
     weak var delegate: PhotoViewerControllerDelegate?
-    let model: PhotoViewerModel
-    lazy var imagePresent: UIImageView = {
+    private let model: PhotoViewerModel
+    private lazy var imagePresent: UIImageView = {
         let image = UIImageView()
         image.image = resizeImage(image: self.model.image.image!, targetSize: CGSize(width: self.model.width, height: self.model.height))
         image.contentMode = .scaleToFill
         image.translatesAutoresizingMaskIntoConstraints = false
         return image
     }()
-    lazy var infoViewButton: UIButton = {
+    private lazy var infoViewButton: UIButton = {
         let button = UIButton(type: .infoLight)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.tintColor = .white
@@ -30,13 +30,14 @@ class PhotoViewerView: UIView {
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-    lazy var downloadButton: UIButton = {
+    private lazy var downloadButton: UIButton = {
        let button = UIButton()
         button.setImage( UIImage(named: "arrow"), for: .normal)
         button.addTarget(delegate, action: #selector(downloadTapButton), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
+
     init(model: PhotoViewerModel) {
         self.model = model
         super.init(frame: UIScreen.main.bounds)
@@ -44,6 +45,7 @@ class PhotoViewerView: UIView {
         makeConstraints()
         backgroundColor = .black
     }
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -116,14 +118,14 @@ class PhotoViewerView: UIView {
         }
         updateConstraints()
     }
-
-    @objc private func infoButtonTapped(_ sender: AnyObject) {
-        delegate?.parsePhoto(with: model.uid)
-    }
-
-    func getImage() -> (UIImage?, Bool) {
+    
+    private func getImage() -> (UIImage?, Bool) {
         let like = (delegate?.getImage(with: model.uid))!
         let image = (like) ? UIImage(named: "unlike") : UIImage(named: "like")
         return (image, like)
+    }
+
+    @objc private func infoButtonTapped(_ sender: AnyObject) {
+        delegate?.parsePhoto(with: model.uid)
     }
 }
