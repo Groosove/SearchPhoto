@@ -17,7 +17,6 @@ protocol PhotosCollectionViewControllerDelegate: AnyObject {
 }
 
 final class PhotosCollectionViewController: UIViewController {
-    
     //MARK: - Properties
     private let recentData = Container.shared.coreDataStack
     private let frc: NSFetchedResultsController<Recent> = {

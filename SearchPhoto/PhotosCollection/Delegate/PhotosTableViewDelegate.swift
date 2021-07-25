@@ -23,13 +23,10 @@ final class PhotosTableViewDelegate: NSObject, UITableViewDelegate {
 
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		tableView.deselectRow(at: indexPath, animated: true)
-		guard let imageCell = tableView.cellForRow(at: indexPath) as? PhotosTableViewCell else { return }
-        let image = UIImageView()
-        image.loadImage(imageURL: models[indexPath.row].imageURL)
-        guard image.image == nil else { return }
+        guard let imageCell = tableView.cellForRow(at: indexPath) as? PhotosTableViewCell else { return }
         result = PhotoViewerModel(uid: models[indexPath.row].uid,
                                   name: models[indexPath.row].name,
-                                  image: image,
+                                  image: imageCell.photoView,
                                   width: imageCell.frame.width,
                                   height: imageCell.frame.height,
                                   imageURL: models[indexPath.row].imageURL)

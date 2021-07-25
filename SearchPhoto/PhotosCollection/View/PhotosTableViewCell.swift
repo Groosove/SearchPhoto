@@ -16,7 +16,7 @@ extension PhotosTableViewCell {
 final class PhotosTableViewCell: UITableViewCell {
     static let identifier = "PhotosTableViewCellId"
     private let appearance = Appearance()
-	private lazy var photoView: UIImageView = {
+	lazy var photoView: UIImageView = {
 		let image = UIImageView()
 		image.contentMode = .scaleToFill
 		image.translatesAutoresizingMaskIntoConstraints = false
