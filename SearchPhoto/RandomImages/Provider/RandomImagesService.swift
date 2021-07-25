@@ -14,7 +14,7 @@ final class RandomImagesService: RandomImagesServiceProtocol {
 
     func getImages(completion: @escaping ([PhotosCollectionModel]?, Error?) -> Void) {
         let parametrs = ["count": "30", "client_id": Unsplash.API.clientId]
-        httpHandler.get(baseURL: Unsplash.baseURL, endPoint: Unsplash.Methods.gerRandomImage, parametrs: parametrs) { result in
+        httpHandler.get(baseURL: Unsplash.baseURL, endPoint: Unsplash.Methods.getRandomImage, parametrs: parametrs) { result in
             switch result {
             case let .success(data):
                 do {

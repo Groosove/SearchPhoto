@@ -25,7 +25,7 @@ enum Unsplash {
 	}
 	enum Methods {
 		static let getImages = "/search/photos"
-        static let gerRandomImage = "/photos/random"
+        static let getRandomImage = "/photos/random"
 	}
 
 }

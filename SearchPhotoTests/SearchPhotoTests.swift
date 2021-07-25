@@ -8,7 +8,7 @@
 import XCTest
 @testable import SearchPhoto
 
-class SearchPhotoTests: XCTestCase {
+class SearchPhotoSearchImagesTest: XCTestCase {
 
     let service = HTTPHandler()
     override func setUp() {
@@ -17,7 +17,7 @@ class SearchPhotoTests: XCTestCase {
 
     func testGetRequestGoodData() throws {
         let parametrs = ["query": "Mom", "page": "1", "per_page": "50", "client_id": Unsplash.API.clientId]
-        service.get(baseURL: Unsplash.baseURL, endPoint: Unsplash.Methods.getImages, parametrs: parametrs) { data in
+        service.get(baseURL: Unsplash.baseURL, endPoint: Unsplash.Methods.getRandomImage, parametrs: parametrs) { data in
             switch data {
             case .failure:
                 XCTAssertTrue(true)
