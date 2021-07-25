@@ -10,13 +10,12 @@ import UIKit
 class PhotoViewerView: UIView {
     weak var delegate: PhotoViewerControllerDelegate?
     private let model: PhotoViewerModel
-    private lazy var imagePresent: UIImageView = {
-        let image = UIImageView()
-        image.image = resizeImage(image: self.model.image.image!, targetSize: CGSize(width: self.model.width, height: self.model.height))
-        image.contentMode = .scaleToFill
-        image.translatesAutoresizingMaskIntoConstraints = false
-        return image
-    }()
+	lazy var scrollView: ImageScrollView = {
+		let image = resizeImage(image: self.model.image.image!, targetSize: CGSize(width: self.model.width, height: self.model.height))
+		let scrollView = ImageScrollView(image: image!)
+		scrollView.translatesAutoresizingMaskIntoConstraints = false
+		return scrollView
+	}()
     private lazy var infoViewButton: UIButton = {
         let button = UIButton(type: .infoLight)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -51,7 +50,7 @@ class PhotoViewerView: UIView {
     }
 
     private func addSubviews() {
-        addSubview(imagePresent)
+		addSubview(scrollView)
         addSubview(infoViewButton)
         addSubview(likeButton)
         addSubview(downloadButton)
@@ -60,7 +59,7 @@ class PhotoViewerView: UIView {
     private func makeConstraints() {
         let infoViewButtonConstraints = [
             infoViewButton.leadingAnchor.constraint(equalTo: self.layoutMarginsGuide.leadingAnchor),
-            infoViewButton.topAnchor.constraint(equalTo: imagePresent.bottomAnchor)
+            infoViewButton.topAnchor.constraint(equalTo: scrollView.bottomAnchor)
         ]
 
         let downloadButtonConstraints = [
@@ -72,17 +71,18 @@ class PhotoViewerView: UIView {
             likeButton.trailingAnchor.constraint(equalTo: self.layoutMarginsGuide.trailingAnchor),
             likeButton.bottomAnchor.constraint(equalTo: downloadButton.topAnchor, constant: -5)
         ]
-
-        let imagePresentConstraints = [
-            imagePresent.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            imagePresent.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            imagePresent.topAnchor.constraint(equalTo: self.topAnchor, constant: (UIScreen.main.bounds.height - model.height) / 2)
-        ]
+		
+		let scrollViewConstraints = [
+			scrollView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+			scrollView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+			scrollView.topAnchor.constraint(equalTo: self.topAnchor, constant: (UIScreen.main.bounds.height - model.height) / 2),
+			scrollView.heightAnchor.constraint(equalToConstant: scrollView.imageView.image!.size.height),
+		]
 
         NSLayoutConstraint.activate(infoViewButtonConstraints)
         NSLayoutConstraint.activate(downloadButtonConstraints)
         NSLayoutConstraint.activate(likeButtonConstraints)
-        NSLayoutConstraint.activate(imagePresentConstraints)
+		NSLayoutConstraint.activate(scrollViewConstraints)
     }
 
     private func resizeImage(image: UIImage, targetSize: CGSize) -> UIImage? {
@@ -105,7 +105,7 @@ class PhotoViewerView: UIView {
     }
 
     @objc private func downloadTapButton(_ sender: AnyObject) {
-        delegate?.downloadPhoto(with: imagePresent.image!)
+		delegate?.downloadPhoto(with: scrollView.imageView.image!)
     }
 
     @objc private func likeTapButton(_ sender: AnyObject) {

@@ -44,6 +44,10 @@ class PhotoViewerController: UIViewController, UINavigationControllerDelegate {
         viewer?.likeButton.setImage(image, for: .normal)
         setUpNavigationBar()
     }
+	
+	override func viewDidLayoutSubviews() {
+		viewer?.scrollView.setZoomScale()
+	}
 
     // MARK: - Init
     init(with model: PhotoViewerModel) {
