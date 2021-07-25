@@ -8,7 +8,7 @@
 import Foundation
 
 final class HTTPHandler {
-    private let session = URLSession.shared
+    let session = URLSession.shared
 
 	func get(baseURL: String = "", endPoint: String = "", parametrs: [String: String] = [:], completion: @escaping (Result<Data, NetworkError>) -> Void) {
         var components = URLComponents(string: baseURL)

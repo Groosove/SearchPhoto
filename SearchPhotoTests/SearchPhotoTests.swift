@@ -10,22 +10,40 @@ import XCTest
 
 class SearchPhotoTests: XCTestCase {
 
-    override func setUpWithError() throws {
+    let service = HTTPHandler()
+    override func setUp() {
+        guard let _ = URL(string: Unsplash.baseURL + Unsplash.Methods.getImages) else { fatalError("Bad URL") }
     }
 
-    override func tearDownWithError() throws {
-    }
-
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+    func testGetRequestGoodData() throws {
+        let parametrs = ["query": "Mom", "page": "1", "per_page": "50", "client_id": Unsplash.API.clientId]
+        service.get(baseURL: Unsplash.baseURL, endPoint: Unsplash.Methods.getImages, parametrs: parametrs) { data in
+            switch data {
+            case .failure:
+                XCTAssertTrue(true)
+            default: XCTAssertTrue(false)
+            }
         }
     }
-
+    
+    func testGetRequestError() throws {
+        let parametrs = ["query": "lgjalgjklahgklahklgahplghalghlakkhlgahklkhga", "page": "1", "per_page": "50", "client_id": Unsplash.API.clientId]
+        service.get(baseURL: Unsplash.baseURL, endPoint: Unsplash.Methods.getImages, parametrs: parametrs) { data in
+            switch data {
+            case .failure:
+                XCTAssertTrue(false)
+            default: XCTAssertTrue(true)
+            }
+        }
+    }
+    
+    func testGetRequestWithoutParametrs() throws {
+        service.get(baseURL: Unsplash.baseURL, endPoint: Unsplash.Methods.getImages, parametrs: [:]) { data in
+            switch data {
+            case .failure:
+                XCTAssertTrue(false)
+            default: XCTAssertTrue(true)
+            }
+        }
+    }
 }
