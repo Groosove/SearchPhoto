@@ -9,24 +9,23 @@ import XCTest
 
 class SearchPhotoUITests: XCTestCase {
 
-//    override func setUpWithError() throws {
-//        // Put setup code here. This method is called before the invocation of each test method in the class.
-//
-//        // In UI tests it is usually best to stop immediately when a failure occurs.
-//        continueAfterFailure = false
-//
-//    }
-//
-//    override func tearDownWithError() throws {
-//        // Put teardown code here. This method is called after the invocation of each test method in the class.
-//    }
-
-    func testExample() throws {
-        // UI tests must launch the application that they test.
-        let app = XCUIApplication()
+    var app: XCUIApplication!
+    
+    override  func setUp() {
+        continueAfterFailure = false
+        app = XCUIApplication()
         app.launch()
+    }
 
-        // Use recording to get started writing UI tests.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    func testSearchBarInPhotosCollection() throws {
+        app.tabBars.children(matching: .button).element(boundBy: 1).tap()
+                
+        let searchBar = app.navigationBars["Search Images"]
+        searchBar.searchFields["Search"].tap()
+        searchBar.typeText("Mom")
+
+        XCUIApplication().keyboards.buttons["search"].tap()
+        searchBar.buttons["Cancel"].tap()
+        app.tables.children(matching: .button)["Clear"].tap()
     }
 }

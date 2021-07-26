@@ -70,6 +70,10 @@ class DescriptionView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
+    deinit {
+        mapViewLocation.removeAnnotations(mapViewLocation.annotations)
+    }
+
 	private func addSubviews() {
 		addSubview(dismissButton)
 		addSubview(scrollView)
