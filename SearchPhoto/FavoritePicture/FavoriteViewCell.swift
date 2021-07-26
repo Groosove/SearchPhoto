@@ -30,7 +30,7 @@ class FavoriteViewCell: UICollectionViewCell {
     }
     
     func configure(image: UIImage?) {
-        self.imageView.image = cropImage(image: image!, targetSize: CGSize(width: self.frame.width, height: self.frame.height))
+        self.imageView.image = image
     }
 
     private func makeConstraints() {
@@ -43,23 +43,4 @@ class FavoriteViewCell: UICollectionViewCell {
 
         NSLayoutConstraint.activate(imageViewConstraints)
     }
-    
-    private func cropImage(image: UIImage, targetSize: CGSize) -> UIImage? {
-        guard let cgImage = image.cgImage else { return nil }
-        let contextImage: UIImage = UIImage(cgImage: cgImage)
-        let contextSize: CGSize = contextImage.size
-        var rect = CGRect.zero
-
-        if contextSize.width > contextSize.height {
-            rect = CGRect(x: ((contextSize.width - contextSize.height) / 2), y: 0, width: contextSize.height, height: contextSize.height)
-        } else {
-            rect = CGRect(x: 0, y: ((contextSize.height - contextSize.width) / 2), width: contextSize.width, height: contextSize.width)
-        }
-
-        guard let imageRef = cgImage.cropping(to: rect) else { return nil }
-        let image: UIImage = UIImage(cgImage: imageRef, scale: image.scale, orientation: image.imageOrientation)
-        
-        return image
-    }
-
 }
