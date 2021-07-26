@@ -8,6 +8,7 @@
 import UIKit
 
 final class PhotoViewerView: UIView {
+	// MARK: - Properties
     weak var delegate: PhotoViewerControllerDelegate?
     private let model: PhotoViewerModel
 	lazy var scrollView: ImageScrollView = {
@@ -39,6 +40,7 @@ final class PhotoViewerView: UIView {
         return button
     }()
 
+	//MARK: - Init
     init(model: PhotoViewerModel) {
         self.model = model
         super.init(frame: UIScreen.main.bounds)
@@ -51,6 +53,7 @@ final class PhotoViewerView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
+	//MARK: - Setup UI
     private func addSubviews() {
 		addSubview(scrollView)
         addSubview(infoViewButton)
@@ -87,6 +90,33 @@ final class PhotoViewerView: UIView {
 		NSLayoutConstraint.activate(scrollViewConstraints)
     }
 
+	//MARK: - Update View functions
+    @objc private func downloadTapButton(_ sender: AnyObject) {
+		delegate?.downloadPhoto(with: scrollView.imageView.image!)
+    }
+
+    @objc private func likeTapButton(_ sender: AnyObject) {
+        let image = getImage()
+        likeButton.setImage(image.0, for: .normal)
+        if image.1 == false {
+            delegate?.savePhoto(with: model.image.image!, model: model)
+        } else {
+            delegate?.unsavePhoto(uid: model.uid)
+        }
+        updateConstraints()
+    }
+
+    @objc private func infoButtonTapped(_ sender: AnyObject) {
+        delegate?.parsePhoto(with: model.uid)
+    }
+	
+	//MARK: - Private functions
+    private func getImage() -> (UIImage?, Bool) {
+        let like = (delegate?.getImage(with: model.uid))!
+        let image = (like) ? UIImage(named: "unlike") : UIImage(named: "like")
+        return (image, like)
+    }
+
     private func resizeImage(image: UIImage, targetSize: CGSize) -> UIImage? {
         let size = image.size
         let widthRatio  = targetSize.width  / size.width
@@ -104,30 +134,5 @@ final class PhotoViewerView: UIView {
         let newImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         return newImage
-    }
-
-    @objc private func downloadTapButton(_ sender: AnyObject) {
-		delegate?.downloadPhoto(with: scrollView.imageView.image!)
-    }
-
-    @objc private func likeTapButton(_ sender: AnyObject) {
-        let image = getImage()
-        likeButton.setImage(image.0, for: .normal)
-        if image.1 == false {
-            delegate?.savePhoto(with: model.image.image!, model: model)
-        } else {
-            delegate?.unsavePhoto(uid: model.uid)
-        }
-        updateConstraints()
-    }
-    
-    private func getImage() -> (UIImage?, Bool) {
-        let like = (delegate?.getImage(with: model.uid))!
-        let image = (like) ? UIImage(named: "unlike") : UIImage(named: "like")
-        return (image, like)
-    }
-
-    @objc private func infoButtonTapped(_ sender: AnyObject) {
-        delegate?.parsePhoto(with: model.uid)
     }
 }
