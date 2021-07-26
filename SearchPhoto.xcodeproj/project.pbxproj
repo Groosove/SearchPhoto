@@ -37,7 +37,6 @@
 		1491D8B6269B202B007045AC /* PhotoViewerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1491D8B5269B202B007045AC /* PhotoViewerModel.swift */; };
 		1493EF2326934ECF000A9B08 /* PhotosTablieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1493EF2226934ECF000A9B08 /* PhotosTablieView.swift */; };
 		1493EF2926935055000A9B08 /* PhotosTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1493EF2826935055000A9B08 /* PhotosTableViewCell.swift */; };
-		1497513826AED86E0095889C /* ImageViewerPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1497513726AED86E0095889C /* ImageViewerPageViewController.swift */; };
 		1498040726AC715200678000 /* PhotosCollectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1498040626AC715200678000 /* PhotosCollectionViewModel.swift */; };
 		1498040926AC773200678000 /* PageLauncherController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1498040826AC773200678000 /* PageLauncherController.swift */; };
 		1498040B26AC776A00678000 /* HomeScreenController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1498040A26AC776A00678000 /* HomeScreenController.swift */; };
@@ -127,7 +126,6 @@
 		1491D8B5269B202B007045AC /* PhotoViewerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoViewerModel.swift; sourceTree = "<group>"; };
 		1493EF2226934ECF000A9B08 /* PhotosTablieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PhotosTablieView.swift; path = SearchPhoto/PhotosCollection/View/PhotosTablieView.swift; sourceTree = SOURCE_ROOT; };
 		1493EF2826935055000A9B08 /* PhotosTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PhotosTableViewCell.swift; path = SearchPhoto/PhotosCollection/View/PhotosTableViewCell.swift; sourceTree = SOURCE_ROOT; };
-		1497513726AED86E0095889C /* ImageViewerPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewerPageViewController.swift; sourceTree = "<group>"; };
 		1498040626AC715200678000 /* PhotosCollectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PhotosCollectionViewModel.swift; path = SearchPhoto/PhotosCollection/View/PhotosCollectionViewModel.swift; sourceTree = SOURCE_ROOT; };
 		1498040826AC773200678000 /* PageLauncherController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageLauncherController.swift; sourceTree = "<group>"; };
 		1498040A26AC776A00678000 /* HomeScreenController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreenController.swift; sourceTree = "<group>"; };
@@ -253,7 +251,6 @@
 				1491D8B1269B0E84007045AC /* PhotoViewerView.swift */,
 				1491D8B5269B202B007045AC /* PhotoViewerModel.swift */,
 				4A32AB1326ACE94F004EA15C /* ImageScrollView.swift */,
-				1497513726AED86E0095889C /* ImageViewerPageViewController.swift */,
 			);
 			path = PhotoViewer;
 			sourceTree = "<group>";
@@ -622,7 +619,6 @@
 				143E000D2691CC9400D912F6 /* PhotosCollectionModel.swift in Sources */,
 				147EC4CD26A46A24004B3CC2 /* PhotosTableViewDelegate.swift in Sources */,
 				14DBA2FC26A712EB004A3F43 /* Images+CoreDataClass.swift in Sources */,
-				1497513826AED86E0095889C /* ImageViewerPageViewController.swift in Sources */,
 				1498040726AC715200678000 /* PhotosCollectionViewModel.swift in Sources */,
 				4AB96578269E4DA8003E1F1C /* InstantPanGestureRecognizer.swift in Sources */,
 				4AB96549269E45BE003E1F1C /* DescriptionViewController.swift in Sources */,
