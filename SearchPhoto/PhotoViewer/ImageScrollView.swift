@@ -28,11 +28,8 @@ final class ImageScrollView: UIScrollView {
 		addSubview(imageView)
 		contentSize = imageView.bounds.size
 
-		contentInsetAdjustmentBehavior = .never // Adjust content according to safe area if necessary
 		showsVerticalScrollIndicator = false
 		showsHorizontalScrollIndicator = false
-		alwaysBounceHorizontal = true
-		alwaysBounceVertical = true
 		delegate = self
 	}
 
