@@ -16,7 +16,7 @@ protocol PhotoViewerControllerDelegate: AnyObject {
     func getImage(with imageURL: String) -> Bool
 }
 
-class PhotoViewerController: UIViewController, UINavigationControllerDelegate {
+final class PhotoViewerController: UIViewController, UINavigationControllerDelegate {
     // MARK: - Properties
     let imageData = Container.shared.coreDataStack
     private let frc: NSFetchedResultsController<Images> = {

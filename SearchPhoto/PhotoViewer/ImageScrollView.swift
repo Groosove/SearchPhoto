@@ -8,7 +8,6 @@
 import UIKit
 
 final class ImageScrollView: UIScrollView {
-
 	private let image: UIImage
 	lazy var imageView: UIImageView = {
 		let imageView = UIImageView(image: image)

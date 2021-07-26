@@ -7,7 +7,7 @@
 
 import UIKit
 
-class PhotoViewerView: UIView {
+final class PhotoViewerView: UIView {
     weak var delegate: PhotoViewerControllerDelegate?
     private let model: PhotoViewerModel
 	lazy var scrollView: ImageScrollView = {
