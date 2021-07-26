@@ -14,6 +14,8 @@ class PhotoViewerView: UIView {
 		let image = resizeImage(image: self.model.image.image!, targetSize: CGSize(width: self.model.width, height: self.model.height))
 		let scrollView = ImageScrollView(image: image!)
 		scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.minimumZoomScale = 1.0
+        scrollView.maximumZoomScale = 2.0
 		return scrollView
 	}()
     private lazy var infoViewButton: UIButton = {
