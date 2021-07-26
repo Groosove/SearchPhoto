@@ -33,16 +33,11 @@ final class ImageScrollView: UIScrollView {
 		delegate = self
 	}
 
-	private func setUpImageView() {
-		
-	}
-
 	required init?(coder aDecoder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
 
-	// MARK: - Helper methods
-
+	// MARK: - Zoom Scale
 	func setZoomScale() {
 		let widthScale = frame.size.width / imageView.bounds.width
 		let heightScale = frame.size.height / imageView.bounds.height
