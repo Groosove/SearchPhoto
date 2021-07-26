@@ -21,7 +21,6 @@ final class HelloPageViewContoller: UIPageViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         dataSource = self
-        delegate = nil
 
         for i in 0..<3 {
             let vc = HomeScreenController()
