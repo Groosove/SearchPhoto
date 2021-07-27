@@ -8,8 +8,9 @@
 import UIKit
 
 final class HelloPageViewContoller: UIPageViewController {
-    var pages = [UIViewController]()
-    var images = [
+	private let size = CGSize(width: (UIScreen.main.bounds.width * 2) / 3, height: (UIScreen.main.bounds.height * 2) / 3)
+    private var pages = [UIViewController]()
+    private let images = [
 		UIImage(named: "Favorite"),
 		UIImage(named: "Random"),
 		UIImage(named: "Searchs"),
@@ -27,7 +28,7 @@ final class HelloPageViewContoller: UIPageViewController {
         dataSource = self
 
         for i in 0..<3 {
-			let vc = HomeScreenController(image: images[i]!)
+			let vc = HomeScreenController(image: (images[i]?.resizeImage(targetSize: size))!)
 			if i == 2 {
 				vc.isLast = true
 			}
