@@ -19,7 +19,7 @@ final class RandomImagesViewController: UIViewController {
     private let interactor: RandomImagesBusinessLogic
     private var state: RandomImages.ViewControllerState
     private let collectionDataSource =  RandomImagesDataStore()
-    private let collectionHandler = RandomImagesWaterfallDelegate()
+    private let collectionHandler = RandomImagesDelegate()
     private lazy var collectionView = self.view as? RandomImagesView
 
     // MARK: - Init

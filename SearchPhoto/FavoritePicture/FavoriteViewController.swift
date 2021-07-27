@@ -11,7 +11,7 @@ import CoreData
 class FavoriteViewController: UIViewController {
     // MARK: - Properties
     private var collectionView: UICollectionView?
-    private var images = [UIImage?]()
+	private var images = [(image: UIImage?, cropImage: UIImage?)]()
     private var models = [Images]()
     private let imageData = Container.shared.coreDataStack
     private let frc: NSFetchedResultsController<Images> = {
@@ -24,17 +24,12 @@ class FavoriteViewController: UIViewController {
     }()
 
     // MARK: - View cycle
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        images = getImages()
-        models = imageData.getAllImages()
-        setUpNavigationBar()
-        setUpCollectionView()
-    }
-
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(true)
-		viewDidLoad()
+		images = getImages()
+		models = imageData.getAllImages()
+		setUpNavigationBar()
+		setUpCollectionView()
 	}
 
     // MARK: - Setup UI
@@ -54,18 +49,21 @@ class FavoriteViewController: UIViewController {
     }
 
     // MARK: - Private Function
-    private func getImages() -> [UIImage?] {
+    private func getImages() -> [(UIImage?, UIImage?)] {
         let imagePaths = imageData.getAllImages()
+		guard imagePaths.count != images.count else { return images }
         let documentDirectory = FileManager.SearchPathDirectory.documentDirectory
         let userDomainMask = FileManager.SearchPathDomainMask.userDomainMask
         let paths = NSSearchPathForDirectoriesInDomains(documentDirectory, userDomainMask, true)
 
         if let dirPath = paths.first {
-            var result = [UIImage?]()
+            var result = [(UIImage?, UIImage?)]()
             for item in imagePaths {
                 let imageURL = URL(fileURLWithPath: dirPath).appendingPathComponent(item.uid)
-                let image = UIImage(contentsOfFile: imageURL.path)
-                result.append(image)
+                let imageFromFile = UIImage(contentsOfFile: imageURL.path)
+				guard let image = imageFromFile else { continue }
+				let cropImage = image.cropImage(targetSize: CGSize(width: self.view.frame.width/3, height: self.view.frame.width/3))
+                result.append((image, cropImage))
             }
             return result
         }
@@ -90,7 +88,7 @@ extension FavoriteViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FavoriteViewCell.identifier, for: indexPath)
         guard let imagePhoto = cell as? FavoriteViewCell else { return UICollectionViewCell() }
-        imagePhoto.configure(image: images[indexPath.item])
+		imagePhoto.configure(image: images[indexPath.item].cropImage)
         return imagePhoto
     }
 }
@@ -100,9 +98,14 @@ extension FavoriteViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
         let item = models[indexPath.item]
-        guard images[indexPath.item] != nil else { return }
-        let image = UIImageView(image: images[indexPath.item])
-        let result = PhotoViewerModel(uid: item.uid, name: item.name, image: image, width: CGFloat(item.width), height: CGFloat(item.height), imageURL: item.imageURL)
+		guard images[indexPath.item].image != nil else { return }
+		let image = UIImageView(image: images[indexPath.item].image)
+        let result = PhotoViewerModel(uid: item.uid,
+									  name: item.name,
+									  image: image,
+									  width: CGFloat(item.width),
+									  height: CGFloat(item.height),
+									  imageURL: item.imageURL)
         openViewer(with: result)
      }
 }

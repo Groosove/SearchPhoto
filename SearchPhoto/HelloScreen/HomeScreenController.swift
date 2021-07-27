@@ -14,12 +14,6 @@ final class HomeScreenController: UIViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-
-    let descriptionLabel: UILabel = {
-       let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
     
     let dismissButton: UIButton = {
         let button = UIButton()
@@ -31,7 +25,16 @@ final class HomeScreenController: UIViewController {
         return button
     }()
     
-    override func viewDidLoad() {
+	init(image: UIImage) {
+		self.imageView.image = image
+		super.init(nibName: nil, bundle: nil)
+	}
+	
+	required init?(coder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
+	}
+
+	override func viewDidLoad() {
         super.viewDidLoad()
         addSubviews()
         if isLast {
@@ -42,7 +45,6 @@ final class HomeScreenController: UIViewController {
     
     private func addSubviews() {
         self.view.addSubview(imageView)
-        self.view.addSubview(descriptionLabel)
         self.view.addSubview(dismissButton)
     }
     
@@ -52,18 +54,11 @@ final class HomeScreenController: UIViewController {
             imageView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor)
         ]
 
-        let descriptionLabelConstraints = [
-            descriptionLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 10),
-            descriptionLabel.leadingAnchor.constraint(equalTo: self.view.layoutMarginsGuide.leadingAnchor),
-            descriptionLabel.trailingAnchor.constraint(equalTo: self.view.layoutMarginsGuide.trailingAnchor)
-        ]
-
         let dismissButtonConstraints = [
             dismissButton.trailingAnchor.constraint(equalTo: self.view.layoutMarginsGuide.trailingAnchor, constant: 10),
             dismissButton.topAnchor.constraint(equalTo: self.view.layoutMarginsGuide.topAnchor, constant: 10)
         ]
         NSLayoutConstraint.activate(imageViewConstraints)
-        NSLayoutConstraint.activate(descriptionLabelConstraints)
         NSLayoutConstraint.activate(dismissButtonConstraints)
     }
 

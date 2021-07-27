@@ -7,6 +7,26 @@
 
 import UIKit
 extension UIImage {
+	func cropImage(targetSize: CGSize) -> UIImage? {
+		guard let cgImage = self.cgImage else { return nil }
+		let contextImage: UIImage = UIImage(cgImage: cgImage)
+		let contextSize: CGSize = contextImage.size
+		var rect = CGRect.zero
+
+		if contextSize.width > contextSize.height {
+			rect = CGRect(x: ((contextSize.width - contextSize.height) / 2), y: 0, width: contextSize.height, height: contextSize.height)
+		} else {
+			rect = CGRect(x: 0, y: ((contextSize.height - contextSize.width) / 2), width: contextSize.width, height: contextSize.width)
+		}
+
+		guard let imageRef = cgImage.cropping(to: rect) else { return nil }
+		let image: UIImage = UIImage(cgImage: imageRef, scale: self.scale, orientation: self.imageOrientation)
+
+		return image
+	}
+}
+
+extension UIImage {
     public convenience init?(blurHash: String, size: CGSize, punch: Float = 1) {
         guard blurHash.count >= 6 else { return nil }
 

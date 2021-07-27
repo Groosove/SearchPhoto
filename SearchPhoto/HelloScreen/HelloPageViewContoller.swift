@@ -9,7 +9,11 @@ import UIKit
 
 final class HelloPageViewContoller: UIPageViewController {
     var pages = [UIViewController]()
-    
+    var images = [
+		UIImage(named: "Favorite"),
+		UIImage(named: "Random"),
+		UIImage(named: "Searchs"),
+	]
     override init(transitionStyle style: UIPageViewController.TransitionStyle, navigationOrientation: UIPageViewController.NavigationOrientation, options: [UIPageViewController.OptionsKey : Any]? = nil) {
         super.init(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
     }
@@ -24,7 +28,7 @@ final class HelloPageViewContoller: UIPageViewController {
         delegate = nil
 
         for i in 0..<3 {
-            let vc = HomeScreenController()
+			let vc = HomeScreenController(image: images[i]!)
 			if i == 2 {
 				vc.isLast = true
 			}
