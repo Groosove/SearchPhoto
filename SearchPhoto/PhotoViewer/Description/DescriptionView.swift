@@ -33,11 +33,12 @@ class DescriptionView: UIView {
 		annotation.coordinate = location.coordinate!
 		map.setRegion(MKCoordinateRegion(center: annotation.coordinate,
 										 latitudinalMeters: 50000,
-										 longitudinalMeters: 60000), animated: true)
+                                         longitudinalMeters: 60000), animated: true)
 		map.centerCoordinate = annotation.coordinate
 		map.mapType = .standard
 		map.addAnnotation(annotation)
 		map.isScrollEnabled = true
+        map.mapType = .standard
 		map.translatesAutoresizingMaskIntoConstraints = false
 		return map
 	}()
@@ -68,6 +69,11 @@ class DescriptionView: UIView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    deinit {
+        mapViewLocation.removeAnnotations(mapViewLocation.annotations)
+        mapViewLocation.delegate = nil
     }
 
 	private func addSubviews() {
@@ -104,7 +110,7 @@ class DescriptionView: UIView {
 
 		let descriptionLabelConstraints = [
 			descriptionLabel.topAnchor.constraint(equalTo: scrollView.topAnchor),
-            descriptionLabel.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
+            descriptionLabel.widthAnchor.constraint(equalToConstant: descriptionLabel.frame.width)
 		]
 
 		let mapViewConstraints = [

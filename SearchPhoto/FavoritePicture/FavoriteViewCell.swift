@@ -30,7 +30,7 @@ class FavoriteViewCell: UICollectionViewCell {
     }
     
     func configure(image: UIImage?) {
-		self.imageView.image = image?.cropImage(targetSize: CGSize(width: self.frame.width, height: self.frame.height))
+        self.imageView.image = image
     }
 
     private func makeConstraints() {

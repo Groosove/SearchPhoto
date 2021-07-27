@@ -7,13 +7,17 @@
 
 import UIKit
 
-class PhotoViewerView: UIView {
+final class PhotoViewerView: UIView {
+	// MARK: - Properties
     weak var delegate: PhotoViewerControllerDelegate?
     private let model: PhotoViewerModel
 	lazy var scrollView: ImageScrollView = {
-		let image = resizeImage(image: self.model.image.image!, targetSize: CGSize(width: self.model.width, height: self.model.height))
+		let size = CGSize(width: self.model.width, height: self.model.height)
+		let image = self.model.image.image?.resizeImage(targetSize: size)
 		let scrollView = ImageScrollView(image: image!)
 		scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.minimumZoomScale = 1.0
+        scrollView.maximumZoomScale = 2.0
 		return scrollView
 	}()
     private lazy var infoViewButton: UIButton = {
@@ -37,6 +41,7 @@ class PhotoViewerView: UIView {
         return button
     }()
 
+	//MARK: - Init
     init(model: PhotoViewerModel) {
         self.model = model
         super.init(frame: UIScreen.main.bounds)
@@ -49,6 +54,7 @@ class PhotoViewerView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
+	//MARK: - Setup UI
     private func addSubviews() {
 		addSubview(scrollView)
         addSubview(infoViewButton)
@@ -85,25 +91,7 @@ class PhotoViewerView: UIView {
 		NSLayoutConstraint.activate(scrollViewConstraints)
     }
 
-    private func resizeImage(image: UIImage, targetSize: CGSize) -> UIImage? {
-        let size = image.size
-        let widthRatio  = targetSize.width  / size.width
-        let heightRatio = targetSize.height / size.height
-        var newSize: CGSize
-
-        if widthRatio > heightRatio {
-            newSize = CGSize(width: size.width * heightRatio, height: size.height * heightRatio)
-        } else {
-            newSize = CGSize(width: size.width * widthRatio, height: size.height * widthRatio)
-        }
-        let rect = CGRect(origin: .zero, size: newSize)
-        UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
-        image.draw(in: rect)
-        let newImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        return newImage
-    }
-
+	//MARK: - Update View functions
     @objc private func downloadTapButton(_ sender: AnyObject) {
 		delegate?.downloadPhoto(with: scrollView.imageView.image!)
     }
@@ -118,14 +106,15 @@ class PhotoViewerView: UIView {
         }
         updateConstraints()
     }
-    
+
+    @objc private func infoButtonTapped(_ sender: AnyObject) {
+        delegate?.parsePhoto(with: model.uid)
+    }
+	
+	//MARK: - Private functions
     private func getImage() -> (UIImage?, Bool) {
         let like = (delegate?.getImage(with: model.uid))!
         let image = (like) ? UIImage(named: "unlike") : UIImage(named: "like")
         return (image, like)
-    }
-
-    @objc private func infoButtonTapped(_ sender: AnyObject) {
-        delegate?.parsePhoto(with: model.uid)
     }
 }

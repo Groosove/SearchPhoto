@@ -8,7 +8,6 @@
 import UIKit
 
 final class ImageScrollView: UIScrollView {
-
 	private let image: UIImage
 	lazy var imageView: UIImageView = {
 		let imageView = UIImageView(image: image)
@@ -28,24 +27,16 @@ final class ImageScrollView: UIScrollView {
 		addSubview(imageView)
 		contentSize = imageView.bounds.size
 
-		contentInsetAdjustmentBehavior = .never // Adjust content according to safe area if necessary
 		showsVerticalScrollIndicator = false
 		showsHorizontalScrollIndicator = false
-		alwaysBounceHorizontal = true
-		alwaysBounceVertical = true
 		delegate = self
-	}
-
-	private func setUpImageView() {
-		
 	}
 
 	required init?(coder aDecoder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
 
-	// MARK: - Helper methods
-
+	// MARK: - Zoom Scale
 	func setZoomScale() {
 		let widthScale = frame.size.width / imageView.bounds.width
 		let heightScale = frame.size.height / imageView.bounds.height

@@ -47,7 +47,6 @@ final class RandomImagesViewController: UIViewController {
     // MARK: - Setup UI
 
     private func setUpNavigationBar() {
-        navigationController?.navigationBar.isTranslucent = true
         navigationController?.navigationBar.barTintColor = .black
         navigationItem.title = "Random Images"
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]

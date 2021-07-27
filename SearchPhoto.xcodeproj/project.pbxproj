@@ -288,11 +288,11 @@
 		4A385AF4268F515600EC0D51 /* SearchPhoto */ = {
 			isa = PBXGroup;
 			children = (
-				14CAA36626A8805600F9895E /* HelloScreen */,
 				4A385AF5268F515600EC0D51 /* AppDelegate.swift */,
 				146BABCF2692055200B10A43 /* MainTabBarController.swift */,
 				143E000A2691CC9400D912F6 /* CoreDataStack.swift */,
 				1466BA3E2699077B0035F783 /* DIContainer.swift */,
+				14CAA36626A8805600F9895E /* HelloScreen */,
 				14D38CF92698E56000E949BF /* PhotoViewer */,
 				146BABD326921F8800B10A43 /* FavoritePicture */,
 				8A77228D6229EE9FB46F4E09 /* RandomImages */,
