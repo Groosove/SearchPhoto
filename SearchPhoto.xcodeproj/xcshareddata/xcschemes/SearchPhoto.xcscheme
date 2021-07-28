@@ -49,6 +49,26 @@
                ReferencedContainer = "container:SearchPhoto.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "4AE4FF7726B157C9008563FC"
+               BuildableName = "SnapshotUITest.xctest"
+               BlueprintName = "SnapshotUITest"
+               ReferencedContainer = "container:SearchPhoto.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "4AE4FF8F26B15A2D008563FC"
+               BuildableName = "SnapshotTests.xctest"
+               BlueprintName = "SnapshotTests"
+               ReferencedContainer = "container:SearchPhoto.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
