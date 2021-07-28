@@ -11,7 +11,7 @@ protocol DescriptionViewControllerDelegate: AnyObject {
 	func dismissSelf()
 }
 
-class DescriptionViewController: UIViewController {
+final class DescriptionViewController: UIViewController {
     // MARK: - Properties
 	private lazy var descView = self.view as? DescriptionView
 	private let model: PhotoStatModel

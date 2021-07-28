@@ -16,6 +16,7 @@ extension PhotosTableViewCell {
 final class PhotosTableViewCell: UITableViewCell {
     static let identifier = "PhotosTableViewCellId"
     private let appearance = Appearance()
+	private(set) var isLoading = true
 	lazy var photoView: UIImageView = {
 		let image = UIImageView()
 		image.contentMode = .scaleToFill
@@ -44,6 +45,7 @@ final class PhotosTableViewCell: UITableViewCell {
     func configure(image: String, photograph: String, blurHash: String) {
         self.photoView.image = UIImage(blurHash: blurHash, size: appearance.blurSize)
         self.photoView.loadImage(imageURL: image)
+		isLoading = false
         self.photographLabel.text = photograph
     }
 

@@ -21,7 +21,7 @@ final class ImageScrollView: UIScrollView {
 		}
 	}
 
-	required init(image: UIImage) {
+	init(image: UIImage) {
 		self.image = image
 		super.init(frame: .zero)
 		addSubview(imageView)
@@ -47,11 +47,10 @@ final class ImageScrollView: UIScrollView {
 }
 
 extension ImageScrollView: UIScrollViewDelegate {
-	
 	func viewForZooming(in scrollView: UIScrollView) -> UIView? {
 		return imageView
 	}
-	
+
 	func scrollViewDidZoom(_ scrollView: UIScrollView) {
 		let imageViewSize = imageView.frame.size
 		let scrollViewSize = scrollView.bounds.size

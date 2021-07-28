@@ -2,19 +2,19 @@
 //  HomeScreenController.swift
 //  SearchPhoto
 //
-//  Created by Fenix Lavon on 7/24/21.
+//  Created by Artur Lutfullin on 7/24/21.
 //
 
 import UIKit
 
 final class HomeScreenController: UIViewController {
+	//MARK: - Properties
     var isLast = false
     let imageView: UIImageView = {
         let view = UIImageView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    
     let dismissButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -24,7 +24,8 @@ final class HomeScreenController: UIViewController {
         button.isHidden = true
         return button
     }()
-    
+	
+	//MARK: - Init
 	init(image: UIImage) {
 		self.imageView.image = image
 		super.init(nibName: nil, bundle: nil)
@@ -34,6 +35,7 @@ final class HomeScreenController: UIViewController {
 		fatalError("init(coder:) has not been implemented")
 	}
 
+	//MARK: - View Cycle
 	override func viewDidLoad() {
         super.viewDidLoad()
         addSubviews()
@@ -43,6 +45,7 @@ final class HomeScreenController: UIViewController {
         makeConstraints()
     }
     
+	//MARK: - Setup UI
     private func addSubviews() {
         self.view.addSubview(imageView)
         self.view.addSubview(dismissButton)
@@ -62,6 +65,7 @@ final class HomeScreenController: UIViewController {
         NSLayoutConstraint.activate(dismissButtonConstraints)
     }
 
+	//MARK: - Private functions
     @objc private func dismissScreen() {
         let rootVC = MainTabBarController()
         rootVC.modalPresentationStyle = .fullScreen

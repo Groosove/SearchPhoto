@@ -2,12 +2,13 @@
 //  PageLauncherController.swift
 //  SearchPhoto
 //
-//  Created by Fenix Lavon on 7/24/21.
+//  Created by Artur Lutfullin on 7/24/21.
 //
 
 import UIKit
 
 final class PageLauncherController: UIViewController {
+	//MARK: - Properties
     let myContainerView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -16,6 +17,7 @@ final class PageLauncherController: UIViewController {
     }()
     var thePageVC = HelloPageViewContoller()
 
+	//MARK: - View cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         addSubviews()
@@ -24,6 +26,7 @@ final class PageLauncherController: UIViewController {
         thePageVC.didMove(toParent: self)
     }
 
+	//MARK: - Setup UI
     private func addSubviews() {
         view.addSubview(myContainerView)
         myContainerView.addSubview(thePageVC.view)

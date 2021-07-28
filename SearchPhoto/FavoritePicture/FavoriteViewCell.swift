@@ -7,9 +7,8 @@
 
 import UIKit
 
-class FavoriteViewCell: UICollectionViewCell {
+final class FavoriteViewCell: UICollectionViewCell {
     static let identifier = "FavoriteViewCellId"
-
     private lazy var imageView: UIImageView = {
        let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false

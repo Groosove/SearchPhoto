@@ -9,7 +9,8 @@ import UIKit
 
 class RandomImagesViewCell: UICollectionViewCell {
     static let identifier = "UICollectionViewCellId"
-    private lazy var photoView: UIImageView = {
+	private(set) var isLoading = true
+    private(set) lazy var photoView: UIImageView = {
         let image = UIImageView()
         image.contentMode = .scaleToFill
         image.translatesAutoresizingMaskIntoConstraints = false
@@ -49,10 +50,9 @@ class RandomImagesViewCell: UICollectionViewCell {
     
     
     func configure(image: String, photograph: String) {
-        DispatchQueue.main.async {
-            self.photoView.loadImage(imageURL: image)
-            self.photographLabel.text = photograph
-        }
+		self.photoView.loadImage(imageURL: image)
+		isLoading = false
+		self.photographLabel.text = photograph
     }
 
     private func makeConstraints() {

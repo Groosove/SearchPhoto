@@ -8,6 +8,7 @@
 import UIKit
 
 final class HelloPageViewContoller: UIPageViewController {
+	//MARK: - Properties
 	private let size = CGSize(width: (UIScreen.main.bounds.width * 2) / 3, height: (UIScreen.main.bounds.height * 2) / 3)
     private var pages = [UIViewController]()
     private let images = [
@@ -15,6 +16,8 @@ final class HelloPageViewContoller: UIPageViewController {
 		UIImage(named: "Random"),
 		UIImage(named: "Searchs"),
 	]
+
+	//MARK: - Init
     override init(transitionStyle style: UIPageViewController.TransitionStyle, navigationOrientation: UIPageViewController.NavigationOrientation, options: [UIPageViewController.OptionsKey : Any]? = nil) {
         super.init(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
     }
@@ -23,6 +26,7 @@ final class HelloPageViewContoller: UIPageViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+	//MARK: - View cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         dataSource = self
@@ -38,6 +42,7 @@ final class HelloPageViewContoller: UIPageViewController {
     }
 }
 
+//MARK: - UIPageViewControllerDataSource
 extension HelloPageViewContoller: UIPageViewControllerDataSource {
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         guard let viewControllerIndex = pages.firstIndex(of: viewController) else { return nil }

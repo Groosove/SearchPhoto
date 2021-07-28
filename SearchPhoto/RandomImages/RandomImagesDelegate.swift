@@ -17,17 +17,13 @@ final class RandomImagesDelegate: NSObject, UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
-        let image = UIImageView()
-        image.loadImage(imageURL: models[indexPath.item].urls.regular)
-        if image.image == nil {
-            return
-        }
+		guard let photoCell = collectionView.cellForItem(at: indexPath) as? RandomImagesViewCell, !photoCell.isLoading else { return }
         let item = models[indexPath.item]
         let imageRatio = item.width / item.height
         let height = UIScreen.main.bounds.width / imageRatio
         let result = PhotoViewerModel(uid: item.uid,
                                       name: item.user.name,
-                                      image: image,
+									  image: photoCell.photoView,
                                       width: UIScreen.main.bounds.width,
                                       height: height,
                                       imageURL: item.urls.regular)

@@ -7,7 +7,8 @@
 
 import UIKit
 
-class EXIFView: UIView {
+final class EXIFView: UIView {
+	//MARK: - Properties
 	let model: Exif?
 	private lazy var makeLabel: UILabel = {
 		let label = createMetaDataLabel(title: "Make\n", data: model?.make ?? "--")
@@ -35,6 +36,7 @@ class EXIFView: UIView {
 		return label
 	}()
 
+	//MARK: - Init
 	init(model: Exif?) {
 		self.model = model
 		super.init(frame: UIScreen.main.bounds)
@@ -46,6 +48,7 @@ class EXIFView: UIView {
 		fatalError("init(coder:) has not been implemented")
 	}
 
+	//MARK: - Setup UI
 	private func addSubviews() {
 		addSubview(makeLabel)
 		addSubview(modelLabel)
@@ -96,6 +99,7 @@ class EXIFView: UIView {
 		NSLayoutConstraint.activate(isoLabelConstraints)
 	}
 
+	//MARK: - Private functions
 	private func createMetaDataLabel(title: String, data: String) -> UILabel {
 		let label = UILabel()
 		let text = NSMutableAttributedString(string: title + data)
@@ -107,12 +111,4 @@ class EXIFView: UIView {
 		label.translatesAutoresizingMaskIntoConstraints = false
 		return label
 	}
-}
-
-extension NSMutableAttributedString {
-	func setColorForText(textForAttribute: String, withColor color: UIColor) {
-		let range: NSRange = self.mutableString.range(of: textForAttribute, options: .caseInsensitive)
-		self.addAttribute(NSAttributedString.Key.foregroundColor, value: color, range: range)
-	}
-
 }

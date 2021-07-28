@@ -8,7 +8,7 @@
 import UIKit
 import CoreData
 
-class FavoriteViewController: UIViewController {
+final class FavoriteViewController: UIViewController {
     // MARK: - Properties
     private var collectionView: UICollectionView?
 	private var images = [(image: UIImage?, cropImage: UIImage?)]()
@@ -50,7 +50,6 @@ class FavoriteViewController: UIViewController {
 
     // MARK: - Private Function
     private func getImages() -> [(UIImage?, UIImage?)] {
-        print(#function)
         let imagePaths = imageData.getAllImages()
 		guard imagePaths.count != images.count else { return images }
         let documentDirectory = FileManager.SearchPathDirectory.documentDirectory
@@ -77,24 +76,6 @@ class FavoriteViewController: UIViewController {
         navVC.modalPresentationStyle = .fullScreen
         navigationController?.modalPresentationStyle = .fullScreen
         self.navigationController?.present(navVC, animated: true)
-    }
-    
-    private func cropImage(image: UIImage, targetSize: CGSize) -> UIImage? {
-        guard let cgImage = image.cgImage else { return nil }
-        let contextImage: UIImage = UIImage(cgImage: cgImage)
-        let contextSize: CGSize = contextImage.size
-        var rect = CGRect.zero
-
-        if contextSize.width > contextSize.height {
-            rect = CGRect(x: ((contextSize.width - contextSize.height) / 2), y: 0, width: contextSize.height, height: contextSize.height)
-        } else {
-            rect = CGRect(x: 0, y: ((contextSize.height - contextSize.width) / 2), width: contextSize.width, height: contextSize.width)
-        }
-
-        guard let imageRef = cgImage.cropping(to: rect) else { return nil }
-        let image: UIImage = UIImage(cgImage: imageRef, scale: image.scale, orientation: image.imageOrientation)
-        
-        return image
     }
 }
 

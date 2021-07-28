@@ -9,7 +9,9 @@
 /* Begin PBXBuildFile section */
 		1414AF212699FEC000B9066C /* WaterfallLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1414AF202699FEC000B9066C /* WaterfallLayout.swift */; };
 		142C23A52698DE2000C99E54 /* PhotosCollectionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142C23A32698DE2000C99E54 /* PhotosCollectionService.swift */; };
-		142CBDC526A85C3700808833 /* UIImage_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142CBDC426A85C3700808833 /* UIImage_Extension.swift */; };
+		142CBDC526A85C3700808833 /* UIImage_BlurHash_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142CBDC426A85C3700808833 /* UIImage_BlurHash_Extension.swift */; };
+		143DBC7B26B18445009546E3 /* NSMutableAttributesString_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143DBC7A26B18445009546E3 /* NSMutableAttributesString_Extension.swift */; };
+		143DBC7F26B184C7009546E3 /* UIImage_Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143DBC7E26B184C7009546E3 /* UIImage_Extension.swift */; };
 		143E00052691CC6400D912F6 /* PhotosCollectionDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143E00002691CC6400D912F6 /* PhotosCollectionDataFlow.swift */; };
 		143E00062691CC6400D912F6 /* PhotosCollectionPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143E00012691CC6400D912F6 /* PhotosCollectionPresenter.swift */; };
 		143E00072691CC6400D912F6 /* PhotosCollectionBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143E00022691CC6400D912F6 /* PhotosCollectionBuilder.swift */; };
@@ -107,7 +109,9 @@
 		01EF368D92DD927ADD3F1A97 /* RandomImagesDataFlow.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = RandomImagesDataFlow.swift; sourceTree = "<group>"; };
 		1414AF202699FEC000B9066C /* WaterfallLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterfallLayout.swift; sourceTree = "<group>"; };
 		142C23A32698DE2000C99E54 /* PhotosCollectionService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PhotosCollectionService.swift; path = SearchPhoto/PhotosCollection/Provider/PhotosCollectionService.swift; sourceTree = SOURCE_ROOT; };
-		142CBDC426A85C3700808833 /* UIImage_Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage_Extension.swift; sourceTree = "<group>"; };
+		142CBDC426A85C3700808833 /* UIImage_BlurHash_Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage_BlurHash_Extension.swift; sourceTree = "<group>"; };
+		143DBC7A26B18445009546E3 /* NSMutableAttributesString_Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSMutableAttributesString_Extension.swift; sourceTree = "<group>"; };
+		143DBC7E26B184C7009546E3 /* UIImage_Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage_Extension.swift; sourceTree = "<group>"; };
 		143E00002691CC6400D912F6 /* PhotosCollectionDataFlow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PhotosCollectionDataFlow.swift; path = SearchPhoto/PhotosCollection/PhotosCollectionDataFlow.swift; sourceTree = SOURCE_ROOT; };
 		143E00012691CC6400D912F6 /* PhotosCollectionPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PhotosCollectionPresenter.swift; path = SearchPhoto/PhotosCollection/PhotosCollectionPresenter.swift; sourceTree = SOURCE_ROOT; };
 		143E00022691CC6400D912F6 /* PhotosCollectionBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PhotosCollectionBuilder.swift; path = SearchPhoto/PhotosCollection/PhotosCollectionBuilder.swift; sourceTree = SOURCE_ROOT; };
@@ -216,6 +220,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		143DBC8026B184DE009546E3 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				1491D8B3269B1F13007045AC /* ImageView_Extension.swift */,
+				142CBDC426A85C3700808833 /* UIImage_BlurHash_Extension.swift */,
+				143DBC7E26B184C7009546E3 /* UIImage_Extension.swift */,
+				143DBC7A26B18445009546E3 /* NSMutableAttributesString_Extension.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
 		143E00142691CCE000D912F6 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -360,11 +375,10 @@
 		4A85F237269264EC006BEE9C /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				143DBC8026B184DE009546E3 /* Extension */,
 				4A9BF5E926986A0D00302AC3 /* API.swift */,
 				4A9BF5E826986A0C00302AC3 /* APIMethods.swift */,
-				1491D8B3269B1F13007045AC /* ImageView_Extension.swift */,
 				1414AF202699FEC000B9066C /* WaterfallLayout.swift */,
-				142CBDC426A85C3700808833 /* UIImage_Extension.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -700,6 +714,7 @@
 			files = (
 				147EC4D126A46A37004B3CC2 /* PhotosTableViewDataStore.swift in Sources */,
 				1466BA3F2699077B0035F783 /* DIContainer.swift in Sources */,
+				143DBC7F26B184C7009546E3 /* UIImage_Extension.swift in Sources */,
 				4A385B00268F515600EC0D51 /* SearchPhoto.xcdatamodeld in Sources */,
 				4AB96577269E4DA8003E1F1C /* PanelTransition.swift in Sources */,
 				143E000D2691CC9400D912F6 /* PhotosCollectionModel.swift in Sources */,
@@ -739,6 +754,7 @@
 				143E00072691CC6400D912F6 /* PhotosCollectionBuilder.swift in Sources */,
 				4AB9657B269E4DA8003E1F1C /* PresentAnimation.swift in Sources */,
 				146BABD526921FA900B10A43 /* FavoriteViewController.swift in Sources */,
+				143DBC7B26B18445009546E3 /* NSMutableAttributesString_Extension.swift in Sources */,
 				4A385AF6268F515600EC0D51 /* AppDelegate.swift in Sources */,
 				1491D8B4269B1F13007045AC /* ImageView_Extension.swift in Sources */,
 				147EC4C926A46A05004B3CC2 /* Recent+CoreDataProperties.swift in Sources */,
@@ -757,7 +773,7 @@
 				88111C5EC5175137FE12788B /* RandomImagesProvider.swift in Sources */,
 				4A32AB1426ACE94F004EA15C /* ImageScrollView.swift in Sources */,
 				2CA0D1E7434B5085D2C577F1 /* RandomImagesDataStore.swift in Sources */,
-				142CBDC526A85C3700808833 /* UIImage_Extension.swift in Sources */,
+				142CBDC526A85C3700808833 /* UIImage_BlurHash_Extension.swift in Sources */,
 				5BDE01676D1429195A366C3E /* RandomImagesService.swift in Sources */,
 				147EC4CE26A46A24004B3CC2 /* RecentTableViewDelegate.swift in Sources */,
 				7F01CB34D31C7453E39F6058 /* RandomImagesView.swift in Sources */,
@@ -1070,7 +1086,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = R7476264FZ;
 				INFOPLIST_FILE = SnapshotTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1091,7 +1107,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = R7476264FZ;
 				INFOPLIST_FILE = SnapshotTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
