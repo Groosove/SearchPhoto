@@ -22,8 +22,6 @@ final class PhotosCollectionInteractor: PhotosCollectionBusinessLogic {
 
             if let items = items {
                 result = .success(items)
-            } else if let error = error {
-                result = .failure(.loadImageError(message: error.localizedDescription))
             } else {
                 result = .failure(.loadImageError(message: "Check internet connection"))
             }

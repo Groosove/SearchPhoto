@@ -9,7 +9,7 @@ protocol PhotosCollectionServiceProtocol {
 }
 
 enum PhotosCollectionServiceError: Error {
-    case decodeJSON
+    case endCountRequestApi
 }
 
 final class PhotosCollectionService: PhotosCollectionServiceProtocol {
@@ -24,7 +24,7 @@ final class PhotosCollectionService: PhotosCollectionServiceProtocol {
                 do {
                     let models = try self.decoder.decode(UnsplashPhoto.self, from: data)
                     completion(models.results, nil)
-                } catch { completion(nil, PhotosCollectionServiceError.decodeJSON) }
+                } catch { completion(nil, PhotosCollectionServiceError.endCountRequestApi) }
             case let .failure(error):
                 completion(nil, error)
             }

@@ -24,7 +24,7 @@ final class RandomImagesInteractor: RandomImagesBusinessLogic {
             } else {
                 result = .failure(.loadImageErrror(message: "Check internet connection"))
             }
-            self.presenter.presentSomething(response: RandomImages.LoadImage.Response(result: result))
+            self.presenter.presentImages(response: RandomImages.LoadImage.Response(result: result))
         }
     }
 }

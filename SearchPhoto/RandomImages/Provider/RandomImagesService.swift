@@ -20,7 +20,7 @@ final class RandomImagesService: RandomImagesServiceProtocol {
                 do {
                     let models = try self.decoder.decode([PhotosCollectionModel].self, from: data)
                     completion(models, nil)
-                } catch { completion(nil, PhotosCollectionServiceError.decodeJSON) }
+                } catch { completion(nil, PhotosCollectionServiceError.endCountRequestApi) }
             case let .failure(error):
                 completion(nil, error)
             }

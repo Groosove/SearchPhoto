@@ -16,8 +16,8 @@ final class PhotosCollectionPresenter: PhotosCollectionPresentationLogic {
         var viewModel: PhotosCollection.LoadImages.ViewModel
 
         switch response.result {
-        case let .failure(error):
-            viewModel = PhotosCollection.LoadImages.ViewModel(state: .error(message: error.localizedDescription))
+        case .failure:
+            viewModel = PhotosCollection.LoadImages.ViewModel(state: .error(message: "Check your internet connection"))
         case let .success(data):
             if data.isEmpty {
                 viewModel = PhotosCollection.LoadImages.ViewModel(state: .emptyResult)
@@ -26,7 +26,7 @@ final class PhotosCollectionPresenter: PhotosCollectionPresentationLogic {
 				viewModel = PhotosCollection.LoadImages.ViewModel(state: .result(result))
 			}
 		}
-        viewController?.displaySomething(viewModel: viewModel)
+        viewController?.displayImages(viewModel: viewModel)
     }
 
     private func processingData(data: [PhotosCollectionModel]) -> [PhotosCollectionViewModel] {

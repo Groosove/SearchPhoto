@@ -7,7 +7,7 @@ import UIKit
 import CoreData
 
 protocol PhotosCollectionDisplayLogic: AnyObject {
-    func displaySomething(viewModel: PhotosCollection.LoadImages.ViewModel)
+    func displayImages(viewModel: PhotosCollection.LoadImages.ViewModel)
 }
 
 protocol PhotosCollectionViewControllerDelegate: AnyObject {
@@ -120,7 +120,7 @@ final class PhotosCollectionViewController: UIViewController {
 
 // MARK: - PhotosCollectionDisplayLogic
 extension PhotosCollectionViewController: PhotosCollectionDisplayLogic {
-    func displaySomething(viewModel: PhotosCollection.LoadImages.ViewModel) {
+    func displayImages(viewModel: PhotosCollection.LoadImages.ViewModel) {
         display(newState: viewModel.state)
     }
 
