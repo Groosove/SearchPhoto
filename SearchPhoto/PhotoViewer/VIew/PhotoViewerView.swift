@@ -15,6 +15,7 @@ final class PhotoViewerView: UIView {
 		let size = CGSize(width: self.model.width, height: self.model.height)
 		let image = self.model.image.image?.resizeImage(targetSize: size)
 		let scrollView = ImageScrollView(image: image!)
+		scrollView.delegateController = self.delegate
 		scrollView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.minimumZoomScale = 1.0
         scrollView.maximumZoomScale = 2.0
@@ -118,3 +119,4 @@ final class PhotoViewerView: UIView {
         return (image, like)
     }
 }
+

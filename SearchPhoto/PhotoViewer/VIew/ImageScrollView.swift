@@ -9,6 +9,7 @@ import UIKit
 
 final class ImageScrollView: UIScrollView {
 	private let image: UIImage
+	weak var delegateController: PhotoViewerControllerDelegate?
 	lazy var imageView: UIImageView = {
 		let imageView = UIImageView(image: image)
 		imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -58,5 +59,4 @@ extension ImageScrollView: UIScrollViewDelegate {
 		let horizontalInset = imageViewSize.width < scrollViewSize.width ? (scrollViewSize.width - imageViewSize.width) / 2 : 0
 		scrollView.contentInset = UIEdgeInsets(top: verticalInset, left: horizontalInset, bottom: verticalInset, right: horizontalInset)
 	}
-	
 }
