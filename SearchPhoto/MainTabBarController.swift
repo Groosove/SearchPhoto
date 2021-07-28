@@ -31,3 +31,11 @@ final class MainTabBarController: UITabBarController {
 		return navigationVC
 	}
 }
+
+func createActivity(with vc: UIViewController, message: String) {
+	let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+	alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"),
+								  style: .default,
+								  handler: { _ in NSLog("The \"OK\" alert occured.")}))
+	vc.present(alert, animated: true, completion: nil)
+}

@@ -116,17 +116,9 @@ extension PhotoViewerController: PhotoViewerControllerDelegate {
 				let data = try result.get()
 				let model = try decoder.decode(PhotoStatModel.self, from: data)
 				self.descriptionCreate(with: model)
-			} catch { self.createActivity(message: "Check your internet connection") }
+			} catch { createActivity(with: self, message: "Check your internet connection") }
         }
     }
-	
-	private func createActivity(message: String) {
-		   let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
-		   alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"),
-										 style: .default,
-										 handler: { _ in NSLog("The \"OK\" alert occured.")}))
-		   self.present(alert, animated: true, completion: nil)
-	   }
 
     func downloadPhoto(with image: UIImage) {
 		UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)

@@ -97,14 +97,6 @@ final class PhotosCollectionViewController: UIViewController {
 		navigationItem.hidesSearchBarWhenScrolling = true
 	}
 
-    private func createActivity(message: String) {
-        let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"),
-                                      style: .default,
-                                      handler: { _ in NSLog("The \"OK\" alert occured.")}))
-        self.present(alert, animated: true, completion: nil)
-    }
-    
     private func setUpSearchBar() {
         let searchController = UISearchController(searchResultsController: nil)
         navigationItem.searchController = searchController
@@ -130,14 +122,14 @@ extension PhotosCollectionViewController: PhotosCollectionDisplayLogic {
         case .loading:
             print("loading...")
         case let .error(message):
-			createActivity(message: message)
+			createActivity(with: self, message: message)
         case let .result(items):
 			tableHandler.models = items
 			tableDataSource.models = items
             tableHandler.delegate = self
 			tableView.updateTableViewData(delegate: tableHandler, dataSource: tableDataSource)
         case .emptyResult:
-            createActivity(message: "Nothing was found for this result")
+            createActivity(with: self, message: "Nothing was found for this result")
             tableView.isHidden = true
             recentTableView.isHidden = false
 			recentData.deleteLastRecents()

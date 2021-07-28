@@ -8,7 +8,7 @@
 import UIKit
 
 protocol RandomImagesDisplayLogic: AnyObject {
-    func displaySomething(viewModel: RandomImages.LoadImage.ViewModel)
+    func displayImages(viewModel: RandomImages.LoadImage.ViewModel)
 }
 
 protocol RandomImagesViewControllerDelegate: AnyObject {
@@ -57,7 +57,7 @@ final class RandomImagesViewController: UIViewController {
 
 // MARK: - RandomImagesDisplayLogic
 extension RandomImagesViewController: RandomImagesDisplayLogic {
-    func displaySomething(viewModel: RandomImages.LoadImage.ViewModel) {
+    func displayImages(viewModel: RandomImages.LoadImage.ViewModel) {
         display(newState: viewModel.state)
     }
 
@@ -67,7 +67,7 @@ extension RandomImagesViewController: RandomImagesDisplayLogic {
         case .loading:
             print("loading...")
         case let .error(message):
-			createActivity(message: message)
+			createActivity(with: self, message: message)
         case let .result(items):
             collectionDataSource.models = items
             collectionHandler.models = items
@@ -75,16 +75,8 @@ extension RandomImagesViewController: RandomImagesDisplayLogic {
             collectionHandler.delegate = self
             collectionView?.updateCollectioViewData(delegate: collectionHandler, dataSource: collectionDataSource)
         case .emptyResult:
-			print("Empty result")
+			createActivity(with: self, message: "Nothing was found for this result")
         }
-	}
-
-	private func createActivity(message: String) {
-		let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
-		alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"),
-									  style: .default,
-									  handler: { _ in NSLog("The \"OK\" alert occured.")}))
-		self.present(alert, animated: true, completion: nil)
 	}
 }
 

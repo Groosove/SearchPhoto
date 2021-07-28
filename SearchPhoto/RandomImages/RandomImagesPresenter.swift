@@ -25,6 +25,6 @@ final class RandomImagesPresenter: RandomImagesPresentationLogic {
                 viewModel = RandomImages.LoadImage.ViewModel(state: .result(result))
             }
         }
-        viewController?.displaySomething(viewModel: viewModel)
+        viewController?.displayImages(viewModel: viewModel)
     }
 }
