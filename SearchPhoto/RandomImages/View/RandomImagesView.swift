@@ -10,7 +10,7 @@ extension RandomImagesView {
     }
 }
 
-class RandomImagesView: UIView {
+final class RandomImagesView: UIView {
     private let appearance = Appearance()
     weak var delegate: RandomImagesViewControllerDelegate?
     private lazy var collectionView: UICollectionView = {

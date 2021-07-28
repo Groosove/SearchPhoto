@@ -2,7 +2,7 @@
 //  PhotosCollectionViewModel.swift
 //  SearchPhoto
 //
-//  Created by Fenix Lavon on 7/24/21.
+//  Created by Artur Lutfullin on 7/24/21.
 //
 
 import UIKit

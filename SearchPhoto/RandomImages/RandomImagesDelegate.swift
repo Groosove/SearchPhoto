@@ -1,8 +1,8 @@
 //
-//  RandomImagesWaterfallDelegate.swift
+//  RandomImagesDelegate.swift
 //  SearchPhoto
 //
-//  Created by Fenix Lavon on 7/17/21.
+//  Created by Artur Lutfullin on 7/17/21.
 //
 
 import UIKit

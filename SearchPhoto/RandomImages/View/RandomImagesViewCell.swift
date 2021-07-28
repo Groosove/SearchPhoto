@@ -2,12 +2,12 @@
 //  RandomImagesViewCell.swift
 //  SearchPhoto
 //
-//  Created by Fenix Lavon on 7/17/21.
+//  Created by Artur Lutfullin on 7/17/21.
 //
 
 import UIKit
 
-class RandomImagesViewCell: UICollectionViewCell {
+final class RandomImagesViewCell: UICollectionViewCell {
     static let identifier = "UICollectionViewCellId"
 	private(set) var isLoading = true
     private(set) lazy var photoView: UIImageView = {

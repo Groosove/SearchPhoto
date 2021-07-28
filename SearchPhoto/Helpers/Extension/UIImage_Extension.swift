@@ -2,7 +2,7 @@
 //  UIImage_Extenshions.swift
 //  SearchPhoto
 //
-//  Created by Fenix Lavon on 7/28/21.
+//  Created by Artur Lutfullin on 7/28/21.
 //
 
 import UIKit

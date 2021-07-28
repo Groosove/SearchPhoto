@@ -1,6 +1,8 @@
 //
-//  RandomImages module
-//  Created by Artur Lutfullin on 17/07/2021.
+//  RandomImagesViewController.swift
+//	SearchPhoto
+//
+//	Created by Artur Lutfullin on 17/07/2021.
 //
 
 import UIKit

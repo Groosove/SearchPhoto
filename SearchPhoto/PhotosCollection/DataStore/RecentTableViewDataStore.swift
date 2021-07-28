@@ -2,12 +2,12 @@
 //  RecentTableViewDataStore.swift
 //  SearchPhoto
 //
-//  Created by Fenix Lavon on 7/10/21.
+//  Created by Artur Lutfullin on 7/10/21.
 //
 
 import UIKit
 
-class RecentTableViewDataStore: NSObject, UITableViewDataSource {
+final class RecentTableViewDataStore: NSObject, UITableViewDataSource {
     var models: [Recent]
     init (models: [Recent] = []) {
         self.models = models

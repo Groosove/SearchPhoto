@@ -2,7 +2,7 @@
 //  Recent+CoreDataProperties.swift
 //  SearchPhoto
 //
-//  Created by Fenix Lavon on 7/10/21.
+//  Created by Artur Lutfullin on 7/10/21.
 //
 //
 
