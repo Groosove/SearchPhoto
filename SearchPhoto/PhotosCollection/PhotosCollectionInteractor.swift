@@ -25,7 +25,7 @@ final class PhotosCollectionInteractor: PhotosCollectionBusinessLogic {
             } else if let error = error {
                 result = .failure(.loadImageError(message: error.localizedDescription))
             } else {
-                result = .failure(.loadImageError(message: "No Data"))
+                result = .failure(.loadImageError(message: "Check internet connection"))
             }
             self.presenter.showImages(response: PhotosCollection.LoadImages.Response(result: result))
         }

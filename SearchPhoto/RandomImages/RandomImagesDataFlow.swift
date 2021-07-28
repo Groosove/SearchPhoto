@@ -32,6 +32,6 @@ enum RandomImages {
     }
 
     enum RandomImagesError: Error {
-        case someError(message: String)
+        case loadImageErrror(message: String)
     }
 }

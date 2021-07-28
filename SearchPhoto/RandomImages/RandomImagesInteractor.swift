@@ -21,10 +21,8 @@ final class RandomImagesInteractor: RandomImagesBusinessLogic {
             let result: RandomImages.RandomImagesRequestResult
             if let items = items {
                 result = .success(items)
-            } else if let error = error {
-                result = .failure(.someError(message: error.localizedDescription))
             } else {
-                result = .failure(.someError(message: "No Data"))
+                result = .failure(.loadImageErrror(message: "Check internet connection"))
             }
             self.presenter.presentSomething(response: RandomImages.LoadImage.Response(result: result))
         }
