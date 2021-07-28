@@ -70,7 +70,7 @@ final class PhotoViewerController: UIViewController, UINavigationControllerDeleg
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(shareImage))
     }
 
-	// MARK: - Dissmiss Controller
+	// MARK: - Private functions
     @objc private func dismissController() {
         dismiss(animated: true, completion: nil)
     }
@@ -81,6 +81,11 @@ final class PhotoViewerController: UIViewController, UINavigationControllerDeleg
         activityVC.popoverPresentationController?.sourceView = self.view
         activityVC.excludedActivityTypes = [ UIActivity.ActivityType.airDrop, UIActivity.ActivityType.postToFacebook ]
         self.present(activityVC, animated: true, completion: nil)
+    }
+	
+    private func documentDirectoryPath() -> URL? {
+        let path = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        return path.first
     }
 }
 
@@ -122,11 +127,6 @@ extension PhotoViewerController: PhotoViewerControllerDelegate {
 
     func downloadPhoto(with image: UIImage) {
 		UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
-    }
-
-    private func documentDirectoryPath() -> URL? {
-        let path = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-        return path.first
     }
 
     func getImage(with imageURL: String) -> Bool {

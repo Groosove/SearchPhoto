@@ -26,8 +26,7 @@ final class FavoriteViewController: UIViewController {
     // MARK: - View cycle
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(true)
-		images = getImages()
-        models = imageData.getAllImages()
+		(models, images) = getImages()
         setUpNavigationBar()
         setUpCollectionView()
 	}
@@ -49,9 +48,9 @@ final class FavoriteViewController: UIViewController {
     }
 
     // MARK: - Private Function
-    private func getImages() -> [(UIImage?, UIImage?)] {
+    private func getImages() -> ([Images], [(UIImage?, UIImage?)]) {
         let imagePaths = imageData.getAllImages()
-		guard imagePaths.count != images.count else { return images }
+		guard imagePaths.count != images.count else { return (models, images) }
         let documentDirectory = FileManager.SearchPathDirectory.documentDirectory
         let userDomainMask = FileManager.SearchPathDomainMask.userDomainMask
         let paths = NSSearchPathForDirectoriesInDomains(documentDirectory, userDomainMask, true)
@@ -65,9 +64,9 @@ final class FavoriteViewController: UIViewController {
 				let cropImage = image.cropImage(targetSize: CGSize(width: self.view.frame.width/3, height: self.view.frame.width/3))
                 result.append((image, cropImage))
             }
-            return result
+            return (imagePaths, result)
         }
-        return []
+        return (imagePaths, [])
     }
 
     private func openViewer(with model: PhotoViewerModel) {
