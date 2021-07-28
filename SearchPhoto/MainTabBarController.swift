@@ -7,6 +7,9 @@
 
 import UIKit
 
+final class CustomNavigationController: UINavigationController {
+	override var preferredStatusBarStyle: UIStatusBarStyle { .lightContent }
+}
 final class MainTabBarController: UITabBarController {
     override func viewDidLoad() {
         view.backgroundColor = .black
@@ -22,7 +25,7 @@ final class MainTabBarController: UITabBarController {
     }
 
 	private func generateNavigationController(with controller: UIViewController, imageName: String) -> UIViewController {
-		let navigationVC = UINavigationController(rootViewController: controller)
+		let navigationVC = CustomNavigationController(rootViewController: controller)
 		navigationVC.tabBarItem.image = UIImage(named: imageName)
 		return navigationVC
 	}

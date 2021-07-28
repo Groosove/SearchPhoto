@@ -98,7 +98,7 @@ extension RandomImagesViewController: WaterfallLayoutDelegate {
 extension RandomImagesViewController: RandomImagesViewControllerDelegate {
     func openViewer(with model: PhotoViewerModel) {
         let rootVC = PhotoViewerController(with: model)
-        let navVC = UINavigationController(rootViewController: rootVC)
+        let navVC = CustomNavigationController(rootViewController: rootVC)
         navVC.modalPresentationStyle = .fullScreen
         navigationController?.modalPresentationStyle = .fullScreen
         self.navigationController?.present(navVC, animated: true)
