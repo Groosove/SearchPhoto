@@ -55,5 +55,4 @@ final class RandomImagesView: UIView {
         ]
         NSLayoutConstraint.activate(collectionViewConstraints)
     }
-
 }

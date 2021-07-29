@@ -23,7 +23,7 @@ final class RandomImagesViewController: UIViewController {
     private let collectionDataSource =  RandomImagesDataStore()
     private let collectionHandler = RandomImagesDelegate()
     private lazy var collectionView = self.view as? RandomImagesView
-
+	private let indicatorView = IndicatorView(frame: UIScreen.main.bounds)
     // MARK: - Init
     init(interactor: RandomImagesBusinessLogic, initialState: RandomImages.ViewControllerState = .loading) {
         self.interactor = interactor
@@ -44,6 +44,7 @@ final class RandomImagesViewController: UIViewController {
         super.viewDidLoad()
         setUpNavigationBar()
         loadImages()
+		
     }
 
     // MARK: - Setup UI
@@ -52,6 +53,8 @@ final class RandomImagesViewController: UIViewController {
         navigationController?.navigationBar.barTintColor = .black
         navigationItem.title = "Random Images"
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+		navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(reloadImages))
+		navigationItem.rightBarButtonItem?.tintColor = .white
     }
 }
 
@@ -65,18 +68,30 @@ extension RandomImagesViewController: RandomImagesDisplayLogic {
         state = newState
         switch state {
         case .loading:
-            print("loading...")
+			view.addSubview(indicatorView)
+			indicatorView.isLoading = true
+			loadImages()
         case let .error(message):
 			createActivity(with: self, message: message)
+			indicatorView.isLoading = false
         case let .result(items):
-            collectionDataSource.models = items
-            collectionHandler.models = items
-            collectionView?.delegate = self
+            collectionDataSource.models += items
+            collectionHandler.models += items
             collectionHandler.delegate = self
+			collectionView?.delegate = self
             collectionView?.updateCollectioViewData(delegate: collectionHandler, dataSource: collectionDataSource)
+			indicatorView.isLoading = false
         case .emptyResult:
 			createActivity(with: self, message: "Nothing was found for this result")
+			indicatorView.isLoading = false
         }
+	}
+	
+	@objc private func reloadImages() {
+		collectionHandler.models = []
+		collectionDataSource.models = []
+		collectionView?.updateCollectioViewData(delegate: collectionHandler, dataSource: collectionDataSource)
+		display(newState: .loading)
 	}
 }
 
@@ -98,7 +113,7 @@ extension RandomImagesViewController: RandomImagesViewControllerDelegate {
         self.navigationController?.present(navVC, animated: true)
     }
 
-    func loadImages() {
+	func loadImages() {
         let request = RandomImages.LoadImage.Request()
         interactor.loadImages(request: request)
     }

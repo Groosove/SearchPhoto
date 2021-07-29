@@ -24,7 +24,7 @@ struct RandomImagesProvider: RandomImagesProviderProtocol {
             if let error = error {
                 completion(nil, .getItemsFailed(underlyingError: error))
             } else if let models = array {
-                self.dataStore.models += models
+                self.dataStore.models = models
                 completion(self.dataStore.models, nil)
             }
         }
