@@ -79,14 +79,14 @@ extension RandomImagesViewController: RandomImagesDisplayLogic {
     func display(newState: RandomImages.ViewControllerState) {
         state = newState
 		switch state {
-		case .error, .result, .emptyResult:
-			indicatorView.isLoading = false
-			indicatorView.removeFromSuperview()
-		default:
+		case .loading:
 			view.addSubview(indicatorView)
 			indicatorView.isLoading = true
-			
+		default:
+			indicatorView.isLoading = false
+			indicatorView.removeFromSuperview()
 		}
+
         switch state {
         case .loading:
 			loadImages()
