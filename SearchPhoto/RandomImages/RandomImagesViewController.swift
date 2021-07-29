@@ -17,14 +17,19 @@ protocol RandomImagesViewControllerDelegate: AnyObject {
 }
 
 final class RandomImagesViewController: UIViewController {
-    // MARK: - Properties
+    //MARK: - Properties
     private let interactor: RandomImagesBusinessLogic
     private var state: RandomImages.ViewControllerState
     private let collectionDataSource =  RandomImagesDataStore()
     private let collectionHandler = RandomImagesDelegate()
     private lazy var collectionView = self.view as? RandomImagesView
 	private let indicatorView = IndicatorView(frame: UIScreen.main.bounds)
-    // MARK: - Init
+	private var isLoading = false {
+		didSet {
+			
+		}
+	}
+    //MARK: - Init
     init(interactor: RandomImagesBusinessLogic, initialState: RandomImages.ViewControllerState = .loading) {
         self.interactor = interactor
         self.state = initialState
@@ -35,7 +40,7 @@ final class RandomImagesViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    // MARK: - View cycle
+    //MARK: - View cycle
     override func loadView() {
         self.view = RandomImagesView(frame: UIScreen.main.bounds, delegate: self)
     }
@@ -44,10 +49,9 @@ final class RandomImagesViewController: UIViewController {
         super.viewDidLoad()
         setUpNavigationBar()
         loadImages()
-		
     }
 
-    // MARK: - Setup UI
+    //MARK: - Setup UI
 
     private func setUpNavigationBar() {
         navigationController?.navigationBar.barTintColor = .black
@@ -56,37 +60,8 @@ final class RandomImagesViewController: UIViewController {
 		navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(reloadImages))
 		navigationItem.rightBarButtonItem?.tintColor = .white
     }
-}
-
-// MARK: - RandomImagesDisplayLogic
-extension RandomImagesViewController: RandomImagesDisplayLogic {
-    func displayImages(viewModel: RandomImages.LoadImage.ViewModel) {
-        display(newState: viewModel.state)
-    }
-
-    func display(newState: RandomImages.ViewControllerState) {
-        state = newState
-        switch state {
-        case .loading:
-			view.addSubview(indicatorView)
-			indicatorView.isLoading = true
-			loadImages()
-        case let .error(message):
-			createActivity(with: self, message: message)
-			indicatorView.isLoading = false
-        case let .result(items):
-            collectionDataSource.models += items
-            collectionHandler.models += items
-            collectionHandler.delegate = self
-			collectionView?.delegate = self
-            collectionView?.updateCollectioViewData(delegate: collectionHandler, dataSource: collectionDataSource)
-			indicatorView.isLoading = false
-        case .emptyResult:
-			createActivity(with: self, message: "Nothing was found for this result")
-			indicatorView.isLoading = false
-        }
-	}
 	
+	//MARK: - Private functions
 	@objc private func reloadImages() {
 		collectionHandler.models = []
 		collectionDataSource.models = []
@@ -95,7 +70,46 @@ extension RandomImagesViewController: RandomImagesDisplayLogic {
 	}
 }
 
-// MARK: - WaterfallLayoutDelegate
+//MARK: - RandomImagesDisplayLogic
+extension RandomImagesViewController: RandomImagesDisplayLogic {
+    func displayImages(viewModel: RandomImages.LoadImage.ViewModel) {
+        display(newState: viewModel.state)
+    }
+
+    func display(newState: RandomImages.ViewControllerState) {
+        state = newState
+		switch state {
+		case .error, .result, .emptyResult:
+			indicatorView.isLoading = false
+			indicatorView.removeFromSuperview()
+		default:
+			view.addSubview(indicatorView)
+			indicatorView.isLoading = true
+			
+		}
+        switch state {
+        case .loading:
+			loadImages()
+        case let .error(message):
+			createActivity(with: self, message: message)
+			indicatorView.isLoading = false
+			indicatorView.removeFromSuperview()
+        case let .result(items):
+            collectionDataSource.models += items
+            collectionHandler.models += items
+            collectionHandler.delegate = self
+			collectionView?.delegate = self
+            collectionView?.updateCollectioViewData(delegate: collectionHandler, dataSource: collectionDataSource)
+
+        case .emptyResult:
+			createActivity(with: self, message: "Nothing was found for this result")
+			indicatorView.isLoading = false
+			indicatorView.removeFromSuperview()
+        }
+	}
+}
+
+//MARK: - WaterfallLayoutDelegate
 extension RandomImagesViewController: WaterfallLayoutDelegate {
     func waterfallLayout(_ layout: WaterfallLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let images = collectionDataSource.models[indexPath.item]
@@ -103,7 +117,7 @@ extension RandomImagesViewController: WaterfallLayoutDelegate {
     }
 }
 
-// MARK: - RandomImagesViewControllerDelegate
+//MARK: - RandomImagesViewControllerDelegate
 extension RandomImagesViewController: RandomImagesViewControllerDelegate {
     func openViewer(with model: PhotoViewerModel) {
         let rootVC = PhotoViewerController(with: model)

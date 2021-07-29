@@ -10,7 +10,9 @@ import UIKit
 final class IndicatorView: UIView {
 	private lazy var indicator : UIActivityIndicatorView = {
 		let indicator = UIActivityIndicatorView(style: .large)
+		indicator.color = .white
 		indicator.translatesAutoresizingMaskIntoConstraints = false
+		
 		return indicator
 	}()
 	
