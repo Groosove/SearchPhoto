@@ -11,22 +11,18 @@ protocol WaterfallLayoutDelegate: AnyObject {
     func waterfallLayout(_ layout: WaterfallLayout, sizeForItemAt indexPath: IndexPath) -> CGSize
 }
 
-class WaterfallLayout: UICollectionViewLayout {
-    // MARK: - Public properties
+final class WaterfallLayout: UICollectionViewLayout {
+    // MARK: - Properties
     weak var delegate: WaterfallLayoutDelegate!
     var topInset: CGFloat = 16 {
         didSet {
             invalidateLayout()
         }
     }
-
-    // MARK: - Private properties
     private var layoutAttributes = [UICollectionViewLayoutAttributes]()
     private var frames = [CGRect]()
     private var pagingViewAttributes: UICollectionViewLayoutAttributes?
     private var contentHeight: CGFloat = 0
-
-    // MARK: - Private computed properties
     private var numberOfColumns: Int {
         guard let collectionView = collectionView else { return 1 }
         let numberOfColumns = WaterfallLayout.numberOfColumns(for: collectionView.frame.width)
@@ -53,6 +49,7 @@ class WaterfallLayout: UICollectionViewLayout {
         return CGSize(width: width, height: contentHeight)
     }
 
+	//MARK: - Setup Layout
     override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         var attributes = [UICollectionViewLayoutAttributes]()
         var firstFrameIndex: Int = 0
@@ -96,6 +93,7 @@ class WaterfallLayout: UICollectionViewLayout {
         return bounds.width != newBounds.width
     }
 
+	//MARK: - Prepare Views
     override func prepare() {
         super.prepare()
         reset()
@@ -149,7 +147,7 @@ class WaterfallLayout: UICollectionViewLayout {
         }
         contentHeight += itemSpacing
     }
-
+	//MARK: - Private function
     private func reset() {
         pagingViewAttributes = nil
         layoutAttributes.removeAll()
@@ -158,7 +156,7 @@ class WaterfallLayout: UICollectionViewLayout {
     }
 
     // MARK: - Utilities
-    class func numberOfColumns(for width: CGFloat, itemSpacing: CGFloat = 16, minimumWidth: CGFloat = 150) -> Int {
+    private class func numberOfColumns(for width: CGFloat, itemSpacing: CGFloat = 16, minimumWidth: CGFloat = 150) -> Int {
         return Int(floor(width - itemSpacing) / (minimumWidth + itemSpacing))
     }
 
