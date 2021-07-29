@@ -52,7 +52,6 @@ final class RandomImagesViewController: UIViewController {
     }
 
     //MARK: - Setup UI
-
     private func setUpNavigationBar() {
         navigationController?.navigationBar.barTintColor = .black
         navigationItem.title = "Random Images"
@@ -60,7 +59,7 @@ final class RandomImagesViewController: UIViewController {
 		navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(reloadImages))
 		navigationItem.rightBarButtonItem?.tintColor = .white
     }
-	
+
 	//MARK: - Private functions
 	@objc private func reloadImages() {
 		collectionHandler.models = []
