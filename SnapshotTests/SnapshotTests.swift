@@ -11,8 +11,7 @@ import SnapshotTesting
 
 class SnapshotTests: XCTestCase {
 	func testExample() {
-		let vc = PhotosCollectionBuilder().build()
-
+		let vc = CustomNavigationController(rootViewController: PhotosCollectionBuilder().build())
 		assertSnapshot(matching: vc, as: .image(on: .iPhoneX))
 	}
 }
