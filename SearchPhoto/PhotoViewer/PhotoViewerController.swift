@@ -43,6 +43,7 @@ final class PhotoViewerController: UIViewController, UINavigationControllerDeleg
         let image = (getImage(with: model.uid)) ? UIImage(named: "like") : UIImage(named: "unlike")
         viewer?.likeButton.setImage(image, for: .normal)
         setUpNavigationBar()
+		addGesture()
     }
 	
 	override func viewDidLayoutSubviews() {
@@ -87,6 +88,13 @@ final class PhotoViewerController: UIViewController, UINavigationControllerDeleg
         let path = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         return path.first
     }
+	
+	private func addGesture() {
+		let singleTap = UITapGestureRecognizer(target: self, action: #selector(didSingleTap(_:)))
+		singleTap.numberOfTapsRequired = 1
+		singleTap.numberOfTouchesRequired = 1
+		viewer?.scrollView.addGestureRecognizer(singleTap)
+	}
 }
 
 // MARK: - PhotoViewerControllerDelegate
@@ -141,5 +149,15 @@ extension PhotoViewerController: UIPopoverPresentationControllerDelegate {
 		rootVC.transitioningDelegate = transition
 		rootVC.modalPresentationStyle = .custom
 		present(rootVC, animated: true)
+	}
+}
+
+extension PhotoViewerController: UIGestureRecognizerDelegate {
+	
+	@objc private func didSingleTap(_ recognizer: UITapGestureRecognizer) {
+		let currentNavAlpha = self.navigationController?.navigationBar.alpha ?? 0.0
+        UIView.animate(withDuration: 0.235) {
+            self.navigationController?.navigationBar.alpha = currentNavAlpha > 0.5 ? 0.0 : 1.0
+        }
 	}
 }
