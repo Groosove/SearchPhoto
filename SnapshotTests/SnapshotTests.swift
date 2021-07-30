@@ -10,8 +10,9 @@ import SnapshotTesting
 @testable import SearchPhoto
 
 class SnapshotTests: XCTestCase {
-	func testExample() {
+	func testSnapshotOnDifferentDevices() {
 		let vc = CustomNavigationController(rootViewController: PhotosCollectionBuilder().build())
-		assertSnapshot(matching: vc, as: .image)
+		assertSnapshot(matching: vc, as: .image(on: .iPhone8Plus(.portrait)))
+		assertSnapshot(matching: vc, as: .image(on: .iPhoneSe(.portrait)))
 	}
 }
