@@ -143,7 +143,6 @@ extension PhotosCollectionViewController: PhotosCollectionDisplayLogic {
 // MARK: - UISearchBarDelegate
 extension PhotosCollectionViewController: UISearchBarDelegate {
 	func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        
 		findPhoto(with: searchBar.text!.capitalized)
 	}
 
