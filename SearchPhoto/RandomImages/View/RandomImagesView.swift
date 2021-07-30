@@ -41,7 +41,7 @@ final class RandomImagesView: UIView {
         collectionView.dataSource = dataSource
         collectionView.reloadData()
     }
-    
+
     private func addSubviews() {
         addSubview(collectionView)
     }

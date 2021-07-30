@@ -46,7 +46,7 @@ final class CoreDataStack {
         let results = try? viewContext.fetch(fetchRequest) as? [Recent]
         return results!
     }
-   
+
 	func deleteLastRecents() {
 		let recents = getAllRecents()
 		viewContext.performAndWait {
@@ -55,7 +55,7 @@ final class CoreDataStack {
 		}
 		try? viewContext.save()
 	}
-	
+
 	func deleteAllRecents() {
 		let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Recent")
 		let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)

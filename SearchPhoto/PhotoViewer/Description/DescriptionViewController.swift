@@ -21,7 +21,7 @@ final class DescriptionViewController: UIViewController {
 		super.loadView()
 		self.view = DescriptionView(model: model)
 	}
-    
+
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		descView?.delegate = self

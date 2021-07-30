@@ -9,7 +9,7 @@ import UIKit
 import MapKit
 
 final class DescriptionView: UIView {
-	//MARK: - Properties
+	// MARK: - Properties
 	let model: PhotoStatModel
 	weak var delegate: DescriptionViewControllerDelegate?
 	private lazy var dismissButton: UIButton = {
@@ -60,7 +60,7 @@ final class DescriptionView: UIView {
 	}()
 	private let scrollView = UIScrollView()
 
-	//MARK: - Init
+	// MARK: - Init
 	init(model: PhotoStatModel) {
 		self.model = model
 		super.init(frame: UIScreen.main.bounds)
@@ -68,7 +68,7 @@ final class DescriptionView: UIView {
 		addSubviews()
 		makeConstraints()
 	}
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -78,7 +78,7 @@ final class DescriptionView: UIView {
         mapViewLocation.delegate = nil
     }
 
-	//MARK: - Setup UI
+	// MARK: - Setup UI
 	private func addSubviews() {
 		addSubview(dismissButton)
 		addSubview(scrollView)
@@ -129,7 +129,7 @@ final class DescriptionView: UIView {
 		NSLayoutConstraint.activate(mapViewConstraints)
 	}
 
-	//MARK: - Private functions
+	// MARK: - Private functions
 	@objc private func dismissController() {
 		delegate?.dismissSelf()
 	}

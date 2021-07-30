@@ -42,7 +42,7 @@ final class PhotoViewerView: UIView {
         return button
     }()
 
-	//MARK: - Init
+	// MARK: - Init
     init(model: PhotoViewerModel) {
         self.model = model
         super.init(frame: UIScreen.main.bounds)
@@ -55,7 +55,7 @@ final class PhotoViewerView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-	//MARK: - Setup UI
+	// MARK: - Setup UI
     private func addSubviews() {
 		addSubview(scrollView)
         addSubview(infoViewButton)
@@ -78,12 +78,12 @@ final class PhotoViewerView: UIView {
             likeButton.trailingAnchor.constraint(equalTo: self.layoutMarginsGuide.trailingAnchor),
             likeButton.bottomAnchor.constraint(equalTo: downloadButton.topAnchor, constant: -5)
         ]
-		
+
 		let scrollViewConstraints = [
 			scrollView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
 			scrollView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
 			scrollView.topAnchor.constraint(equalTo: self.topAnchor, constant: (UIScreen.main.bounds.height - model.height) / 2),
-			scrollView.heightAnchor.constraint(equalToConstant: scrollView.imageView.image!.size.height),
+			scrollView.heightAnchor.constraint(equalToConstant: scrollView.imageView.image!.size.height)
 		]
 
         NSLayoutConstraint.activate(infoViewButtonConstraints)
@@ -92,7 +92,7 @@ final class PhotoViewerView: UIView {
 		NSLayoutConstraint.activate(scrollViewConstraints)
     }
 
-	//MARK: - Update View functions
+	// MARK: - Update View functions
     @objc private func downloadTapButton(_ sender: AnyObject) {
 		delegate?.downloadPhoto(with: scrollView.imageView.image!)
     }
@@ -111,12 +111,11 @@ final class PhotoViewerView: UIView {
     @objc private func infoButtonTapped(_ sender: AnyObject) {
         delegate?.parsePhoto(with: model.uid)
     }
-	
-	//MARK: - Private functions
+
+	// MARK: - Private functions
     private func getImage() -> (UIImage?, Bool) {
         let like = (delegate?.getImage(with: model.uid))!
         let image = (like) ? UIImage(named: "unlike") : UIImage(named: "like")
         return (image, like)
     }
 }
-

@@ -1,4 +1,10 @@
+disabled_rules:
+  - vertical_parameter_alignment_on_call
+  - vertical_parameter_alignment
 line_length: 180
 
 excluded:
   - SearchPhoto/Helpers
+  - SnapshotTests
+  - SearchPhotoUITests
+  - SearchPhotoTests

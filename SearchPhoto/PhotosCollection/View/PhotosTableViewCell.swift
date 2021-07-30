@@ -74,7 +74,4 @@ final class PhotosTableViewCell: UITableViewCell {
 		NSLayoutConstraint.activate(photographLabelConstraints)
 		NSLayoutConstraint.activate(photoViewConstraints)
 	}
-
-    
-
 }

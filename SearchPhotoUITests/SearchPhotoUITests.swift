@@ -10,7 +10,7 @@ import XCTest
 class SearchPhotoUITests: XCTestCase {
 
     var app: XCUIApplication!
-    
+
     override  func setUp() {
         continueAfterFailure = false
         app = XCUIApplication()
@@ -19,7 +19,7 @@ class SearchPhotoUITests: XCTestCase {
 
     func testSearchBarInPhotosCollection() throws {
         app.tabBars.children(matching: .button).element(boundBy: 1).tap()
-                
+
         let searchBar = app.navigationBars["Search Images"]
         searchBar.searchFields["Search"].tap()
         searchBar.typeText("Mom")

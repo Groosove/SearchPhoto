@@ -8,7 +8,7 @@
 import UIKit
 
 final class PageLauncherController: UIViewController {
-	//MARK: - Properties
+	// MARK: - Properties
     let myContainerView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -17,7 +17,7 @@ final class PageLauncherController: UIViewController {
     }()
     var thePageVC = HelloPageViewContoller()
 
-	//MARK: - View cycle
+	// MARK: - View cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         addSubviews()
@@ -26,7 +26,7 @@ final class PageLauncherController: UIViewController {
         thePageVC.didMove(toParent: self)
     }
 
-	//MARK: - Setup UI
+	// MARK: - Setup UI
     private func addSubviews() {
         view.addSubview(myContainerView)
         myContainerView.addSubview(thePageVC.view)
@@ -46,9 +46,8 @@ final class PageLauncherController: UIViewController {
             thePageVC.view.leadingAnchor.constraint(equalTo: myContainerView.leadingAnchor),
             thePageVC.view.trailingAnchor.constraint(equalTo: myContainerView.trailingAnchor)
         ]
-        
+
         NSLayoutConstraint.activate(thePageVCConstraints)
         NSLayoutConstraint.activate(myContainerViewConstraints)
     }
 }
-

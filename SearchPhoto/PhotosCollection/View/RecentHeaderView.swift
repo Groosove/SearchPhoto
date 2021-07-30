@@ -38,22 +38,22 @@ final class RecentHeaderView: UITableViewHeaderFooterView {
 		addSubviews()
 		makeConstraints()
 	}
-	
+
 	required init?(coder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
-	
+
 	private func addSubviews() {
 		self.addSubview(headerView)
 		self.addSubview(clearRecents)
 	}
-	
+
 	private func makeConstraints() {
 		let headerViewConstraints = [
             headerView.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: appearance.layoutOffset),
 			headerView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor)
 		]
-		
+
 		let clearRecentsConstraints = [
 			clearRecents.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -appearance.layoutOffset),
 			clearRecents.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor)
@@ -61,7 +61,7 @@ final class RecentHeaderView: UITableViewHeaderFooterView {
 		NSLayoutConstraint.activate(headerViewConstraints)
 		NSLayoutConstraint.activate(clearRecentsConstraints)
 	}
-	
+
 	@objc private func deleteRecents() {
 		delegate?.deleteAllRecents()
 	}

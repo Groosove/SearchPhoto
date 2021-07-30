@@ -8,7 +8,7 @@
 import UIKit
 
 final class HomeScreenController: UIViewController {
-	//MARK: - Properties
+	// MARK: - Properties
     var isLast = false
     let imageView: UIImageView = {
         let view = UIImageView()
@@ -24,18 +24,18 @@ final class HomeScreenController: UIViewController {
         button.isHidden = true
         return button
     }()
-	
-	//MARK: - Init
+
+	// MARK: - Init
 	init(image: UIImage) {
 		self.imageView.image = image
 		super.init(nibName: nil, bundle: nil)
 	}
-	
+
 	required init?(coder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
 
-	//MARK: - View Cycle
+	// MARK: - View Cycle
 	override func viewDidLoad() {
         super.viewDidLoad()
         addSubviews()
@@ -44,13 +44,13 @@ final class HomeScreenController: UIViewController {
         }
         makeConstraints()
     }
-    
-	//MARK: - Setup UI
+
+	// MARK: - Setup UI
     private func addSubviews() {
         self.view.addSubview(imageView)
         self.view.addSubview(dismissButton)
     }
-    
+
     private func makeConstraints() {
         let imageViewConstraints = [
             imageView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
@@ -65,7 +65,7 @@ final class HomeScreenController: UIViewController {
         NSLayoutConstraint.activate(dismissButtonConstraints)
     }
 
-	//MARK: - Private functions
+	// MARK: - Private functions
     @objc private func dismissScreen() {
         let rootVC = MainTabBarController()
         rootVC.modalPresentationStyle = .fullScreen

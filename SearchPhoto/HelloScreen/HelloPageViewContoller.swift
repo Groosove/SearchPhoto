@@ -8,41 +8,43 @@
 import UIKit
 
 final class HelloPageViewContoller: UIPageViewController {
-	//MARK: - Properties
+	// MARK: - Properties
 	private let size = CGSize(width: (UIScreen.main.bounds.width * 2) / 3, height: (UIScreen.main.bounds.height * 2) / 3)
     private var pages = [UIViewController]()
     private let images = [
 		UIImage(named: "Favorite"),
 		UIImage(named: "Random"),
-		UIImage(named: "Searchs"),
+		UIImage(named: "Searchs")
 	]
 
-	//MARK: - Init
-    override init(transitionStyle style: UIPageViewController.TransitionStyle, navigationOrientation: UIPageViewController.NavigationOrientation, options: [UIPageViewController.OptionsKey : Any]? = nil) {
+	// MARK: - Init
+    override init(transitionStyle style: UIPageViewController.TransitionStyle,
+				  navigationOrientation: UIPageViewController.NavigationOrientation,
+				  options: [UIPageViewController.OptionsKey : Any]? = nil) {
         super.init(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-	//MARK: - View cycle
+
+	// MARK: - View cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         dataSource = self
 
-        for i in 0..<3 {
-			let vc = HomeScreenController(image: (images[i]?.resizeImage(targetSize: size))!)
-			if i == 2 {
-				vc.isLast = true
+        for item in 0..<3 {
+			let viewController = HomeScreenController(image: (images[item]?.resizeImage(targetSize: size))!)
+			if item == 2 {
+				viewController.isLast = true
 			}
-            pages.append(vc)
+            pages.append(viewController)
         }
         setViewControllers([pages[0]], direction: .forward, animated: false, completion: nil)
     }
 }
 
-//MARK: - UIPageViewControllerDataSource
+// MARK: - UIPageViewControllerDataSource
 extension HelloPageViewContoller: UIPageViewControllerDataSource {
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         guard let viewControllerIndex = pages.firstIndex(of: viewController) else { return nil }

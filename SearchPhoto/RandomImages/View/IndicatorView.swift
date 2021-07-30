@@ -8,14 +8,14 @@
 import UIKit
 
 final class IndicatorView: UIView {
-	private lazy var indicator : UIActivityIndicatorView = {
+	private lazy var indicatorView: UIActivityIndicatorView = {
 		let indicator = UIActivityIndicatorView(style: .large)
 		indicator.color = .white
 		indicator.translatesAutoresizingMaskIntoConstraints = false
-		
+
 		return indicator
 	}()
-	
+
 	var isLoading = false {
         didSet {
             guard oldValue != isLoading else { return }
@@ -25,13 +25,13 @@ final class IndicatorView: UIView {
 
     private func showSpinner(isShown: Bool) {
         if isShown {
-			self.addSubview(indicator)
-			indicator.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-			indicator.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
-			indicator.startAnimating()
+			self.addSubview(indicatorView)
+			indicatorView.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+			indicatorView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+			indicatorView.startAnimating()
         } else {
-			indicator.removeFromSuperview()
-            indicator.stopAnimating()
+			indicatorView.removeFromSuperview()
+            indicatorView.stopAnimating()
         }
     }
 }

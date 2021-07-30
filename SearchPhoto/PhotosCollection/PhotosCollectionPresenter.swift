@@ -9,7 +9,6 @@ protocol PhotosCollectionPresentationLogic {
     func showImages(response: PhotosCollection.LoadImages.Response)
 }
 
-
 final class PhotosCollectionPresenter: PhotosCollectionPresentationLogic {
     weak var viewController: PhotosCollectionDisplayLogic?
     func showImages(response: PhotosCollection.LoadImages.Response) {

@@ -27,7 +27,7 @@ final class FavoriteViewCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     func configure(image: UIImage?) {
         self.imageView.image = image
     }

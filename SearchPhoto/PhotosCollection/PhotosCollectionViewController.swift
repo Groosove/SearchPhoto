@@ -17,7 +17,7 @@ protocol PhotosCollectionViewControllerDelegate: AnyObject {
 }
 
 final class PhotosCollectionViewController: UIViewController {
-    //MARK: - Properties
+    // MARK: - Properties
     private let recentData = Container.shared.coreDataStack
     private let frc: NSFetchedResultsController<Recent> = {
         let request = NSFetchRequest<Recent>(entityName: "Recent")
@@ -36,7 +36,7 @@ final class PhotosCollectionViewController: UIViewController {
 	private let recentTableDataSource = RecentTableViewDataStore()
     private let recentTableHandler = RecentTableViewDelegate()
 
-    //MARK: - Init
+    // MARK: - Init
     init(interactor: PhotosCollectionBusinessLogic, initialState: PhotosCollection.ViewControllerState = .loading) {
         self.interactor = interactor
         self.state = initialState
@@ -46,14 +46,14 @@ final class PhotosCollectionViewController: UIViewController {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    //MARK: -  View cycle
+
+    // MARK: - View cycle
     override func viewDidLoad() {
         super.viewDidLoad()
 		setUpNavigationBar()
 		setUpSearchBar()
     }
-	
+
 	override func viewWillLayoutSubviews() {
 		super.viewWillLayoutSubviews()
         if recentTableView == nil {
@@ -68,7 +68,7 @@ final class PhotosCollectionViewController: UIViewController {
 			view.addSubview(recentTableView)
 			updateRecents()
 		}
-        
+
         if !tableView.isDescendant(of: self.view) {
             view.addSubview(tableView)
             tableView.isHidden = true

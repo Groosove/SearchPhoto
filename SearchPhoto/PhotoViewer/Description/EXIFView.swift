@@ -8,7 +8,7 @@
 import UIKit
 
 final class EXIFView: UIView {
-	//MARK: - Properties
+	// MARK: - Properties
 	let model: Exif?
 	private lazy var makeLabel: UILabel = {
 		let label = createMetaDataLabel(title: "Make\n", data: model?.make ?? "--")
@@ -36,7 +36,7 @@ final class EXIFView: UIView {
 		return label
 	}()
 
-	//MARK: - Init
+	// MARK: - Init
 	init(model: Exif?) {
 		self.model = model
 		super.init(frame: UIScreen.main.bounds)
@@ -48,7 +48,7 @@ final class EXIFView: UIView {
 		fatalError("init(coder:) has not been implemented")
 	}
 
-	//MARK: - Setup UI
+	// MARK: - Setup UI
 	private func addSubviews() {
 		addSubview(makeLabel)
 		addSubview(modelLabel)
@@ -99,7 +99,7 @@ final class EXIFView: UIView {
 		NSLayoutConstraint.activate(isoLabelConstraints)
 	}
 
-	//MARK: - Private functions
+	// MARK: - Private functions
 	private func createMetaDataLabel(title: String, data: String) -> UILabel {
 		let label = UILabel()
 		let text = NSMutableAttributedString(string: title + data)

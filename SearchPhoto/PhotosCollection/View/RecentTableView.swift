@@ -50,6 +50,4 @@ final class RecentTableView: UIView {
 		]
         NSLayoutConstraint.activate(tableViewViewConstaints)
 	}
-
-    
 }

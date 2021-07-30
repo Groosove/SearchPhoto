@@ -46,7 +46,7 @@ final class PhotoViewerController: UIViewController, UINavigationControllerDeleg
         setUpNavigationBar()
 		addGesture()
     }
-	
+
 	override func viewDidLayoutSubviews() {
 		viewer?.scrollView.setZoomScale()
 	}
@@ -84,24 +84,24 @@ final class PhotoViewerController: UIViewController, UINavigationControllerDeleg
         activityVC.excludedActivityTypes = [ UIActivity.ActivityType.airDrop, UIActivity.ActivityType.postToFacebook ]
         self.present(activityVC, animated: true, completion: nil)
     }
-	
+
     private func documentDirectoryPath() -> URL? {
         let path = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         return path.first
     }
-	
+
 	private func addGesture() {
 		let singleTap = UITapGestureRecognizer(target: self, action: #selector(didSingleTap(_:)))
 		singleTap.numberOfTapsRequired = 1
 		singleTap.numberOfTouchesRequired = 1
 		viewer?.scrollView.addGestureRecognizer(singleTap)
-		
+
 		let doubleTap = UITapGestureRecognizer(target: self, action: #selector(didDoubleTap(_:)))
 		doubleTap.numberOfTapsRequired = 2
 		doubleTap.numberOfTouchesRequired = 1
 		singleTap.require(toFail: doubleTap)
 		viewer?.scrollView.addGestureRecognizer(doubleTap)
-		
+
 		let panGesture = UIPanGestureRecognizer(target: self, action: #selector(didPan(_:)))
 		panGesture.cancelsTouchesInView = false
 		panGesture.delegate = self
@@ -176,30 +176,30 @@ extension PhotoViewerController: UIGestureRecognizerDelegate {
 			view.downloadButton.alpha = currentNavAlpha > 0.5 ? 0.0 : 1.0
         }
 	}
-	
+
 	@objc private func didDoubleTap(_ recognizer: UITapGestureRecognizer) {
 		let pointInView = recognizer.location(in: viewer?.scrollView)
 		viewer?.scrollView.zoomInOrOut(at: pointInView)
 	}
-	
+
 	@objc private func didPan(_ recognizer: UIPanGestureRecognizer) {
 		guard let scroll = viewer?.scrollView else { return }
 		guard scroll.zoomScale == scroll.minimumZoomScale else { return }
 		if recognizer.state == .began {
 			firstTouch = recognizer.translation(in: view)
 		}
-		
+
 		if recognizer.state != .cancelled {
 			lastTouch = recognizer.translation(in: view)
 		}
-		
+
 		if recognizer.state == .ended {
 			if lastTouch.y - firstTouch.y > (scroll.imageView.frame.height / 4) {
 				dismissController()
 			}
 		}
 	}
-	
+
 	func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
 		   return true
 	   }

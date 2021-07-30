@@ -17,19 +17,14 @@ protocol RandomImagesViewControllerDelegate: AnyObject {
 }
 
 final class RandomImagesViewController: UIViewController {
-    //MARK: - Properties
+    // MARK: - Properties
     private let interactor: RandomImagesBusinessLogic
     private var state: RandomImages.ViewControllerState
     private let collectionDataSource =  RandomImagesDataStore()
     private let collectionHandler = RandomImagesDelegate()
     private lazy var collectionView = self.view as? RandomImagesView
 	private let indicatorView = IndicatorView(frame: UIScreen.main.bounds)
-	private var isLoading = false {
-		didSet {
-			
-		}
-	}
-    //MARK: - Init
+    // MARK: - Init
     init(interactor: RandomImagesBusinessLogic, initialState: RandomImages.ViewControllerState = .loading) {
         self.interactor = interactor
         self.state = initialState
@@ -40,7 +35,7 @@ final class RandomImagesViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    //MARK: - View cycle
+    // MARK: - View cycle
     override func loadView() {
         self.view = RandomImagesView(frame: UIScreen.main.bounds, delegate: self)
     }
@@ -51,7 +46,7 @@ final class RandomImagesViewController: UIViewController {
         loadImages()
     }
 
-    //MARK: - Setup UI
+    // MARK: - Setup UI
     private func setUpNavigationBar() {
         navigationController?.navigationBar.barTintColor = .black
         navigationItem.title = "Random Images"
@@ -60,7 +55,7 @@ final class RandomImagesViewController: UIViewController {
 		navigationItem.rightBarButtonItem?.tintColor = .white
     }
 
-	//MARK: - Private functions
+	// MARK: - Private functions
 	@objc private func reloadImages() {
 		collectionHandler.models = []
 		collectionDataSource.models = []
@@ -69,7 +64,7 @@ final class RandomImagesViewController: UIViewController {
 	}
 }
 
-//MARK: - RandomImagesDisplayLogic
+// MARK: - RandomImagesDisplayLogic
 extension RandomImagesViewController: RandomImagesDisplayLogic {
     func displayImages(viewModel: RandomImages.LoadImage.ViewModel) {
         display(newState: viewModel.state)
@@ -108,7 +103,7 @@ extension RandomImagesViewController: RandomImagesDisplayLogic {
 	}
 }
 
-//MARK: - WaterfallLayoutDelegate
+// MARK: - WaterfallLayoutDelegate
 extension RandomImagesViewController: WaterfallLayoutDelegate {
     func waterfallLayout(_ layout: WaterfallLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let images = collectionDataSource.models[indexPath.item]
@@ -116,7 +111,7 @@ extension RandomImagesViewController: WaterfallLayoutDelegate {
     }
 }
 
-//MARK: - RandomImagesViewControllerDelegate
+// MARK: - RandomImagesViewControllerDelegate
 extension RandomImagesViewController: RandomImagesViewControllerDelegate {
     func openViewer(with model: PhotoViewerModel) {
         let rootVC = PhotoViewerController(with: model)

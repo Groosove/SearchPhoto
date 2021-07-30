@@ -24,7 +24,7 @@ final class RecentTableViewDelegate: NSObject, UITableViewDelegate {
         searchBar.text = models[indexPath.row].search
         delegate?.updateSearchResults(with: models[indexPath.row].search)
     }
-	
+
 	func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
 		let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: RecentHeaderView.identifier) as? RecentHeaderView
 		guard let headerView = view else { return UIView() }
@@ -32,7 +32,7 @@ final class RecentTableViewDelegate: NSObject, UITableViewDelegate {
 		headerView.tintColor = .black
 		return headerView
 	}
-	
+
 	@objc private func deleteRecents() {
 		delegate?.deleteAllRecents()
 	}

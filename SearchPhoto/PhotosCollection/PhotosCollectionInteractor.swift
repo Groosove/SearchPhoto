@@ -17,7 +17,7 @@ final class PhotosCollectionInteractor: PhotosCollectionBusinessLogic {
     }
 
     func findPhoto(request: PhotosCollection.LoadImages.Request) {
-		provider.getItems(with: request.search) { (items, error) in
+		provider.getItems(with: request.search) { (items, _) in
             let result: PhotosCollection.PhotosCollectionRequestResult
 
             if let items = items {
