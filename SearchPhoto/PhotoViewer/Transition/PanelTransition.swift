@@ -34,7 +34,7 @@ final class PanelTransition: NSObject, UIViewControllerTransitioningDelegate {
     func interactionControllerForPresentation(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
         return driver
     }
-
+	
     func interactionControllerForDismissal(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
         return driver
     }
