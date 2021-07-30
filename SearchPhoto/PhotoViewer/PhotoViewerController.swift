@@ -167,9 +167,13 @@ extension PhotoViewerController: UIPopoverPresentationControllerDelegate {
 // MARK: - UIGestureRecognizerDelegate
 extension PhotoViewerController: UIGestureRecognizerDelegate {
 	@objc private func didSingleTap(_ recognizer: UITapGestureRecognizer) {
+		guard let view = viewer else { return }
 		let currentNavAlpha = self.navigationController?.navigationBar.alpha ?? 0.0
         UIView.animate(withDuration: 0.235) {
             self.navigationController?.navigationBar.alpha = currentNavAlpha > 0.5 ? 0.0 : 1.0
+			view.infoViewButton.alpha = currentNavAlpha > 0.5 ? 0.0 : 1.0
+			view.likeButton.alpha = currentNavAlpha > 0.5 ? 0.0 : 1.0
+			view.downloadButton.alpha = currentNavAlpha > 0.5 ? 0.0 : 1.0
         }
 	}
 	

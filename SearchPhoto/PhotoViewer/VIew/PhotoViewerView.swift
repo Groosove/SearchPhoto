@@ -21,20 +21,20 @@ final class PhotoViewerView: UIView {
         scrollView.maximumZoomScale = 2.0
 		return scrollView
 	}()
-    private lazy var infoViewButton: UIButton = {
+    private(set) lazy var infoViewButton: UIButton = {
         let button = UIButton(type: .infoLight)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.tintColor = .white
         button.addTarget(delegate, action: #selector(infoButtonTapped), for: .touchUpInside)
         return button
     }()
-    lazy var likeButton: UIButton = {
+    private(set) lazy var likeButton: UIButton = {
         let button = UIButton()
         button.addTarget(delegate, action: #selector(likeTapButton), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-    private lazy var downloadButton: UIButton = {
+    private(set) lazy var downloadButton: UIButton = {
        let button = UIButton()
         button.setImage( UIImage(named: "arrow"), for: .normal)
         button.addTarget(delegate, action: #selector(downloadTapButton), for: .touchUpInside)
