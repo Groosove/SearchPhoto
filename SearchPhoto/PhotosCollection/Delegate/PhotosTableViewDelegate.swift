@@ -23,7 +23,7 @@ final class PhotosTableViewDelegate: NSObject, UITableViewDelegate {
 
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		tableView.deselectRow(at: indexPath, animated: true)
-		guard let imageCell = tableView.cellForRow(at: indexPath) as? PhotosTableViewCell, !imageCell.isLoading else { return }
+		guard let imageCell = tableView.cellForRow(at: indexPath) as? PhotosTableViewCell, imageCell.isLoading else { return }
         result = PhotoViewerModel(uid: models[indexPath.row].uid,
                                   name: models[indexPath.row].name,
                                   image: imageCell.photoView,

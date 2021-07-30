@@ -17,7 +17,8 @@ final class RandomImagesDelegate: NSObject, UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
-		guard let photoCell = collectionView.cellForItem(at: indexPath) as? RandomImagesViewCell, !photoCell.isLoading else { return }
+		guard let photoCell = collectionView.cellForItem(at: indexPath) as? RandomImagesViewCell,
+			  photoCell.photoView.image != nil else { return }
         let item = models[indexPath.item]
         let imageRatio = item.width / item.height
         let height = UIScreen.main.bounds.width / imageRatio

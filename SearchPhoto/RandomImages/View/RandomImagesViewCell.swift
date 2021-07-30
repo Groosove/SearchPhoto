@@ -9,7 +9,6 @@ import UIKit
 
 final class RandomImagesViewCell: UICollectionViewCell {
     static let identifier = "UICollectionViewCellId"
-	private(set) var isLoading = true
     private(set) lazy var photoView: UIImageView = {
         let image = UIImageView()
         image.contentMode = .scaleToFill
@@ -50,7 +49,6 @@ final class RandomImagesViewCell: UICollectionViewCell {
 
     func configure(image: String, photograph: String) {
 		self.photoView.loadImage(imageURL: image)
-		isLoading = false
 		self.photographLabel.text = photograph
     }
 
