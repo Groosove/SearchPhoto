@@ -45,6 +45,18 @@ final class ImageScrollView: UIScrollView {
 		minimumZoomScale = minScale
 		zoomScale = minScale
 	}
+	
+	func zoomInOrOut(at point:CGPoint) {
+		let newZoomScale = self.zoomScale == self.minimumZoomScale
+			? maximumZoomScale : self.minimumZoomScale
+		let size = self.bounds.size
+		let w = size.width / newZoomScale
+		let h = size.height / newZoomScale
+		let x = point.x - (w * 0.5)
+		let y = point.y - (h * 0.5)
+		let rect = CGRect(x: x, y: y, width: w, height: h)
+		self.zoom(to: rect, animated: true)
+	}
 }
 
 extension ImageScrollView: UIScrollViewDelegate {

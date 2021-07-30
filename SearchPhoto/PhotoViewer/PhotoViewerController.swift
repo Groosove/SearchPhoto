@@ -30,7 +30,8 @@ final class PhotoViewerController: UIViewController, UINavigationControllerDeleg
     lazy var viewer = self.view as? PhotoViewerView
     let model: PhotoViewerModel
 	private let transition = PanelTransition()
-
+	private var firstTouch: CGPoint = .zero
+	private var lastTouch: CGPoint = .zero
     // MARK: - View cycle
     override func loadView() {
 		super.loadView()
@@ -94,6 +95,17 @@ final class PhotoViewerController: UIViewController, UINavigationControllerDeleg
 		singleTap.numberOfTapsRequired = 1
 		singleTap.numberOfTouchesRequired = 1
 		viewer?.scrollView.addGestureRecognizer(singleTap)
+		
+		let doubleTap = UITapGestureRecognizer(target: self, action: #selector(didDoubleTap(_:)))
+		doubleTap.numberOfTapsRequired = 2
+		doubleTap.numberOfTouchesRequired = 1
+		singleTap.require(toFail: doubleTap)
+		viewer?.scrollView.addGestureRecognizer(doubleTap)
+		
+		let panGesture = UIPanGestureRecognizer(target: self, action: #selector(didPan(_:)))
+		panGesture.cancelsTouchesInView = false
+		panGesture.delegate = self
+		viewer?.scrollView.addGestureRecognizer(panGesture)
 	}
 }
 
@@ -153,11 +165,33 @@ extension PhotoViewerController: UIPopoverPresentationControllerDelegate {
 }
 
 extension PhotoViewerController: UIGestureRecognizerDelegate {
-	
 	@objc private func didSingleTap(_ recognizer: UITapGestureRecognizer) {
 		let currentNavAlpha = self.navigationController?.navigationBar.alpha ?? 0.0
         UIView.animate(withDuration: 0.235) {
             self.navigationController?.navigationBar.alpha = currentNavAlpha > 0.5 ? 0.0 : 1.0
         }
+	}
+	
+	@objc private func didDoubleTap(_ recognizer: UITapGestureRecognizer) {
+		let pointInView = recognizer.location(in: viewer?.scrollView)
+		viewer?.scrollView.zoomInOrOut(at: pointInView)
+	}
+	
+	@objc private func didPan(_ recognizer: UIPanGestureRecognizer) {
+		guard let scroll = viewer?.scrollView else { return }
+		guard scroll.zoomScale == scroll.minimumZoomScale else { return }
+		if recognizer.state == .began {
+			firstTouch = recognizer.translation(in: view)
+		}
+		
+		if recognizer.state != .cancelled {
+			lastTouch = recognizer.translation(in: view)
+		}
+		
+		if recognizer.state == .ended {
+			if lastTouch.y - firstTouch.y > (scroll.imageView.frame.height / 4) {
+				dismissController()
+			}
+		}
 	}
 }
