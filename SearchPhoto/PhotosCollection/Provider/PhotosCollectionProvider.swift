@@ -11,8 +11,8 @@ enum PhotosCollectionProviderError: Error {
 }
 
 struct PhotosCollectionProvider: PhotosCollectionProviderProtocol {
-    let dataStore: PhotosTableViewDataStore
-    let service: PhotosCollectionServiceProtocol
+    private let dataStore: PhotosTableViewDataStore
+    private let service: PhotosCollectionServiceProtocol
 
     init(dataStore: PhotosTableViewDataStore = PhotosTableViewDataStore(), service: PhotosCollectionServiceProtocol = PhotosCollectionService()) {
         self.dataStore = dataStore

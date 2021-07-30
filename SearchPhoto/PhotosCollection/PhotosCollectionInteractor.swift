@@ -8,8 +8,8 @@ protocol PhotosCollectionBusinessLogic {
 }
 
 final class PhotosCollectionInteractor: PhotosCollectionBusinessLogic {
-    let presenter: PhotosCollectionPresentationLogic
-    let provider: PhotosCollectionProviderProtocol
+    private let presenter: PhotosCollectionPresentationLogic
+    private let provider: PhotosCollectionProviderProtocol
 
     init(presenter: PhotosCollectionPresentationLogic, provider: PhotosCollectionProviderProtocol = PhotosCollectionProvider()) {
         self.presenter = presenter

@@ -9,6 +9,7 @@ import UIKit
 
 final class PhotosTableViewDataStore: NSObject, UITableViewDataSource {
     var models: [PhotosCollectionViewModel]
+
 	init (models: [PhotosCollectionViewModel] = []) {
         self.models = models
     }

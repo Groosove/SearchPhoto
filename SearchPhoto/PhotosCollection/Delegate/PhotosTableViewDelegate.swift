@@ -9,7 +9,7 @@ import UIKit
 
 final class PhotosTableViewDelegate: NSObject, UITableViewDelegate {
 	var models: [PhotosCollectionViewModel]
-    var result: PhotoViewerModel!
+    private var result: PhotoViewerModel!
 	weak var delegate: PhotosCollectionViewControllerDelegate?
 
 	init(models: [PhotosCollectionViewModel] = []) {

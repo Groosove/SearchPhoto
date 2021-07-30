@@ -9,6 +9,7 @@ import UIKit
 
 final class RecentTableViewDataStore: NSObject, UITableViewDataSource {
     var models: [Recent]
+
     init (models: [Recent] = []) {
         self.models = models
     }

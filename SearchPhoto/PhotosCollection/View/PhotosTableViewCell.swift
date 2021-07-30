@@ -17,7 +17,7 @@ final class PhotosTableViewCell: UITableViewCell {
     static let identifier = "PhotosTableViewCellId"
     private let appearance = Appearance()
 	private(set) var isLoading = true
-	lazy var photoView: UIImageView = {
+	private(set) lazy var photoView: UIImageView = {
 		let image = UIImageView()
 		image.contentMode = .scaleToFill
 		image.translatesAutoresizingMaskIntoConstraints = false
