@@ -124,6 +124,8 @@ extension PhotosCollectionViewController: PhotosCollectionDisplayLogic {
         case let .error(message):
 			createActivity(with: self, message: message)
         case let .result(items):
+			tableView.isHidden = false
+			recentTableView.isHidden = true
 			tableHandler.models = items
 			tableDataSource.models = items
             tableHandler.delegate = self
@@ -141,9 +143,8 @@ extension PhotosCollectionViewController: PhotosCollectionDisplayLogic {
 // MARK: - UISearchBarDelegate
 extension PhotosCollectionViewController: UISearchBarDelegate {
 	func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        tableView.isHidden = false
-		recentTableView.isHidden = true
-        findPhoto(with: searchBar.text!.capitalized)
+        
+		findPhoto(with: searchBar.text!.capitalized)
 	}
 
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
