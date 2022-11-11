@@ -15,7 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 	func application(_ application: UIApplication, didFinishLaunchingWithOptions
 						launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        let stack = Container.shared.coreDataStack
+        let stack = StackContainer.shared.coreDataStack
 
         stack.load()
 		window = UIWindow(frame: UIScreen.main.bounds)

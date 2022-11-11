@@ -10,7 +10,7 @@ import UIKit
 extension UIImage {
 	func cropImage(targetSize: CGSize) -> UIImage? {
 		guard let cgImage = self.cgImage else { return nil }
-		let contextImage: UIImage = UIImage(cgImage: cgImage)
+		let contextImage = UIImage(cgImage: cgImage)
 		let contextSize: CGSize = contextImage.size
 		var rect = CGRect.zero
 
@@ -21,14 +21,14 @@ extension UIImage {
 		}
 
 		guard let imageRef = cgImage.cropping(to: rect) else { return nil }
-		let image: UIImage = UIImage(cgImage: imageRef, scale: self.scale, orientation: self.imageOrientation)
+		let image = UIImage(cgImage: imageRef, scale: self.scale, orientation: self.imageOrientation)
 
 		return image
 	}
-	
+
 	func resizeImage(targetSize: CGSize) -> UIImage? {
 		let size = self.size
-		let widthRatio  = targetSize.width  / size.width
+		let widthRatio  = targetSize.width / size.width
 		let heightRatio = targetSize.height / size.height
 		var newSize: CGSize
 

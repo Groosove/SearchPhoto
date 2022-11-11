@@ -8,14 +8,14 @@
 import UIKit
 
 final class RecentTableView: UIView {
-    private lazy var recentTableView: UITableView = {
-        let tableView = UITableView.init(frame: .zero, style: .plain)
+	private lazy var recentTableView: UITableView = {
+		let tableView = UITableView(frame: .zero, style: .plain)
 		tableView.register(RecentTableViewCell.self, forCellReuseIdentifier: RecentTableViewCell.identifier)
 		tableView.register(RecentHeaderView.self, forHeaderFooterViewReuseIdentifier: RecentHeaderView.identifier)
 		tableView.tableFooterView = UIView()
 		tableView.estimatedSectionHeaderHeight = 70
 		tableView.backgroundColor = .black
-        tableView.separatorColor = .white
+		tableView.separatorColor = .white
 		tableView.translatesAutoresizingMaskIntoConstraints = false
 		return tableView
 	}()
@@ -27,15 +27,16 @@ final class RecentTableView: UIView {
 		backgroundColor = .black
 	}
 
+	@available(*, unavailable)
 	required init?(coder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
 
-    func updateTableViewData(delegate: UITableViewDelegate, dataSource: UITableViewDataSource) {
-        recentTableView.delegate = delegate
-        recentTableView.dataSource = dataSource
-        recentTableView.reloadData()
-    }
+	func updateTableViewData(delegate: UITableViewDelegate, dataSource: UITableViewDataSource) {
+		recentTableView.delegate = delegate
+		recentTableView.dataSource = dataSource
+		recentTableView.reloadData()
+	}
 
 	private func addSubviews() {
 		addSubview(recentTableView)
@@ -48,6 +49,6 @@ final class RecentTableView: UIView {
 			recentTableView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
 			recentTableView.topAnchor.constraint(equalTo: self.topAnchor)
 		]
-        NSLayoutConstraint.activate(tableViewViewConstaints)
+		NSLayoutConstraint.activate(tableViewViewConstaints)
 	}
 }

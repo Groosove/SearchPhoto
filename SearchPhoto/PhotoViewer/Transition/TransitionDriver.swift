@@ -8,125 +8,129 @@
 import UIKit
 
 enum TransitionDirection {
-    case present, dismiss
+
+	case present
+	case dismiss
 }
 
 final class TransitionDriver: UIPercentDrivenInteractiveTransition {
 
-    // MARK: - Linking
-    func link(to controller: UIViewController) {
-        presentedController = controller
-        panRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handle(recognizer:)))
-        presentedController?.view.addGestureRecognizer(panRecognizer!)
-    }
+	// MARK: - Linking
+	func link(to controller: UIViewController) {
+		presentedController = controller
+		panRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handle(recognizer:)))
+		presentedController?.view.addGestureRecognizer(panRecognizer!)
+	}
 
-    private weak var presentedController: UIViewController?
-    private var panRecognizer: UIPanGestureRecognizer?
+	private weak var presentedController: UIViewController?
+	private var panRecognizer: UIPanGestureRecognizer?
 
-    // MARK: - Override
-    override var wantsInteractiveStart: Bool {
-        get {
-            switch direction {
-            case .present:
-                return false
-            case .dismiss:
-                let gestureIsActive = panRecognizer?.state == .began
-                return gestureIsActive
-            }
-        }
+	// MARK: - Override
+
+	override var wantsInteractiveStart: Bool {
+		get {
+			switch direction {
+			case .present:
+				return false
+
+			case .dismiss:
+				let gestureIsActive = panRecognizer?.state == .began
+				return gestureIsActive
+			}
+		}
 		// swiftlint:disable unused_setter_value
-        set { }
+		set { }
 		// swiftlint:enable unused_setter_value
-    }
+	}
 
-    // MARK: - Direction
-    var direction: TransitionDirection = .present
+	// MARK: - Direction
 
-    @objc private func handle(recognizer: UIPanGestureRecognizer) {
-        switch direction {
-        case .present:
-            handlePresentation(recognizer: recognizer)
-        case .dismiss:
-            handleDismiss(recognizer: recognizer)
-        }
-    }
+	var direction: TransitionDirection = .present
+
+	@objc private func handle(recognizer: UIPanGestureRecognizer) {
+		switch direction {
+		case .present:
+			handlePresentation(recognizer: recognizer)
+
+		case .dismiss:
+			handleDismiss(recognizer: recognizer)
+		}
+	}
 }
 
 // MARK: - Gesture Handling
+
 extension TransitionDriver {
 
-    private func handlePresentation(recognizer: UIPanGestureRecognizer) {
-        switch recognizer.state {
-        case .began:
-            pause()
-        case .changed:
-            let increment = -recognizer.incrementToBottom(maxTranslation: maxTranslation)
-            update(percentComplete + increment)
+	private func handlePresentation(recognizer: UIPanGestureRecognizer) {
+		switch recognizer.state {
+		case .began:
+			pause()
 
-        case .ended, .cancelled:
-            if recognizer.isProjectedToDownHalf(maxTranslation: maxTranslation) {
-                cancel()
-            } else {
-                finish()
-            }
+		case .changed:
+			let increment = -recognizer.incrementToBottom(maxTranslation: maxTranslation)
+			update(percentComplete + increment)
 
-        case .failed:
-            cancel()
+		case .ended, .cancelled:
+			recognizer.isProjectedToDownHalf(maxTranslation: maxTranslation) ? cancel() : finish()
 
-        default:
-            break
-        }
-    }
+		case .failed:
+			cancel()
 
-    private func handleDismiss(recognizer: UIPanGestureRecognizer) {
-        switch recognizer.state {
-        case .began:
-            pause()
+		default:
+			break
+		}
+	}
 
-            if !isRunning {
-                presentedController?.dismiss(animated: true)
-            }
+	private func handleDismiss(recognizer: UIPanGestureRecognizer) {
+		switch recognizer.state {
+		case .began:
+			pause()
 
-        case .changed:
-            update(percentComplete + recognizer.incrementToBottom(maxTranslation: maxTranslation))
+			if !isRunning {
+				presentedController?.dismiss(animated: true)
+			}
 
-        case .ended, .cancelled:
-            if recognizer.isProjectedToDownHalf(maxTranslation: maxTranslation) {
-                finish()
-            } else {
-                cancel()
-            }
+		case .changed:
+			update(percentComplete + recognizer.incrementToBottom(maxTranslation: maxTranslation))
 
-        case .failed:
-            cancel()
+		case .ended, .cancelled:
+			if recognizer.isProjectedToDownHalf(maxTranslation: maxTranslation) {
+				finish()
+			} else {
+				cancel()
+			}
 
-        default:
-            break
-        }
-    }
+		case .failed:
+			cancel()
 
-    var maxTranslation: CGFloat {
-        return presentedController?.view.frame.height ?? 0
-    }
+		default:
+			break
+		}
+	}
 
-    private var isRunning: Bool {
-        return percentComplete != 0
-    }
+	var maxTranslation: CGFloat {
+		return presentedController?.view.frame.height ?? 0
+	}
+
+	private var isRunning: Bool {
+		return percentComplete != 0
+	}
 }
 
 private extension UIPanGestureRecognizer {
-    func isProjectedToDownHalf(maxTranslation: CGFloat) -> Bool {
-        let endLocation = projectedLocation(decelerationRate: .fast)
-        let isPresentationCompleted = endLocation.y > maxTranslation / 2
+	func isProjectedToDownHalf(maxTranslation: CGFloat) -> Bool {
+		let endLocation = projectedLocation(decelerationRate: .fast)
+		let isPresentationCompleted = endLocation.y > maxTranslation / 2
 
-        return isPresentationCompleted
-    }
+		return isPresentationCompleted
+	}
 
-    func incrementToBottom(maxTranslation: CGFloat) -> CGFloat {
-        let translation = self.translation(in: view).y
-        setTranslation(.zero, in: nil)
+	func incrementToBottom(maxTranslation: CGFloat) -> CGFloat {
+		let translation = self.translation(in: view).y
+		setTranslation(.zero, in: nil)
 
-        let percentIncrement = translation / maxTranslation
-        return percentIncrement
-    }
+		let percentIncrement = translation / maxTranslation
+		return percentIncrement
+	}
 }

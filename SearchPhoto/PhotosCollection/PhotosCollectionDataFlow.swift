@@ -4,35 +4,35 @@
 //
 
 enum PhotosCollection {
-    enum LoadImages {
+	enum LoadImages {
 		// swiftlint:disable nesting
-        struct Request {
-            var search: String
-        }
-
-        struct Response {
-            var result: PhotosCollectionRequestResult
+		struct Request {
+			var search: String
 		}
 
-        struct ViewModel {
-            var state: ViewControllerState
-        }
+		struct Response {
+			var result: PhotosCollectionRequestResult
+		}
+
+		struct ViewModel {
+			var state: ViewControllerState
+		}
 		// swiftlint:enable nesting
-    }
+	}
 
-    enum PhotosCollectionRequestResult {
-        case failure(PhotosCollectionError)
-        case success([PhotosCollectionModel])
-    }
+	enum PhotosCollectionRequestResult {
+		case failure(PhotosCollectionError)
+		case success([PhotosCollectionModel])
+	}
 
-    enum ViewControllerState {
-        case loading
-        case result([PhotosCollectionViewModel])
-        case emptyResult
-        case error(message: String)
-    }
+	enum ViewControllerState {
+		case loading
+		case result([PhotosCollectionViewModel])
+		case emptyResult
+		case error(message: String)
+	}
 
-    enum PhotosCollectionError: Error {
-        case loadImageError(message: String)
-    }
+	enum PhotosCollectionError: Error {
+		case loadImageError(message: String)
+	}
 }

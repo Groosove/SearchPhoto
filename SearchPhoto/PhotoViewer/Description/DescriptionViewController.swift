@@ -12,13 +12,15 @@ protocol DescriptionViewControllerDelegate: AnyObject {
 }
 
 final class DescriptionViewController: UIViewController {
-    // MARK: - Properties
+
+	// MARK: - Properties
+
 	private lazy var descView = self.view as? DescriptionView
 	private let model: PhotoStatModel
 
-    // MARK: - View cycle
+	// MARK: - View cycle
+
 	override func loadView() {
-		super.loadView()
 		self.view = DescriptionView(model: model)
 	}
 
@@ -28,19 +30,23 @@ final class DescriptionViewController: UIViewController {
 		view.backgroundColor = .black
 	}
 
-    // MARK: - Init
+	// MARK: - Init
+
 	init(model: PhotoStatModel) {
 		self.model = model
 		super.init(nibName: nil, bundle: nil)
 	}
 
+	@available(*, unavailable)
 	required init?(coder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
 }
 
 // MARK: - DescriptionViewControllerDelegate
+
 extension DescriptionViewController: DescriptionViewControllerDelegate {
+
 	func dismissSelf() {
 		dismiss(animated: true)
 	}

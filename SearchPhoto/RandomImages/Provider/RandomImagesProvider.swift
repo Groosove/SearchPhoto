@@ -20,7 +20,7 @@ struct RandomImagesProvider: RandomImagesProviderProtocol {
     }
 
     func getItems(completion: @escaping ([PhotosCollectionModel]?, RandomImagesProviderError?) -> Void) {
-        service.getImages { (array, error) in
+        service.getImages { array, error in
             if let error = error {
                 completion(nil, .getItemsFailed(underlyingError: error))
             } else if let models = array {

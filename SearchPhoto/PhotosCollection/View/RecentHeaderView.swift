@@ -8,15 +8,16 @@
 import UIKit
 
 extension RecentHeaderView {
-    struct Appearance {
-        let layoutOffset: CGFloat = 10
-    }
+	struct Appearance {
+		let layoutOffset: CGFloat = 10
+	}
 }
 
 final class RecentHeaderView: UITableViewHeaderFooterView {
+
 	static let identifier = "RecentHeaderViewId"
 	weak var delegate: PhotosCollectionViewControllerDelegate?
-    private let appearance = Appearance()
+	private let appearance = Appearance()
 	private lazy var headerView: UILabel = {
 		let label = UILabel()
 		label.text = "Recents"
@@ -39,6 +40,7 @@ final class RecentHeaderView: UITableViewHeaderFooterView {
 		makeConstraints()
 	}
 
+	@available(*, unavailable)
 	required init?(coder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
@@ -50,7 +52,7 @@ final class RecentHeaderView: UITableViewHeaderFooterView {
 
 	private func makeConstraints() {
 		let headerViewConstraints = [
-            headerView.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: appearance.layoutOffset),
+			headerView.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: appearance.layoutOffset),
 			headerView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor)
 		]
 

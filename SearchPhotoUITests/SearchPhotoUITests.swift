@@ -7,25 +7,30 @@
 
 import XCTest
 
-class SearchPhotoUITests: XCTestCase {
+final class SearchPhotoUITests: XCTestCase {
 
-    var app: XCUIApplication!
+	private var app: XCUIApplication!
 
-    override  func setUp() {
-        continueAfterFailure = false
-        app = XCUIApplication()
-        app.launch()
-    }
+	override func setUp() {
+		super.setUp()
+		continueAfterFailure = false
+		app = XCUIApplication()
+		app.launch()
+	}
 
-    func testSearchBarInPhotosCollection() throws {
-        app.tabBars.children(matching: .button).element(boundBy: 1).tap()
+	override func tearDown() {
+		super.tearDown()
+	}
 
-        let searchBar = app.navigationBars["Search Images"]
-        searchBar.searchFields["Search"].tap()
-        searchBar.typeText("Mom")
+	func testSearchBarInPhotosCollection() throws {
+		app.tabBars.children(matching: .button).element(boundBy: 1).tap()
 
-        XCUIApplication().keyboards.buttons["search"].tap()
-        searchBar.buttons["Cancel"].tap()
-        app.tables.children(matching: .button)["Clear"].tap()
-    }
+		let searchBar = app.navigationBars["Search Images"]
+		searchBar.searchFields["Search"].tap()
+		searchBar.typeText("Mom")
+
+		XCUIApplication().keyboards.buttons["search"].tap()
+		searchBar.buttons["Cancel"].tap()
+		app.tables.children(matching: .button)["Clear"].tap()
+	}
 }

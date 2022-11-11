@@ -8,44 +8,51 @@
 import UIKit
 
 final class HomeScreenController: UIViewController {
+
 	// MARK: - Properties
+
     var isLast = false
     let imageView: UIImageView = {
         let view = UIImageView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    let dismissButton: UIButton = {
+
+    lazy var dismissButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Done", for: .normal)
         button.setTitleColor(.systemBlue, for: .normal)
-        button.addTarget(self, action: #selector(dismissScreen), for: .touchUpInside)
         button.isHidden = true
         return button
     }()
 
 	// MARK: - Init
+
 	init(image: UIImage) {
 		self.imageView.image = image
 		super.init(nibName: nil, bundle: nil)
 	}
 
+	@available(*, unavailable)
 	required init?(coder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
 
 	// MARK: - View Cycle
+
 	override func viewDidLoad() {
         super.viewDidLoad()
         addSubviews()
         if isLast {
             dismissButton.isHidden = false
         }
+		dismissButton.addTarget(self, action: #selector(dismissScreen), for: .touchUpInside)
         makeConstraints()
     }
 
 	// MARK: - Setup UI
+
     private func addSubviews() {
         self.view.addSubview(imageView)
         self.view.addSubview(dismissButton)
@@ -66,6 +73,7 @@ final class HomeScreenController: UIViewController {
     }
 
 	// MARK: - Private functions
+
     @objc private func dismissScreen() {
         let rootVC = MainTabBarController()
         rootVC.modalPresentationStyle = .fullScreen

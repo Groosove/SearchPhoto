@@ -17,7 +17,7 @@ final class RandomImagesInteractor: RandomImagesBusinessLogic {
     }
 
     func loadImages(request: RandomImages.LoadImage.Request) {
-        provider.getItems { (items, _) in
+        provider.getItems { items, _ in
             let result: RandomImages.RandomImagesRequestResult
             if let items = items {
                 result = .success(items)

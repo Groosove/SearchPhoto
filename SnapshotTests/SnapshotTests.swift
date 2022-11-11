@@ -10,7 +10,7 @@ import SnapshotTesting
 @testable import SearchPhoto
 
 class SnapshotTests: XCTestCase {
-	private let recentData = Container.shared.coreDataStack
+	private let recentData = StackContainer.shared.coreDataStack
 
 	func testSnapshotOnDifferentDevices() {
 		let vc = CustomNavigationController(rootViewController: PhotosCollectionBuilder().build())

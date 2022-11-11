@@ -9,7 +9,9 @@ import UIKit
 import MapKit
 
 final class DescriptionView: UIView {
+
 	// MARK: - Properties
+
 	let model: PhotoStatModel
 	weak var delegate: DescriptionViewControllerDelegate?
 	private lazy var dismissButton: UIButton = {
@@ -20,13 +22,14 @@ final class DescriptionView: UIView {
 		button.translatesAutoresizingMaskIntoConstraints = false
 		return button
 	}()
+
 	private lazy var mapViewLocation: MKMapView = {
 		guard let location = model.location, model.location?.coordinate != nil else {
-            let map = MKMapView(frame: CGRect(origin: .zero, size: CGSize(width: frame.width, height: 10)))
-            map.isHidden = true
-            map.translatesAutoresizingMaskIntoConstraints = false
-            return map
-        }
+			let map = MKMapView(frame: CGRect(origin: .zero, size: CGSize(width: frame.width, height: 10)))
+			map.isHidden = true
+			map.translatesAutoresizingMaskIntoConstraints = false
+			return map
+		}
 		let annotation = MKPointAnnotation()
 		let map = MKMapView()
 		map.frame.size = CGSize(width: self.frame.width, height: self.frame.height / 5)
@@ -34,26 +37,28 @@ final class DescriptionView: UIView {
 		annotation.coordinate = location.coordinate!
 		map.setRegion(MKCoordinateRegion(center: annotation.coordinate,
 										 latitudinalMeters: 50000,
-                                         longitudinalMeters: 60000), animated: true)
+										 longitudinalMeters: 60000),
+					  animated: true)
 		map.centerCoordinate = annotation.coordinate
 		map.mapType = .standard
 		map.addAnnotation(annotation)
 		map.isScrollEnabled = true
-        map.mapType = .standard
+		map.mapType = .standard
 		map.translatesAutoresizingMaskIntoConstraints = false
 		return map
 	}()
+
 	private lazy var exifView = EXIFView(model: model.exif)
 	private lazy var descriptionLabel: UILabel = {
-        guard let description = model.description else {
-            let label = UILabel(frame: CGRect(origin: .zero, size: CGSize(width: frame.width, height: 10)))
-            label.translatesAutoresizingMaskIntoConstraints = false
-            return label
-        }
+		guard let description = model.description else {
+			let label = UILabel(frame: CGRect(origin: .zero, size: CGSize(width: frame.width, height: 10)))
+			label.translatesAutoresizingMaskIntoConstraints = false
+			return label
+		}
 		let label = UILabel()
 		label.textColor = .white
 		label.numberOfLines = 0
-        label.text = description
+		label.text = description
 		label.sizeToFit()
 		label.translatesAutoresizingMaskIntoConstraints = false
 		return label
@@ -61,6 +66,7 @@ final class DescriptionView: UIView {
 	private let scrollView = UIScrollView()
 
 	// MARK: - Init
+
 	init(model: PhotoStatModel) {
 		self.model = model
 		super.init(frame: UIScreen.main.bounds)
@@ -69,22 +75,24 @@ final class DescriptionView: UIView {
 		makeConstraints()
 	}
 
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+	@available(*, unavailable)
+	required init?(coder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
+	}
 
-    deinit {
-        mapViewLocation.removeAnnotations(mapViewLocation.annotations)
-        mapViewLocation.delegate = nil
-    }
+	deinit {
+		mapViewLocation.removeAnnotations(mapViewLocation.annotations)
+		mapViewLocation.delegate = nil
+	}
 
 	// MARK: - Setup UI
+
 	private func addSubviews() {
 		addSubview(dismissButton)
 		addSubview(scrollView)
 		scrollView.addSubview(exifView)
 		scrollView.addSubview(descriptionLabel)
-        scrollView.addSubview(mapViewLocation)
+		scrollView.addSubview(mapViewLocation)
 	}
 
 	private func makeConstraints() {
@@ -100,9 +108,9 @@ final class DescriptionView: UIView {
 
 		let scrollViewConstraints = [
 			scrollView.topAnchor.constraint(equalTo: dismissButton.bottomAnchor, constant: 10),
-            scrollView.leadingAnchor.constraint(equalTo: self.layoutMarginsGuide.leadingAnchor),
-            scrollView.trailingAnchor.constraint(equalTo: self.layoutMarginsGuide.trailingAnchor),
-            scrollView.bottomAnchor.constraint(greaterThanOrEqualTo: self.layoutMarginsGuide.bottomAnchor)
+			scrollView.leadingAnchor.constraint(equalTo: self.layoutMarginsGuide.leadingAnchor),
+			scrollView.trailingAnchor.constraint(equalTo: self.layoutMarginsGuide.trailingAnchor),
+			scrollView.bottomAnchor.constraint(greaterThanOrEqualTo: self.layoutMarginsGuide.bottomAnchor)
 		]
 
 		let exifViewConstraints = [
@@ -113,7 +121,7 @@ final class DescriptionView: UIView {
 
 		let descriptionLabelConstraints = [
 			descriptionLabel.topAnchor.constraint(equalTo: scrollView.topAnchor),
-            descriptionLabel.widthAnchor.constraint(equalToConstant: descriptionLabel.frame.width)
+			descriptionLabel.widthAnchor.constraint(equalToConstant: descriptionLabel.frame.width)
 		]
 
 		let mapViewConstraints = [
@@ -130,6 +138,7 @@ final class DescriptionView: UIView {
 	}
 
 	// MARK: - Private functions
+
 	@objc private func dismissController() {
 		delegate?.dismissSelf()
 	}

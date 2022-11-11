@@ -8,14 +8,16 @@
 import UIKit
 
 final class EXIFView: UIView {
+
 	// MARK: - Properties
+
 	let model: Exif?
 	private lazy var makeLabel: UILabel = {
 		let label = createMetaDataLabel(title: "Make\n", data: model?.make ?? "--")
 		return label
 	}()
 	private lazy var modelLabel: UILabel = {
-        let label = createMetaDataLabel(title: "Model\n", data: model?.model ?? "--")
+		let label = createMetaDataLabel(title: "Model\n", data: model?.model ?? "--")
 		return label
 	}()
 	private lazy var shutterLabel: UILabel = {
@@ -27,8 +29,8 @@ final class EXIFView: UIView {
 		return label
 	}()
 	private lazy var isoLabel: UILabel = {
-        let data = (model?.iso == nil) ? "--" : String(model!.iso!)
-        let label = createMetaDataLabel(title: "ISO\n", data: data)
+		let data = (model?.iso == nil) ? "--" : String(model!.iso!)
+		let label = createMetaDataLabel(title: "ISO\n", data: data)
 		return label
 	}()
 	private lazy var apertureLabel: UILabel = {
@@ -37,6 +39,7 @@ final class EXIFView: UIView {
 	}()
 
 	// MARK: - Init
+
 	init(model: Exif?) {
 		self.model = model
 		super.init(frame: UIScreen.main.bounds)
@@ -44,6 +47,7 @@ final class EXIFView: UIView {
 		makeConstraints()
 	}
 
+	@available(*, unavailable)
 	required init?(coder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
@@ -100,6 +104,7 @@ final class EXIFView: UIView {
 	}
 
 	// MARK: - Private functions
+
 	private func createMetaDataLabel(title: String, data: String) -> UILabel {
 		let label = UILabel()
 		let text = NSMutableAttributedString(string: title + data)

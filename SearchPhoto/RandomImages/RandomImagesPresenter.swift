@@ -6,25 +6,29 @@
 import UIKit
 
 protocol RandomImagesPresentationLogic {
-    func presentImages(response: RandomImages.LoadImage.Response)
+
+	/// Показать изображения
+	/// - Parameter response: Загруженные изображения
+	func presentImages(response: RandomImages.LoadImage.Response)
 }
 
 final class RandomImagesPresenter: RandomImagesPresentationLogic {
-    weak var viewController: RandomImagesDisplayLogic?
+	weak var viewController: RandomImagesDisplayLogic?
 
-    func presentImages(response: RandomImages.LoadImage.Response) {
-        var viewModel: RandomImages.LoadImage.ViewModel
+	func presentImages(response: RandomImages.LoadImage.Response) {
+		var viewModel: RandomImages.LoadImage.ViewModel
 
-        switch response.result {
-        case .failure:
+		switch response.result {
+		case .failure:
 			viewModel = RandomImages.LoadImage.ViewModel(state: .error(message: "Check your internet connection"))
-        case let .success(result):
-            if result.isEmpty {
-                viewModel = RandomImages.LoadImage.ViewModel(state: .emptyResult)
-            } else {
-                viewModel = RandomImages.LoadImage.ViewModel(state: .result(result))
-            }
-        }
-        viewController?.displayImages(viewModel: viewModel)
-    }
+
+		case let .success(result):
+			if result.isEmpty {
+				viewModel = RandomImages.LoadImage.ViewModel(state: .emptyResult)
+			} else {
+				viewModel = RandomImages.LoadImage.ViewModel(state: .result(result))
+			}
+		}
+		viewController?.displayImages(viewModel: viewModel)
+	}
 }

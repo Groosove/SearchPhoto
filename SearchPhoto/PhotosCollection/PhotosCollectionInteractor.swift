@@ -4,28 +4,30 @@
 //
 
 protocol PhotosCollectionBusinessLogic {
-    func findPhoto(request: PhotosCollection.LoadImages.Request)
+
+	func findPhoto(request: PhotosCollection.LoadImages.Request)
 }
 
 final class PhotosCollectionInteractor: PhotosCollectionBusinessLogic {
-    private let presenter: PhotosCollectionPresentationLogic
-    private let provider: PhotosCollectionProviderProtocol
 
-    init(presenter: PhotosCollectionPresentationLogic, provider: PhotosCollectionProviderProtocol = PhotosCollectionProvider()) {
-        self.presenter = presenter
-        self.provider = provider
-    }
+	private let presenter: PhotosCollectionPresentationLogic
+	private let provider: PhotosCollectionProviderProtocol
 
-    func findPhoto(request: PhotosCollection.LoadImages.Request) {
-		provider.getItems(with: request.search) { (items, _) in
-            let result: PhotosCollection.PhotosCollectionRequestResult
+	init(presenter: PhotosCollectionPresentationLogic, provider: PhotosCollectionProviderProtocol = PhotosCollectionProvider()) {
+		self.presenter = presenter
+		self.provider = provider
+	}
 
-            if let items = items {
-                result = .success(items)
-            } else {
-                result = .failure(.loadImageError(message: "Check internet connection"))
-            }
-            self.presenter.showImages(response: PhotosCollection.LoadImages.Response(result: result))
-        }
-    }
+	func findPhoto(request: PhotosCollection.LoadImages.Request) {
+		provider.getItems(with: request.search) { items, _ in
+			let result: PhotosCollection.PhotosCollectionRequestResult
+
+			if let items = items {
+				result = .success(items)
+			} else {
+				result = .failure(.loadImageError(message: "Check internet connection"))
+			}
+			self.presenter.showImages(response: PhotosCollection.LoadImages.Response(result: result))
+		}
+	}
 }
